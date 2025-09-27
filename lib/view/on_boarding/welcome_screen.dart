@@ -8,7 +8,8 @@ import '../../l10n/app_localizations.dart';
 import 'started_view/started_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  final WidgetBuilder? loginBuilder;
+  const WelcomeScreen({super.key, this.loginBuilder});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -354,7 +355,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                                  builder:
+                                      widget.loginBuilder ??
+                                      (context) => const LoginScreen(),
                                 ),
                               );
                             },

@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../widget/height/height_selector_widget.dart';
 import '../../../database/local_storage_service.dart';
+import '../../../database/auth_service.dart';
 import '../../../l10n/app_localizations.dart';
 import 'weight_selector.dart';
 
 class HeightSelector extends StatefulWidget {
   final dynamic selectedGender;
   final int? selectedAge;
+  final AuthService? authService;
 
-  const HeightSelector({super.key, this.selectedGender, this.selectedAge});
+  const HeightSelector({
+    super.key,
+    this.selectedGender,
+    this.selectedAge,
+    this.authService,
+  });
 
   @override
   State<HeightSelector> createState() => _HeightSelectorState();
@@ -22,6 +29,13 @@ class _HeightSelectorState extends State<HeightSelector> {
 
   double _selectedHeight = 172.0;
   final LocalStorageService _local = LocalStorageService();
+  AuthService? _auth;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = widget.authService; // Không khởi tạo thật để tránh lỗi test
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +132,16 @@ class _HeightSelectorState extends State<HeightSelector> {
                           ),
                         ),
                         onPressed: () async {
-                          // Save height then go to weight selector
-                          await _local.saveGuestData(heightCm: _selectedHeight);
+                          final uid = _auth?.currentUser?.uid;
+                          if (uid != null) {
+                            await _auth!.updateUserData(uid, {
+                              'bodyInfo.heightCm': _selectedHeight,
+                            });
+                          } else {
+                            await _local.saveGuestData(
+                              heightCm: _selectedHeight,
+                            );
+                          }
                           if (!mounted) return;
                           Navigator.push(
                             context,

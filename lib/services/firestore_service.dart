@@ -75,7 +75,11 @@ class FirestoreService {
 
     final body = jsonEncode({
       "prompt": prompt,
-      "user": userData, // gửi toàn bộ thông tin user
+      "age": userData["age"],
+      "height": userData["height"],
+      "weight": userData["weight"],
+      "disease": userData["disease"],
+      "goal": userData["goal"],
     });
 
     final response = await http.post(

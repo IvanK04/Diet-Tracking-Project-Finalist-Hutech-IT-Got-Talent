@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:math';
+import 'package:diet_tracking_project/services/firestore_service.dart';
 
 /// Data model for chat messages
 class ChatMessage {
@@ -26,6 +28,10 @@ class ChatBotView extends StatefulWidget {
 }
 
 class _ChatBotViewState extends State<ChatBotView> {
+  //firestore
+  final FirestoreService _firestoreService = FirestoreService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   // Constants
   static const Color _primaryColor = Color(0xFF4CAF50);
   static const Color _backgroundColor = Color(0xFF1A1A1A);
@@ -520,7 +526,24 @@ class _ChatBotViewState extends State<ChatBotView> {
       _showOptions = false;
     });
 
-    final botReply = await fetchGeminiReply((text));
+    final currentUser = _auth.currentUser;
+    if (currentUser == null) {
+      setState(() {
+        _messages.add(
+          ChatMessage(
+            text: "Bạn chưa đăng nhập!",
+            isUser: false,
+            timestamp: DateTime.now(),
+          ),
+        );
+      });
+      return;
+    }
+
+    final userDoc = await _firestoreService.getUserById(currentUser.uid);
+    final userData = userDoc.data() as Map<String, dynamic>? ?? {};
+
+    final botReply = await fetchGeminiReply(text, userData);
 
     if (mounted) {
       setState(() {
@@ -531,26 +554,33 @@ class _ChatBotViewState extends State<ChatBotView> {
     }
   }
 
-  Future<String> fetchGeminiReply(String prompt) async {
+  Future<String> fetchGeminiReply(
+    String prompt,
+    Map<String, dynamic> userData,
+  ) async {
     final url = Uri.parse('http://127.0.0.1:8000/chat');
+
+    final body = {
+      "age": userData["age"] ?? 18,
+      "height": userData["height"] ?? 170,
+      "weight": userData["weight"] ?? 65,
+      "disease": userData["disease"] ?? "",
+      "allergy": userData["allergy"] ?? "",
+      "goal": userData["goal"] ?? "",
+      "prompt": prompt,
+    };
+
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        "age": 18,
-        "height": 171,
-        "weight": 65,
-        "disease": "thừa cân",
-        "allergy": "sữa",
-        "goal": "giảm cân",
-        "prompt": prompt,
-      }),
+      body: jsonEncode(body),
     );
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       return data['reply'] ?? 'Không có phản hồi từ AI';
     } else {
-      return 'Lỗi kết nối API';
+      return 'Lỗi kết nối API: ${response.statusCode}';
     }
   }
 

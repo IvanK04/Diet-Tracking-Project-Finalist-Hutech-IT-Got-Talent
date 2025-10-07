@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
 from fastapi.middleware.cors import CORSMiddleware
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -14,10 +14,10 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 #---api_key---#
 
 #---mode_database_config---#
-pc = Pinecone(api_key=PINECONE_API_KEY)
+# pc = Pinecone(api_key=PINECONE_API_KEY)
 genai.configure(api_key=GEMINI_API_KEY)
 model_gemini = genai.GenerativeModel('gemini-2.5-flash-lite')
-model_llm = SentenceTransformer('all-MiniLM-L12-v2')
+# model_llm = SentenceTransformer('all-MiniLM-L12-v2')
 #---model_database_config---#
 
 #--FastAPI--#
@@ -33,67 +33,66 @@ app.add_middleware(
 #--FastAPI--#
 
 #--pinecone--#
-index_name = "nutrition-db"
-if index_name not in pc.list_indexes().names():
-    pc.create_index(
-        name=index_name,
-        dimension=384,
-        metric="cosine",
-        spec=ServerlessSpec(cloud="aws", region="us-east-1")
-    )
+# index_name = "nutrition-db"
+# if index_name not in pc.list_indexes().names():
+#     pc.create_index(
+#         name=index_name,
+#         dimension=384,
+#         metric="cosine",
+#         spec=ServerlessSpec(cloud="aws", region="us-east-1")
+#     )
 
-index = pc.Index(index_name)
+# index = pc.Index(index_name)
 
-def get_embedding(text: str):
-    return model_llm.encode(text, convert_to_numpy=True).tolist()
+# def get_embedding(text: str):
+#     return model_llm.encode(text, convert_to_numpy=True).tolist()
 
-recipes = [
-    {"id": "1", "title": "cơm gà kho gừng", "ingredients": ["cơm", "đùi gà", "gừng"], "how-to-cook": "Ướp gà với gừng, tỏi, hành, nước mắm, đường, tiêu rồi kho lửa nhỏ với nước xăm xắp đến khi gà mềm, nước sánh lại, ăn kèm cơm trắng.","tags": ["giảm cân", "mặn", "khó làm"], "calories" : 300, "protein": 25},
-    {"id": "2", "title": "cơm gà xối mỡ", "ingredients": ["cơm", "đùi gà", "tỏi", "dầu ăn"], "how-to-cook": "Luộc gà với gừng và hành cho thơm, vớt ra chiên giòn da, xối mỡ nóng lên gà cho bóng, nấu cơm bằng nước luộc gà với lá dứa, ăn kèm rau sống và nước mắm tỏi ớt.", "tags": ["tăng cân", "nhiều mỡ", "dễ làm"], "calories": 500, "protein": 25},
-    {"id": "3", "title": "cơm trắng với ức gà", "ingredients": ["cơm", "ức gà", "muối tiêu"], "how-to-cook": "Áp chảo ức gà với tiêu và muối cho vàng mặt, nấu cơm trắng bằng nước lọc hoặc nước luộc gà, ăn kèm rau luộc hoặc salad để cân bằng dinh dưỡng.", "tags": ["nhiều protein", "rẻ"], "calories" : 350, "protein": 31},
-    {"id": "4", "title": "nguyên con gà", "ingredients": ["nguyên con gà"], "how-to-cook": "Làm sạch gà, nhét gừng và hành vào bụng, luộc với nước vừa ngập đến khi chín mềm, vớt ra xé thịt, dùng nước luộc nấu cháo hoặc cơm, nêm vừa ăn và rắc hành tiêu khi dùng.", "tags": ["nhiều protein", "tăng cân"], "calories" : 2500, "protein": 300},
-]
-vectors = []
-for recipe in recipes:
-    vectors.append({
-        "id": recipe["id"],
-        "values": get_embedding(recipe["title"]),
-        "metadata": {
-            "title": recipe["title"],
-            "ingredients": recipe["ingredients"],
-            "how-to-cook": recipe["how-to-cook"],
-            "tags": recipe["tags"],
-            "calories": recipe["calories"],
-            "protein": recipe["protein"]
-        }
-    })
+# recipes = [
+#     {"id": "1", "title": "cơm gà kho gừng", "ingredients": ["cơm", "đùi gà", "gừng"], "how-to-cook": "Ướp gà với gừng, tỏi, hành, nước mắm, đường, tiêu rồi kho lửa nhỏ với nước xăm xắp đến khi gà mềm, nước sánh lại, ăn kèm cơm trắng.","tags": ["giảm cân", "mặn", "khó làm"], "calories" : 300, "protein": 25},
+#     {"id": "2", "title": "cơm gà xối mỡ", "ingredients": ["cơm", "đùi gà", "tỏi", "dầu ăn"], "how-to-cook": "Luộc gà với gừng và hành cho thơm, vớt ra chiên giòn da, xối mỡ nóng lên gà cho bóng, nấu cơm bằng nước luộc gà với lá dứa, ăn kèm rau sống và nước mắm tỏi ớt.", "tags": ["tăng cân", "nhiều mỡ", "dễ làm"], "calories": 500, "protein": 25},
+#     {"id": "3", "title": "cơm trắng với ức gà", "ingredients": ["cơm", "ức gà", "muối tiêu"], "how-to-cook": "Áp chảo ức gà với tiêu và muối cho vàng mặt, nấu cơm trắng bằng nước lọc hoặc nước luộc gà, ăn kèm rau luộc hoặc salad để cân bằng dinh dưỡng.", "tags": ["nhiều protein", "rẻ"], "calories" : 350, "protein": 31},
+#     {"id": "4", "title": "nguyên con gà", "ingredients": ["nguyên con gà"], "how-to-cook": "Làm sạch gà, nhét gừng và hành vào bụng, luộc với nước vừa ngập đến khi chín mềm, vớt ra xé thịt, dùng nước luộc nấu cháo hoặc cơm, nêm vừa ăn và rắc hành tiêu khi dùng.", "tags": ["nhiều protein", "tăng cân"], "calories" : 2500, "protein": 300},
+# ]
+# vectors = []
+# for recipe in recipes:
+#     vectors.append({
+#         "id": recipe["id"],
+#         "values": get_embedding(recipe["title"]),
+#         "metadata": {
+#             "title": recipe["title"],
+#             "ingredients": recipe["ingredients"],
+#             "how-to-cook": recipe["how-to-cook"],
+#             "tags": recipe["tags"],
+#             "calories": recipe["calories"],
+#             "protein": recipe["protein"]
+#         }
+#     })
 
-index.upsert(vectors=vectors)
+# index.upsert(vectors=vectors)
 
-def extract_filter(user_query):
-    filter = {}
-    if "ít calo" in user_query.lower() or "giảm cân" in user_query.lower():
-        filter["tags"] = {"$in": ["giảm cân"]}
-        filter["calories"] = {"$lte": 350}
-    if "tăng cân" in user_query.lower():
-        filter["tags"] = {"$in": ["tăng cân"]}
-        filter["calories"] = {"$gte": 300}
-    if "nhiều protein" in user_query.lower():
-        filter["tags"] = {"$in": ["nhiều protein"]}
-        filter["protein"] = {"$gte": 25}
-    return filter
+# def extract_filter(user_query):
+#     filter = {}
+#     if "ít calo" in user_query.lower() or "giảm cân" in user_query.lower():
+#         filter["tags"] = {"$in": ["giảm cân"]}
+#         filter["calories"] = {"$lte": 350}
+#     if "tăng cân" in user_query.lower():
+#         filter["tags"] = {"$in": ["tăng cân"]}
+#         filter["calories"] = {"$gte": 300}
+#     if "nhiều protein" in user_query.lower():
+#         filter["tags"] = {"$in": ["nhiều protein"]}
+#         filter["protein"] = {"$gte": 25}
+#     return filter
 
 #--pinecome--#
 
 class ChatRequest(BaseModel):
     age: int
-    height: int
-    weight: int
+    height: float
+    weight: float
     disease: str
     allergy: str
     goal: str
     prompt: str
-
 def build_system_prompt():
     return """
 Bạn là chuyên gia dinh dưỡng Việt Nam với giọng điệu như 1 đầu bếp chuyên nghiệp và cách nói chuyện đi thẳng vào vấn đề nhưng nhẹ nhàng.
@@ -119,16 +118,16 @@ FORBIDDEN_BY_ALLERGY = {
     "hải sản": ["tôm", "cua", "cá biển"],
 }
 ##rule-based##
-def violates_rules(disease, allergy, user_prompt):
-    if disease in FORBIDDEN_BY_DISEASE:
-        for item in FORBIDDEN_BY_DISEASE[disease]:
-            if item.lower() in user_prompt.lower():
-                return f"Không thể đề xuất món ăn có '{item}' vì bạn có bệnh {disease}"
+# def violates_rules(disease, allergy, user_prompt):
+#     if disease in FORBIDDEN_BY_DISEASE:
+#         for item in FORBIDDEN_BY_DISEASE[disease]:
+#             if item.lower() in user_prompt.lower():
+#                 return f"Không thể đề xuất món ăn có '{item}' vì bạn có bệnh {disease}"
     
-    if allergy in FORBIDDEN_BY_ALLERGY:
-        for item in FORBIDDEN_BY_ALLERGY[allergy]:
-            if item.lower() in user_prompt.lower():
-                return f"Không thể đề xuất món ăn có '{item}' vì bạn dị ứng với {allergy}"
+#     if allergy in FORBIDDEN_BY_ALLERGY:
+#         for item in FORBIDDEN_BY_ALLERGY[allergy]:
+#             if item.lower() in user_prompt.lower():
+#                 return f"Không thể đề xuất món ăn có '{item}' vì bạn dị ứng với {allergy}"
 ##rule-based##
             
 def filter_output(disease, allergy, model_reply):
@@ -144,7 +143,7 @@ def filter_output(disease, allergy, model_reply):
         
     return 1;
 
-def build_user_prompt(age, height, weight, disease, allergy, goal, user_prompt):
+def build_user_prompt(age, height, weight, disease, allergy, goal, prompt):
     return f"""
 Dựa trên thông tin sau:
 - Tuổi: {age}
@@ -154,32 +153,36 @@ Dựa trên thông tin sau:
 - Dị ứng: {allergy}
 - Mục tiêu: {goal}
 
-Người dùng hỏi: {user_prompt}
+Người dùng hỏi: {prompt}
 """
 
 @app.post("/chat")
 async def chatbox(request: ChatRequest):
-    violation = violates_rules(request.disease, request.allergy, request.prompt)
-    if violation:
-        return {"reply": violation}
+    # violation = violates_rules(request.disease, request.allergy, request.prompt)
+    # if violation:
+    #     return {"reply": violation}
+    # full_prompt = build_system_prompt() + "\n\n" + build_user_prompt(
+    #     request.age, request.height, request.weight,
+    #     request.disease, request.allergy, request.goal, request.prompt
+    # )
+
+    chat = model_gemini.start_chat(history=[])
+
     full_prompt = build_system_prompt() + "\n\n" + build_user_prompt(
         request.age, request.height, request.weight,
         request.disease, request.allergy, request.goal, request.prompt
     )
-
-    chat = model_gemini.start_chat(history=[])
-
     response = chat.send_message(full_prompt)
 
-    flag = filter_output(request.disease, request.allergy, response.text)
+    # flag = filter_output(request.disease, request.allergy, response.text)
 
-    while(flag == 0):
-        full_prompt = build_system_prompt() + "\n\n" + build_user_prompt(
-        request.age, request.height, request.weight,
-        request.disease, request.allergy, request.goal, request.prompt
-    ) + f"Không được đề xuất món ăn mà người dùng bị dị ứng với {request.allergy} hoặc ảnh hưởng xấu đến sức khỏe tại vì họ bị {request.disease}"
-        response = chat.send_message(full_prompt)
-        flag = filter_output(request.disease, request.allergy, response.text)
+    # while(flag == 0):
+    #     full_prompt = build_system_prompt() + "\n\n" + build_user_prompt(
+    #     request.age, request.height, request.weight,
+    #     request.disease, request.allergy, request.goal, request.prompt
+    # ) + f"Không được đề xuất món ăn mà người dùng bị dị ứng với {request.allergy} hoặc ảnh hưởng xấu đến sức khỏe tại vì họ bị {request.disease}"
+    #     response = chat.send_message(full_prompt)
+    #     flag = filter_output(request.disease, request.allergy, response.text)
 
     return {"reply": response.text}
 

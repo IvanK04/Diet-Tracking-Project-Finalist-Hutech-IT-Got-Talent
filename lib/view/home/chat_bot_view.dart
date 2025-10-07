@@ -560,13 +560,18 @@ class _ChatBotViewState extends State<ChatBotView> {
   ) async {
     final url = Uri.parse('http://127.0.0.1:8000/chat');
 
+    final bodyInfo = userData["bodyInfo"] as Map<String, dynamic>? ?? {};
+    final diseaseList = bodyInfo["medicalConditions"] as List<dynamic>? ?? [];
+    final allergyList = bodyInfo["allergies"] as List<dynamic>? ?? [];
+    //this shjt makes no fuking sense at all
+    //dont touch this codde, i beg
     final body = {
       "age": userData["age"] ?? 18,
-      "height": userData["height"] ?? 170,
-      "weight": userData["weight"] ?? 65,
-      "disease": userData["disease"] ?? "",
-      "allergy": userData["allergy"] ?? "",
-      "goal": userData["goal"] ?? "",
+      "height": bodyInfo["heightCm"] ?? 170.toDouble(),
+      "weight": bodyInfo["weightKg"] ?? 65.toDouble(),
+      "disease": diseaseList.join(', '),
+      "allergy": allergyList.join(', '),
+      "goal": userData["goalWeightKg"] ?? "",
       "prompt": prompt,
     };
 

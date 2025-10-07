@@ -1,1 +1,1 @@
-filter["calories"] = {"$lt": 350}
+filter=filters

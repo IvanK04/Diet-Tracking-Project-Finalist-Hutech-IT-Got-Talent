@@ -11,7 +11,7 @@ from pydantic import BaseModel
 load_dotenv()
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-#---api_key---#
+#---api_key---# 
 
 #---mode_database_config---#
 # pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -103,7 +103,16 @@ Luật bắt buộc:
 - Nếu người dùng đề xuất món ăn liên quan đến bệnh lí hoặc dị ứng của họ thì phải ngăn lại và giải thích lý do.
 - Món ăn phải thực tế (tìm được ở tiệm hoặc tự làm) và phù hợp với bối cảnh Sài Gòn.
 - Nếu người dùng yêu cầu công thức thì đưa công thức chi tiết.
-- Giải thích ngắn lý do lựa chọn từng món ăn kèm theo thông tin dinh dưỡng của món ăn đó như calo, protein, carb và fat.
+- Giải thích ngắn lý do lựa chọn từng món ăn kèm theo thông tin dinh dưỡng của món ăn đó như calo, protein, carb và fat theo khung sau:
+⭐
+Món ăn đề xuất: (ghi ra tên của món ăn)
+**Lý do chọn: (nêu ra lí do chọn món ăn)**
+**Thông tin dinh dưỡng**
+-Calo: (ghi ra lượng calo của món ăn)
+-Protein: (ghi ra lượng protein của món ăn)
+-Carb: (ghi ra lượng carb của món ăn)
+-Fat: (ghi ra lượng fat của món ăn)
+⭐
 """
 
 ##rule-based##
@@ -166,7 +175,8 @@ async def chatbox(request: ChatRequest):
     #     request.disease, request.allergy, request.goal, request.prompt
     # )
 
-    chat = model_gemini.start_chat(history=[])
+    history=[]#<--------------------
+    chat = model_gemini.start_chat(history = history)
 
     full_prompt = build_system_prompt() + "\n\n" + build_user_prompt(
         request.age, request.height, request.weight,

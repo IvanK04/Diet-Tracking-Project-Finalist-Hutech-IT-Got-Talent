@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service để quản lý dữ liệu tạm thời của người dùng guest
@@ -110,5 +111,64 @@ class LocalStorageService {
     await prefs.remove(_keyAge);
     await prefs.remove(_keyGender);
     await prefs.remove(_keyLanguage);
+  }
+
+  /// Generic method to save any data with a key
+  Future<void> saveData(String key, dynamic data) async {
+    final prefs = await _prefs;
+
+    if (data is String) {
+      await prefs.setString(key, data);
+    } else if (data is int) {
+      await prefs.setInt(key, data);
+    } else if (data is double) {
+      await prefs.setDouble(key, data);
+    } else if (data is bool) {
+      await prefs.setBool(key, data);
+    } else if (data is List<String>) {
+      await prefs.setStringList(key, data);
+    } else if (data is List) {
+      // If it's a list of maps or complex items, store as JSON string
+      try {
+        await prefs.setString(key, jsonEncode(data));
+      } catch (_) {
+        // Fallback to toString if encoding fails
+        await prefs.setString(key, data.toString());
+      }
+    } else if (data is Map) {
+      // Store maps as JSON string
+      await prefs.setString(key, jsonEncode(data));
+    } else {
+      // For other complex objects, convert to JSON string when possible
+      try {
+        await prefs.setString(key, jsonEncode(data));
+      } catch (_) {
+        await prefs.setString(key, data.toString());
+      }
+    }
+  }
+
+  /// Generic method to get any data by key
+  Future<dynamic> getData(String key) async {
+    final prefs = await _prefs;
+    final value = prefs.get(key);
+    if (value is String) {
+      final trimmed = value.trim();
+      if ((trimmed.startsWith('[') && trimmed.endsWith(']')) ||
+          (trimmed.startsWith('{') && trimmed.endsWith('}'))) {
+        try {
+          return jsonDecode(trimmed);
+        } catch (_) {
+          // Not a valid JSON, return raw string
+        }
+      }
+    }
+    return value;
+  }
+
+  /// Remove data by key
+  Future<void> removeData(String key) async {
+    final prefs = await _prefs;
+    await prefs.remove(key);
   }
 }

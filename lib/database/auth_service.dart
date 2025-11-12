@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/user.dart' as app_user;
 import '../model/body_info_model.dart';
+import '../model/nutrition_calculation_model.dart';
 import 'exceptions.dart';
 import 'local_storage_service.dart';
 
@@ -94,7 +95,7 @@ class AuthService {
       final LocalStorageService localStorage = LocalStorageService();
       await localStorage.clearGuestData();
     } catch (e) {
-      print('⚠️ Error clearing guest data: $e');
+      // Log error if needed, for example: FirebaseCrashlytics.instance.recordError(e, stack);
     }
   }
 
@@ -121,6 +122,84 @@ class AuthService {
       await _firestore.collection(_usersCollection).doc(uid).update(data);
     } catch (e) {
       throw FirestoreException('Không thể cập nhật thông tin user: $e');
+    }
+  }
+
+  /// Lưu kế hoạch dinh dưỡng của người dùng
+  Future<void> saveNutritionPlan(
+    String uid,
+    Map<String, dynamic> planData,
+  ) async {
+    try {
+      await _firestore
+          .collection(_usersCollection)
+          .doc(uid)
+          .collection('nutrition_plans')
+          .doc('active_plan') // Giả sử mỗi user chỉ có 1 plan active
+          .set(planData, SetOptions(merge: true));
+    } catch (e) {
+      throw FirestoreException('Không thể lưu kế hoạch dinh dưỡng: $e');
+    }
+  }
+
+  /// Lấy kế hoạch dinh dưỡng đang hoạt động của người dùng
+  Future<Map<String, dynamic>?> getActiveNutritionPlan(String uid) async {
+    try {
+      final doc = await _firestore
+          .collection(_usersCollection)
+          .doc(uid)
+          .collection('nutrition_plans')
+          .doc('active_plan')
+          .get();
+
+      if (doc.exists) {
+        return doc.data();
+      }
+      return null;
+    } catch (e) {
+      throw FirestoreException('Không thể lấy kế hoạch dinh dưỡng: $e');
+    }
+  }
+
+  /// Lấy và chuyển đổi kế hoạch dinh dưỡng cho bot
+  Future<NutritionCalculation?> getNutritionPlanForCurrentUser() async {
+    final user = currentUser;
+    if (user == null) {
+      return null; // Không có người dùng, không có kế hoạch
+    }
+
+    final planData = await getActiveNutritionPlan(user.uid);
+    if (planData == null) {
+      return null; // Người dùng chưa có kế hoạch
+    }
+
+    try {
+      // Chuyển đổi Map thành đối tượng NutritionCalculation
+      final nutritionPlan = NutritionCalculation.fromJson(planData);
+      return nutritionPlan;
+    } catch (e) {
+      // Lỗi nếu cấu trúc dữ liệu trên Firestore không khớp
+      throw Exception('Lỗi khi chuyển đổi dữ liệu kế hoạch dinh dưỡng: $e');
+    }
+  }
+
+  /// Lấy các bản ghi thực phẩm gần đây của người dùng
+  Future<List<Map<String, dynamic>>> getRecentFoodRecords(
+    String uid, {
+    int limit = 5,
+  }) async {
+    try {
+      final snapshot = await _firestore
+          .collection(_usersCollection)
+          .doc(uid)
+          .collection('food_records')
+          .orderBy('date', descending: true)
+          .limit(limit)
+          .get();
+
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      throw FirestoreException('Không thể lấy lịch sử ăn uống: $e');
     }
   }
 
@@ -246,10 +325,100 @@ class AuthService {
 
   /// Gửi email reset password
   Future<void> sendPasswordResetEmail(String email) async {
+    final String sanitizedEmail = email.trim();
+    if (sanitizedEmail.isEmpty) {
+      throw const AuthException('Email không hợp lệ.', 'invalid-email');
+    }
+
+    String emailForReset = sanitizedEmail;
+
     try {
-      await _auth.sendPasswordResetEmail(email: email);
+      List<String> signInMethods =
+          await _auth.fetchSignInMethodsForEmail(emailForReset);
+
+      if (signInMethods.isEmpty) {
+        final String lowerCaseEmail = sanitizedEmail.toLowerCase();
+        if (lowerCaseEmail != sanitizedEmail) {
+          signInMethods =
+              await _auth.fetchSignInMethodsForEmail(lowerCaseEmail);
+          if (signInMethods.isNotEmpty) {
+            emailForReset = lowerCaseEmail;
+          }
+        }
+
+        if (signInMethods.isEmpty) {
+          final bool exists =
+              await _doesUserExistByEmail(emailForReset);
+          if (!exists && lowerCaseEmail != sanitizedEmail) {
+            final bool existsLower =
+                await _doesUserExistByEmail(lowerCaseEmail);
+            if (existsLower) {
+              emailForReset = lowerCaseEmail;
+            } else {
+              throw const AuthException(
+                'Email không tồn tại trong hệ thống.',
+                'user-not-found',
+              );
+            }
+          } else if (!exists) {
+            throw const AuthException(
+              'Email không tồn tại trong hệ thống.',
+              'user-not-found',
+            );
+          }
+        }
+      }
+
+      if (signInMethods.isNotEmpty &&
+          !signInMethods.contains('password')) {
+        final String providers =
+            signInMethods.map(_providerDisplayName).join(', ');
+        throw AuthException(
+          'Tài khoản này đang đăng nhập bằng: $providers. Không thể đặt lại mật khẩu bằng email.',
+          'requires-different-provider',
+        );
+      }
+
+      await _auth.sendPasswordResetEmail(email: emailForReset);
     } on FirebaseAuthException catch (e) {
       throw AuthException(_handleAuthException(e), e.code);
+    }
+  }
+
+  Future<bool> _doesUserExistByEmail(String email) async {
+    final String lowerCaseEmail = email.trim().toLowerCase();
+
+    final QuerySnapshot<Map<String, dynamic>> normalizedSnapshot = await _firestore
+        .collection(_usersCollection)
+        .where('emailLowercase', isEqualTo: lowerCaseEmail)
+        .limit(1)
+        .get();
+
+    if (normalizedSnapshot.docs.isNotEmpty) {
+      return true;
+    }
+
+    final QuerySnapshot<Map<String, dynamic>> legacySnapshot = await _firestore
+        .collection(_usersCollection)
+        .where('email', isEqualTo: email.trim())
+        .limit(1)
+        .get();
+
+    return legacySnapshot.docs.isNotEmpty;
+  }
+
+  String _providerDisplayName(String providerId) {
+    switch (providerId) {
+      case 'password':
+        return 'Email & Mật khẩu';
+      case 'google.com':
+        return 'Google';
+      case 'facebook.com':
+        return 'Facebook';
+      case 'apple.com':
+        return 'Apple';
+      default:
+        return providerId;
     }
   }
 

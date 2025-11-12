@@ -9,12 +9,11 @@ class GuestSyncService {
   Future<void> syncGuestToUser(String uid) async {
     final hasData = await _local.hasGuestData();
     if (!hasData) {
-      print('🔍 GuestSyncService: No guest data found');
       return;
     }
 
     final data = await _local.readGuestData();
-    print('🔍 GuestSyncService: Syncing guest data = $data');
+
     final Map<String, dynamic> update = {};
 
     // Tạo BodyInfoModel từ dữ liệu guest
@@ -67,14 +66,29 @@ class GuestSyncService {
       };
     }
 
+    // Đồng bộ activityLevel nếu có
+    final String? activityLevel = data['activityLevel'] as String?;
+    if (activityLevel != null && activityLevel.isNotEmpty) {
+      update['bodyInfo'] = {
+        ...(update['bodyInfo'] as Map<String, dynamic>? ?? bodyInfo.toJson()),
+        'activityLevel': activityLevel,
+      };
+    }
+
     if (update.isEmpty) {
-      print('🔍 GuestSyncService: No data to sync');
       await _local.clearGuestData();
       return;
     }
 
-    print('🔍 GuestSyncService: Updating user with data = $update');
     await _auth.updateUserData(uid, update);
+
+    // Đồng bộ kế hoạch dinh dưỡng nếu có
+    final nutritionPlan =
+        await _local.getData('nutrition_plan') as Map<String, dynamic>?;
+    if (nutritionPlan != null) {
+      await _auth.saveNutritionPlan(uid, nutritionPlan);
+    }
+
     await _local.clearGuestData();
   }
 }

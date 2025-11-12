@@ -62,8 +62,7 @@ import 'app_localizations_vi.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,18 +82,17 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('vi'),
+    Locale('vi')
   ];
 
   /// No description provided for @defineYourGoal.
@@ -284,6 +281,24 @@ abstract class AppLocalizations {
   /// **'Why do you want to lose weight?'**
   String get whyDoYouWantToLoseWeight;
 
+  /// No description provided for @whyDoYouWantToGainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you want to gain weight?'**
+  String get whyDoYouWantToGainWeight;
+
+  /// No description provided for @whyDoYouWantToMaintainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you want to maintain weight?'**
+  String get whyDoYouWantToMaintainWeight;
+
+  /// No description provided for @whyDoYouWantToBuildMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you want to build muscle?'**
+  String get whyDoYouWantToBuildMuscle;
+
   /// No description provided for @whyDidYouChooseThisGoal.
   ///
   /// In en, this message translates to:
@@ -295,6 +310,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Improve health'**
   String get improveHealth;
+
+  /// No description provided for @feelMoreConfident.
+  ///
+  /// In en, this message translates to:
+  /// **'Feel more confident'**
+  String get feelMoreConfident;
 
   /// No description provided for @increaseConfidence.
   ///
@@ -331,6 +352,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Improve physical fitness'**
   String get improvePhysicalFitness;
+
+  /// No description provided for @improveAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve appearance'**
+  String get improveAppearance;
+
+  /// No description provided for @doctorRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor\'s recommendation'**
+  String get doctorRecommendation;
+
+  /// No description provided for @healthyLifestyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy lifestyle'**
+  String get healthyLifestyle;
+
+  /// No description provided for @buildStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Build strength'**
+  String get buildStrength;
+
+  /// No description provided for @improveAthletics.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve athletics'**
+  String get improveAthletics;
+
+  /// No description provided for @lookMoreMuscular.
+  ///
+  /// In en, this message translates to:
+  /// **'Look more muscular'**
+  String get lookMoreMuscular;
+
+  /// No description provided for @recoverFromIllness.
+  ///
+  /// In en, this message translates to:
+  /// **'Recover from illness'**
+  String get recoverFromIllness;
+
+  /// No description provided for @increaseAppetite.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase appetite'**
+  String get increaseAppetite;
+
+  /// No description provided for @stayHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay healthy'**
+  String get stayHealthy;
+
+  /// No description provided for @preventWeightGain.
+  ///
+  /// In en, this message translates to:
+  /// **'Prevent weight gain'**
+  String get preventWeightGain;
+
+  /// No description provided for @balancedLifestyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced lifestyle'**
+  String get balancedLifestyle;
+
+  /// No description provided for @maintainFitness.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain fitness'**
+  String get maintainFitness;
+
+  /// No description provided for @getStronger.
+  ///
+  /// In en, this message translates to:
+  /// **'Get stronger'**
+  String get getStronger;
+
+  /// No description provided for @improveBodyComposition.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve body composition'**
+  String get improveBodyComposition;
+
+  /// No description provided for @athleticPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Athletic performance'**
+  String get athleticPerformance;
+
+  /// No description provided for @lookToned.
+  ///
+  /// In en, this message translates to:
+  /// **'Look toned'**
+  String get lookToned;
+
+  /// No description provided for @boostMetabolism.
+  ///
+  /// In en, this message translates to:
+  /// **'Boost metabolism'**
+  String get boostMetabolism;
 
   /// No description provided for @other.
   ///
@@ -539,13 +662,13 @@ abstract class AppLocalizations {
   /// No description provided for @bmiCurrentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Your current BMI'**
+  /// **'Current BMI'**
   String get bmiCurrentTitle;
 
   /// No description provided for @bmiEnterHeightToCalculate.
   ///
   /// In en, this message translates to:
-  /// **'Enter height to calculate BMI.'**
+  /// **'Please enter height to calculate BMI.'**
   String get bmiEnterHeightToCalculate;
 
   /// No description provided for @bmiUnderweight.
@@ -569,12 +692,443 @@ abstract class AppLocalizations {
   /// No description provided for @bmiObese.
   ///
   /// In en, this message translates to:
-  /// **'You should lose weight to protect your health.'**
+  /// **'You need to lose weight seriously to protect your health.'**
   String get bmiObese;
+
+  /// No description provided for @activityLevelSedentaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sedentary'**
+  String get activityLevelSedentaryTitle;
+
+  /// No description provided for @activityLevelSedentarySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'(Mostly sitting, little or no exercise)'**
+  String get activityLevelSedentarySubtitle;
+
+  /// No description provided for @activityLevelLightlyActiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lightly active'**
+  String get activityLevelLightlyActiveTitle;
+
+  /// No description provided for @activityLevelLightlyActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'(Exercise/sports 1-3 days/week)'**
+  String get activityLevelLightlyActiveSubtitle;
+
+  /// No description provided for @activityLevelModeratelyActiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderately active'**
+  String get activityLevelModeratelyActiveTitle;
+
+  /// No description provided for @activityLevelModeratelyActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'(Exercise/sports 3-5 days/week)'**
+  String get activityLevelModeratelyActiveSubtitle;
+
+  /// No description provided for @activityLevelVeryActiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Very active'**
+  String get activityLevelVeryActiveTitle;
+
+  /// No description provided for @activityLevelVeryActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'(Exercise/sports 6-7 days/week)'**
+  String get activityLevelVeryActiveSubtitle;
+
+  /// No description provided for @activityLevelExtraActiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra active'**
+  String get activityLevelExtraActiveTitle;
+
+  /// No description provided for @activityLevelExtraActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'(Exercise twice a day, manual labor)'**
+  String get activityLevelExtraActiveSubtitle;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginTitle;
+
+  /// No description provided for @emailOrPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or Phone Number'**
+  String get emailOrPhone;
+
+  /// No description provided for @emailOrPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Email or Phone Number'**
+  String get emailOrPhoneHint;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'••••••••'**
+  String get passwordHint;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPassword;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginButton;
+
+  /// No description provided for @orLoginWith.
+  ///
+  /// In en, this message translates to:
+  /// **'OR login with'**
+  String get orLoginWith;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t have an account'**
+  String get dontHaveAccount;
+
+  /// No description provided for @pleaseEnterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter email'**
+  String get pleaseEnterEmail;
+
+  /// No description provided for @pleaseEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter password'**
+  String get pleaseEnterPassword;
+
+  /// No description provided for @loginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful!'**
+  String get loginSuccess;
+
+  /// No description provided for @loginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please check your information.'**
+  String get loginFailed;
+
+  /// No description provided for @invalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or password is incorrect. Please try again.'**
+  String get invalidCredentials;
+
+  /// No description provided for @googleLoginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Google login successful!'**
+  String get googleLoginSuccess;
+
+  /// No description provided for @googleLoginCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google login cancelled.'**
+  String get googleLoginCancelled;
+
+  /// No description provided for @googleLoginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Google login failed. Please try again.'**
+  String get googleLoginFailed;
+
+  /// No description provided for @passwordResetEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent. Please check your inbox.'**
+  String get passwordResetEmailSent;
+
+  /// No description provided for @pleaseEnterEmailFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter email first.'**
+  String get pleaseEnterEmailFirst;
+
+  /// No description provided for @passwordResetFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to send password reset email. Please check your email and try again.'**
+  String get passwordResetFailed;
+
+  /// No description provided for @signupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get signupTitle;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// No description provided for @fullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get fullNameHint;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @phoneNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get phoneNumberHint;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'example@gmail.com'**
+  String get emailHint;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @confirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'••••••••'**
+  String get confirmPasswordHint;
+
+  /// No description provided for @agreeWith.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree with '**
+  String get agreeWith;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get and;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @signupButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signupButton;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @loginLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginLink;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and we\'ll send you instructions to reset your password.'**
+  String get forgotPasswordInstruction;
+
+  /// No description provided for @sendResetEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Email'**
+  String get sendResetEmail;
+
+  /// No description provided for @backToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login'**
+  String get backToLogin;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email.'**
+  String get invalidEmail;
+
+  /// No description provided for @pleaseEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter email.'**
+  String get pleaseEnterValidEmail;
+
+  /// No description provided for @emailNotExist.
+  ///
+  /// In en, this message translates to:
+  /// **'Email does not exist in the system.'**
+  String get emailNotExist;
+
+  /// No description provided for @accountUsesProviderMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This account uses: {provider}. Cannot reset password via email.'**
+  String accountUsesProviderMessage(Object provider);
+
+  /// No description provided for @unableToSendResetEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to send password reset email. Please try again later.'**
+  String get unableToSendResetEmail;
+
+  /// No description provided for @userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No account found with this email.'**
+  String get userNotFound;
+
+  /// No description provided for @tooManyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please try again later.'**
+  String get tooManyRequests;
+
+  /// No description provided for @networkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection and try again.'**
+  String get networkError;
+
+  /// No description provided for @pleaseEnterFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your full name.'**
+  String get pleaseEnterFullName;
+
+  /// No description provided for @pleaseEnterPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter phone number.'**
+  String get pleaseEnterPhoneNumber;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters.'**
+  String get passwordMinLength;
+
+  /// No description provided for @pleaseConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm password.'**
+  String get pleaseConfirmPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @pleaseAgreeToTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Please agree to the terms of service.'**
+  String get pleaseAgreeToTerms;
+
+  /// No description provided for @emailAlreadyInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is already in use. Please use a different email.'**
+  String get emailAlreadyInUse;
+
+  /// No description provided for @weakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak. Please use a stronger password.'**
+  String get weakPassword;
+
+  /// No description provided for @registrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get registrationFailed;
+
+  /// No description provided for @registrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful!'**
+  String get registrationSuccess;
+
+  /// No description provided for @dietAssistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Diet Assistant'**
+  String get dietAssistant;
+
+  /// No description provided for @recordMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Record Meal'**
+  String get recordMeal;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -583,26 +1137,25 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'vi'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'vi'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'vi':
-      return AppLocalizationsVi();
+    case 'en': return AppLocalizationsEn();
+    case 'vi': return AppLocalizationsVi();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

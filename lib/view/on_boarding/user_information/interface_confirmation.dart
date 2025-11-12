@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../login/signup_screen.dart';
+import '../../identities/register/register_main_screen.dart';
 import '../../../database/local_storage_service.dart';
 import '../../../database/auth_service.dart';
 import '../../home/home_view.dart';
@@ -61,7 +61,6 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
   /// Chuyển đến màn hình đăng ký với dữ liệu onboarding đã có
   Future<void> _navigateToSignup() async {
     final guestData = await _localStorage.readGuestData();
-    print('🔍 Interface confirmation: Guest data = $guestData');
 
     if (!mounted) return;
 
@@ -135,7 +134,7 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: const Color.fromRGBO(0, 0, 0, 0.06),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -160,7 +159,7 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
             style: GoogleFonts.inter(
               fontSize: 18,
               height: 1.6,
-              color: _titleColor.withOpacity(0.85),
+              color: _titleColor.withAlpha((255 * 0.85).round()),
             ),
           ),
         ],
@@ -201,7 +200,7 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
             style: GoogleFonts.inter(
               fontSize: 18,
               height: 1.6,
-              color: _titleColor.withOpacity(0.9),
+              color: _titleColor.withAlpha((255 * 0.9).round()),
             ),
           ),
         ),
@@ -245,7 +244,10 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
           elevation: 6,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
-            side: BorderSide(color: _accentColor.withOpacity(0.2), width: 1),
+            side: BorderSide(
+              color: _accentColor.withAlpha((255 * 0.2).round()),
+              width: 1,
+            ),
           ),
         ),
         onPressed: () => _navigateAsGuest(context),
@@ -324,7 +326,7 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
           } catch (e) {
             if (!mounted) return;
             Navigator.of(context).pop(); // Đóng loading dialog
-            print('🔍 InterfaceConfirmation: Error in continue button: $e');
+
             // Vẫn chuyển trang ngay cả khi có lỗi
             Navigator.pushAndRemoveUntil(
               context,
@@ -356,12 +358,15 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: const Color.fromRGBO(0, 0, 0, 0.08),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
           ],
-          border: Border.all(color: Colors.black.withOpacity(0.08), width: 1),
+          border: Border.all(
+            color: const Color.fromRGBO(0, 0, 0, 0.08),
+            width: 1,
+          ),
         ),
         child: Material(
           color: Colors.transparent,
@@ -380,20 +385,15 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        print('🔍 InterfaceConfirmation: No current user found');
         return;
       }
 
       final hasData = await _localStorage.hasGuestData();
       if (!hasData) {
-        print('🔍 InterfaceConfirmation: No guest data found');
         return;
       }
 
       final data = await _localStorage.readGuestData();
-      print(
-        '🔍 InterfaceConfirmation: Saving onboarding data to Firestore = $data',
-      );
 
       final Map<String, dynamic> update = {};
 
@@ -405,6 +405,8 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
         if (data['medicalConditions'] != null)
           'medicalConditions': data['medicalConditions'],
         if (data['allergies'] != null) 'allergies': data['allergies'],
+        if (data['activityLevel'] != null)
+          'activityLevel': data['activityLevel'],
       };
 
       if (bodyInfo.isNotEmpty) {
@@ -421,19 +423,22 @@ class _InterfaceConfirmationState extends State<InterfaceConfirmation> {
         update['goal'] = data['goal'];
       }
 
+      // Thêm targetDays vào dữ liệu cập nhật
+      final targetDays = await _localStorage.getData('targetDays') as int?;
+      if (targetDays != null) {
+        update['targetDays'] = targetDays;
+      }
+
       if (update.isEmpty) {
-        print('🔍 InterfaceConfirmation: No data to save');
         return;
       }
 
-      print('🔍 InterfaceConfirmation: Updating user with data = $update');
       await _authService.updateUserData(user.uid, update);
 
       // Xóa dữ liệu guest sau khi lưu thành công
       await _localStorage.clearGuestData();
-      print('🔍 InterfaceConfirmation: Onboarding data saved successfully');
     } catch (e) {
-      print('🔍 InterfaceConfirmation: Error saving onboarding data: $e');
+      // Consider logging the error to a service
     }
   }
 }

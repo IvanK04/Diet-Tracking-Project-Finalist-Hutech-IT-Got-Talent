@@ -12,8 +12,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get defineYourGoal => 'Xác định mục tiêu của bạn';
 
   @override
-  String get weWillBuild =>
-      'Chúng tôi sẽ xây dựng cho bạn một kế hoạch tùy chỉnh nhằm giúp bạn duy trì động lực và đạt được mục tiêu của mình.';
+  String get weWillBuild => 'Chúng tôi sẽ xây dựng cho bạn một kế hoạch tùy chỉnh nhằm giúp bạn duy trì động lực và đạt được mục tiêu của mình.';
 
   @override
   String get getStartedNow => 'Bắt đầu ngay!';
@@ -22,12 +21,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get appTitle => 'Theo dõi chế độ ăn';
 
   @override
-  String get startTrackingToday =>
-      'Bắt đầu theo dõi\nchế độ ăn kiêng của bạn hôm nay!';
+  String get startTrackingToday => 'Bắt đầu theo dõi\nchế độ ăn kiêng của bạn hôm nay!';
 
   @override
-  String get trackDailyDiet =>
-      'Theo dõi chế độ ăn kiêng hàng ngày với\nkế hoạch bữa ăn cá nhân hóa và\nkhuyến nghị thông minh.';
+  String get trackDailyDiet => 'Theo dõi chế độ ăn kiêng hàng ngày với\nkế hoạch bữa ăn cá nhân hóa và\nkhuyến nghị thông minh.';
 
   @override
   String get getStarted => 'Bắt đầu ngay';
@@ -42,8 +39,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tellUsAboutYourself => 'Hãy cho chúng tôi biết về bản thân bạn';
 
   @override
-  String get weWillCreatePersonalizedPlan =>
-      'Chúng tôi sẽ tạo kế hoạch cá nhân hóa cho bạn dựa trên các chi tiết như tuổi và cân nặng hiện tại của bạn.';
+  String get weWillCreatePersonalizedPlan => 'Chúng tôi sẽ tạo kế hoạch cá nhân hóa cho bạn dựa trên các chi tiết như tuổi và cân nặng hiện tại của bạn.';
 
   @override
   String get start => 'Bắt đầu';
@@ -52,8 +48,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get gender => 'Giới tính';
 
   @override
-  String get weWillUseThisInfo =>
-      'Chúng tôi sẽ sử dụng thông tin này để tính toán nhu cầu năng lượng hằng ngày của bạn.';
+  String get weWillUseThisInfo => 'Chúng tôi sẽ sử dụng thông tin này để tính toán nhu cầu năng lượng hằng ngày của bạn.';
 
   @override
   String get male => 'Nam';
@@ -107,10 +102,22 @@ class AppLocalizationsVi extends AppLocalizations {
   String get whyDoYouWantToLoseWeight => 'Tại sao bạn muốn giảm cân?';
 
   @override
+  String get whyDoYouWantToGainWeight => 'Tại sao bạn muốn tăng cân?';
+
+  @override
+  String get whyDoYouWantToMaintainWeight => 'Tại sao bạn muốn duy trì cân nặng?';
+
+  @override
+  String get whyDoYouWantToBuildMuscle => 'Tại sao bạn muốn tăng cơ?';
+
+  @override
   String get whyDidYouChooseThisGoal => 'Tại sao bạn chọn mục tiêu này?';
 
   @override
   String get improveHealth => 'Cải thiện sức khỏe';
+
+  @override
+  String get feelMoreConfident => 'Cảm thấy tự tin hơn';
 
   @override
   String get increaseConfidence => 'Tăng tự tin';
@@ -129,6 +136,57 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get improvePhysicalFitness => 'Cải thiện thể lực';
+
+  @override
+  String get improveAppearance => 'Cải thiện ngoại hình';
+
+  @override
+  String get doctorRecommendation => 'Theo khuyến nghị của bác sĩ';
+
+  @override
+  String get healthyLifestyle => 'Lối sống lành mạnh';
+
+  @override
+  String get buildStrength => 'Tăng sức mạnh';
+
+  @override
+  String get improveAthletics => 'Cải thiện thể thao';
+
+  @override
+  String get lookMoreMuscular => 'Trông cơ bắp hơn';
+
+  @override
+  String get recoverFromIllness => 'Hồi phục sau bệnh';
+
+  @override
+  String get increaseAppetite => 'Tăng cảm giác thèm ăn';
+
+  @override
+  String get stayHealthy => 'Giữ sức khỏe';
+
+  @override
+  String get preventWeightGain => 'Ngăn tăng cân';
+
+  @override
+  String get balancedLifestyle => 'Lối sống cân bằng';
+
+  @override
+  String get maintainFitness => 'Duy trì thể lực';
+
+  @override
+  String get getStronger => 'Trở nên mạnh mẽ hơn';
+
+  @override
+  String get improveBodyComposition => 'Cải thiện thành phần cơ thể';
+
+  @override
+  String get athleticPerformance => 'Hiệu suất thể thao';
+
+  @override
+  String get lookToned => 'Trông săn chắc';
+
+  @override
+  String get boostMetabolism => 'Tăng cường trao đổi chất';
 
   @override
   String get other => 'Khác';
@@ -161,12 +219,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get optimizeMealCosts => 'Muốn tối ưu chi phí bữa ăn';
 
   @override
-  String get weBringYouBestResults =>
-      'Chúng tôi mang đến cho bạn hiệu quả tốt nhất';
+  String get weBringYouBestResults => 'Chúng tôi mang đến cho bạn hiệu quả tốt nhất';
 
   @override
-  String get personalizedPathwayBasedOnGoals =>
-      'Lộ trình cá nhân hóa dựa trên mục tiêu và thói quen của bạn. Bắt đầu ngay để thấy sự thay đổi bền vững.';
+  String get personalizedPathwayBasedOnGoals => 'Lộ trình cá nhân hóa dựa trên mục tiêu và thói quen của bạn. Bắt đầu ngay để thấy sự thay đổi bền vững.';
 
   @override
   String get height => 'Chiều cao';
@@ -193,33 +249,28 @@ class AppLocalizationsVi extends AppLocalizations {
   String get youCanDoIt => 'Bạn sẽ làm được!';
 
   @override
-  String get maintainCurrentWeightIsHealthy =>
-      'Duy trì cân nặng hiện tại là một lựa chọn lành mạnh';
+  String get maintainCurrentWeightIsHealthy => 'Duy trì cân nặng hiện tại là một lựa chọn lành mạnh';
 
   @override
   String get loseWeightGoalPrefix => 'Giảm';
 
   @override
-  String get loseWeightGoalSuffix =>
-      'kg là mục tiêu thách thức nhưng hoàn toàn khả thi';
+  String get loseWeightGoalSuffix => 'kg là mục tiêu thách thức nhưng hoàn toàn khả thi';
 
   @override
   String get gainWeightGoalPrefix => 'Tăng';
 
   @override
-  String get gainWeightGoalSuffix =>
-      'kg sẽ giúp bạn đạt trạng thái cân bằng tốt hơn';
+  String get gainWeightGoalSuffix => 'kg sẽ giúp bạn đạt trạng thái cân bằng tốt hơn';
 
   @override
-  String get setClearGoalsMessage =>
-      'Đặt mục tiêu rõ ràng giúp bạn tiến gần hơn mỗi ngày';
+  String get setClearGoalsMessage => 'Đặt mục tiêu rõ ràng giúp bạn tiến gần hơn mỗi ngày';
 
   @override
   String get goalWeightPrefix => 'Cân nặng mục tiêu';
 
   @override
-  String get userProgressMessage =>
-      'người dùng ghi nhận tiến bộ rõ rệt sau 4 tuần theo kế hoạch';
+  String get userProgressMessage => 'người dùng ghi nhận tiến bộ rõ rệt sau 4 tuần theo kế hoạch';
 
   @override
   String get continueAsGuest => 'Tiếp tục với Guest';
@@ -240,7 +291,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get languageChangedToEnglish => 'Đã chuyển sang tiếng Anh';
 
   @override
-  String get bmiCurrentTitle => 'BMI hiện tại của bạn';
+  String get bmiCurrentTitle => 'Chỉ số BMI hiện tại';
 
   @override
   String get bmiEnterHeightToCalculate => 'Hãy nhập chiều cao để tính BMI.';
@@ -256,4 +307,222 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get bmiObese => 'Bạn cần giảm cân nghiêm túc để bảo vệ sức khỏe';
+
+  @override
+  String get activityLevelSedentaryTitle => 'Ít vận động';
+
+  @override
+  String get activityLevelSedentarySubtitle => '(Chủ yếu ngồi, ít hoặc không tập thể dục)';
+
+  @override
+  String get activityLevelLightlyActiveTitle => 'Vận động nhẹ';
+
+  @override
+  String get activityLevelLightlyActiveSubtitle => '(Tập thể dục/thể thao 1-3 ngày/tuần)';
+
+  @override
+  String get activityLevelModeratelyActiveTitle => 'Vận động vừa';
+
+  @override
+  String get activityLevelModeratelyActiveSubtitle => '(Tập thể dục/thể thao 3-5 ngày/tuần)';
+
+  @override
+  String get activityLevelVeryActiveTitle => 'Vận động nặng';
+
+  @override
+  String get activityLevelVeryActiveSubtitle => '(Tập thể dục/thể thao 6-7 ngày/tuần)';
+
+  @override
+  String get activityLevelExtraActiveTitle => 'Vận động rất nặng';
+
+  @override
+  String get activityLevelExtraActiveSubtitle => '(Tập thể dục 2 lần/ngày, công việc lao động phổ thông)';
+
+  @override
+  String get loginTitle => 'Đăng Nhập';
+
+  @override
+  String get emailOrPhone => 'Email hoặc Số Điện Thoại';
+
+  @override
+  String get emailOrPhoneHint => 'Nhập Email hoặc Số Điện Thoại';
+
+  @override
+  String get password => 'Mật khẩu';
+
+  @override
+  String get passwordHint => '••••••••';
+
+  @override
+  String get forgotPassword => 'Quên mật khẩu?';
+
+  @override
+  String get loginButton => 'Đăng nhập';
+
+  @override
+  String get orLoginWith => 'HOẶC đăng nhập bằng';
+
+  @override
+  String get continueWithGoogle => 'Tiếp tục với Google';
+
+  @override
+  String get dontHaveAccount => 'Tôi chưa có tài khoản';
+
+  @override
+  String get pleaseEnterEmail => 'Vui lòng nhập email';
+
+  @override
+  String get pleaseEnterPassword => 'Vui lòng nhập mật khẩu';
+
+  @override
+  String get loginSuccess => 'Đăng nhập thành công!';
+
+  @override
+  String get loginFailed => 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.';
+
+  @override
+  String get invalidCredentials => 'Email hoặc mật khẩu không chính xác. Vui lòng thử lại.';
+
+  @override
+  String get googleLoginSuccess => 'Đăng nhập Google thành công!';
+
+  @override
+  String get googleLoginCancelled => 'Đăng nhập Google đã bị hủy.';
+
+  @override
+  String get googleLoginFailed => 'Đăng nhập Google thất bại. Vui lòng thử lại.';
+
+  @override
+  String get passwordResetEmailSent => 'Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư.';
+
+  @override
+  String get pleaseEnterEmailFirst => 'Vui lòng nhập email trước.';
+
+  @override
+  String get passwordResetFailed => 'Không thể gửi email đặt lại mật khẩu. Vui lòng kiểm tra email và thử lại.';
+
+  @override
+  String get signupTitle => 'Tạo tài khoản';
+
+  @override
+  String get fullName => 'Họ và tên';
+
+  @override
+  String get fullNameHint => 'Nhập họ và tên của bạn';
+
+  @override
+  String get phoneNumber => 'Số điện thoại';
+
+  @override
+  String get phoneNumberHint => 'Nhập số điện thoại';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailHint => 'example@gmail.com';
+
+  @override
+  String get confirmPassword => 'Nhập lại mật khẩu';
+
+  @override
+  String get confirmPasswordHint => '••••••••';
+
+  @override
+  String get agreeWith => 'Tôi đồng ý với ';
+
+  @override
+  String get termsOfService => 'Điều khoản sử dụng';
+
+  @override
+  String get and => ' và ';
+
+  @override
+  String get privacyPolicy => 'Chính sách bảo mật';
+
+  @override
+  String get signupButton => 'Đăng ký';
+
+  @override
+  String get alreadyHaveAccount => 'Đã có tài khoản? ';
+
+  @override
+  String get loginLink => 'Đăng nhập';
+
+  @override
+  String get forgotPasswordTitle => 'Quên mật khẩu?';
+
+  @override
+  String get forgotPasswordInstruction => 'Nhập email của bạn và chúng tôi sẽ gửi cho bạn hướng dẫn để đặt lại mật khẩu.';
+
+  @override
+  String get sendResetEmail => 'Gửi email đặt lại mật khẩu';
+
+  @override
+  String get backToLogin => 'Quay lại đăng nhập';
+
+  @override
+  String get success => 'Thành công';
+
+  @override
+  String get invalidEmail => 'Email không hợp lệ.';
+
+  @override
+  String get pleaseEnterValidEmail => 'Vui lòng nhập email.';
+
+  @override
+  String get emailNotExist => 'Email không tồn tại trong hệ thống.';
+
+  @override
+  String accountUsesProviderMessage(Object provider) {
+    return 'Tài khoản này đang đăng nhập bằng: $provider. Không thể đặt lại mật khẩu bằng email.';
+  }
+
+  @override
+  String get unableToSendResetEmail => 'Không thể gửi email đặt lại mật khẩu. Vui lòng thử lại sau.';
+
+  @override
+  String get userNotFound => 'Không tìm thấy tài khoản với email này.';
+
+  @override
+  String get tooManyRequests => 'Quá nhiều yêu cầu. Vui lòng thử lại sau.';
+
+  @override
+  String get networkError => 'Lỗi kết nối mạng. Vui lòng kiểm tra kết nối và thử lại.';
+
+  @override
+  String get pleaseEnterFullName => 'Vui lòng nhập họ và tên.';
+
+  @override
+  String get pleaseEnterPhoneNumber => 'Vui lòng nhập số điện thoại.';
+
+  @override
+  String get passwordMinLength => 'Mật khẩu phải có ít nhất 6 ký tự.';
+
+  @override
+  String get pleaseConfirmPassword => 'Vui lòng nhập lại mật khẩu.';
+
+  @override
+  String get passwordsDoNotMatch => 'Mật khẩu xác nhận không khớp.';
+
+  @override
+  String get pleaseAgreeToTerms => 'Vui lòng đồng ý với điều khoản sử dụng.';
+
+  @override
+  String get emailAlreadyInUse => 'Email đã được sử dụng. Vui lòng sử dụng email khác.';
+
+  @override
+  String get weakPassword => 'Mật khẩu quá yếu. Vui lòng sử dụng mật khẩu mạnh hơn.';
+
+  @override
+  String get registrationFailed => 'Đăng ký thất bại. Vui lòng thử lại.';
+
+  @override
+  String get registrationSuccess => 'Đăng ký thành công!';
+
+  @override
+  String get dietAssistant => 'Trợ lý dinh dưỡng';
+
+  @override
+  String get recordMeal => 'Ghi nhận món ăn';
 }

@@ -337,6 +337,8 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get activityLevelExtraActiveSubtitle => '(Tập thể dục 2 lần/ngày, công việc lao động phổ thông)';
+<<<<<<< HEAD
+=======
 
   @override
   String get loginTitle => 'Đăng Nhập';
@@ -525,4 +527,5 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get recordMeal => 'Ghi nhận món ăn';
+>>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
 }

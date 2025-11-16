@@ -113,6 +113,9 @@
   "activityLevelVeryActiveTitle": "Very active",
   "activityLevelVeryActiveSubtitle": "(Exercise/sports 6-7 days/week)",
   "activityLevelExtraActiveTitle": "Extra active",
+<<<<<<< HEAD
+  "activityLevelExtraActiveSubtitle": "(Exercise twice a day, manual labor)"
+=======
   "activityLevelExtraActiveSubtitle": "(Exercise twice a day, manual labor)",
   "loginTitle": "Login",
   "emailOrPhone": "Email or Phone Number",
@@ -174,4 +177,5 @@
   "weakPassword": "Password is too weak. Please use a stronger password.",
   "registrationFailed": "Registration failed. Please try again.",
   "registrationSuccess": "Registration successful!"
+>>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
 }

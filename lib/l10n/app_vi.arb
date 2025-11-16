@@ -113,6 +113,9 @@
   "activityLevelVeryActiveTitle": "Vận động nặng",
   "activityLevelVeryActiveSubtitle": "(Tập thể dục/thể thao 6-7 ngày/tuần)",
   "activityLevelExtraActiveTitle": "Vận động rất nặng",
+<<<<<<< HEAD
+  "activityLevelExtraActiveSubtitle": "(Tập thể dục 2 lần/ngày, công việc lao động phổ thông)"
+=======
   "activityLevelExtraActiveSubtitle": "(Tập thể dục 2 lần/ngày, công việc lao động phổ thông)",
   "loginTitle": "Đăng Nhập",
   "emailOrPhone": "Email hoặc Số Điện Thoại",
@@ -174,4 +177,5 @@
   "weakPassword": "Mật khẩu quá yếu. Vui lòng sử dụng mật khẩu mạnh hơn.",
   "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại.",
   "registrationSuccess": "Đăng ký thành công!"
+>>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
 }

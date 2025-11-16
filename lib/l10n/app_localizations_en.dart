@@ -337,6 +337,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activityLevelExtraActiveSubtitle => '(Exercise twice a day, manual labor)';
+<<<<<<< HEAD
+=======
 
   @override
   String get loginTitle => 'Login';
@@ -525,4 +527,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recordMeal => 'Record Meal';
+>>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
 }

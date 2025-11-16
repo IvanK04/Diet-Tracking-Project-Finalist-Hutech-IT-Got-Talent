@@ -754,6 +754,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'(Exercise twice a day, manual labor)'**
   String get activityLevelExtraActiveSubtitle;
+<<<<<<< HEAD
+=======
 
   /// No description provided for @loginTitle.
   ///
@@ -1126,6 +1128,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Record Meal'**
   String get recordMeal;
+>>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

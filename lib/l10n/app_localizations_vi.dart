@@ -337,8 +337,6 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get activityLevelExtraActiveSubtitle => '(Tập thể dục 2 lần/ngày, công việc lao động phổ thông)';
-<<<<<<< HEAD
-=======
 
   @override
   String get loginTitle => 'Đăng Nhập';
@@ -523,9 +521,606 @@ class AppLocalizationsVi extends AppLocalizations {
   String get registrationSuccess => 'Đăng ký thành công!';
 
   @override
-  String get dietAssistant => 'Trợ lý dinh dưỡng';
+  String get chatBotDietAssistant => 'Trợ lý dinh dưỡng';
 
   @override
-  String get recordMeal => 'Ghi nhận món ăn';
->>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
+  String get chatBotNewChatCreated => 'Đã tạo cuộc trò chuyện mới';
+
+  @override
+  String get chatBotChatHistoryComingSoon => 'Tính năng lịch sử chat sẽ được thêm sau';
+
+  @override
+  String get chatBotSettingsComingSoon => 'Tính năng cài đặt sẽ được thêm sau';
+
+  @override
+  String get chatBotPleaseEnterAllInfo => 'Vui lòng điền đầy đủ thông tin';
+
+  @override
+  String get chatBotCreateNewChat => 'Tạo đoạn chat mới';
+
+  @override
+  String get chatBotStartNewConversation => 'Bắt đầu cuộc trò chuyện mới';
+
+  @override
+  String get chatBotChatHistory => 'Lịch sử chat';
+
+  @override
+  String get chatBotViewPreviousConversations => 'Xem các cuộc trò chuyện trước';
+
+  @override
+  String get chatBotSettings => 'Cài đặt';
+
+  @override
+  String get chatBotCustomizeApp => 'Tùy chỉnh ứng dụng';
+
+  @override
+  String get chatBotEnterMessage => 'Nhập tin nhắn...';
+
+  @override
+  String get chatBotFoodSuggestion => 'gợi ý món ăn';
+
+  @override
+  String get chatBotEnterIngredients => 'Nhập nguyên liệu món ăn đang có sẵn';
+
+  @override
+  String get chatBotEnterBudget => 'Nhập chi phí mong muốn cho bữa ăn';
+
+  @override
+  String get chatBotEnterMealType => 'Bữa sáng, Bữa trưa, Bữa tối, Bữa ăn nhẹ, Thực đơn cả ngày';
+
+  @override
+  String get chatBotSubmit => 'Gửi';
+
+  @override
+  String get chatBotJustNow => 'Vừa xong';
+
+  @override
+  String chatBotMinutesAgo(int minutes) {
+    return '$minutes phút trước';
+  }
+
+  @override
+  String chatBotHoursAgo(int hours) {
+    return '$hours giờ trước';
+  }
+
+  @override
+  String get chatBotSaveAll => 'Lưu tất cả';
+
+  @override
+  String get chatBotSave => 'Lưu';
+
+  @override
+  String chatBotAddedAllToList(int count) {
+    return 'Đã thêm $count món vào danh sách';
+  }
+
+  @override
+  String chatBotAddedToList(String name) {
+    return 'Đã thêm \"$name\" vào danh sách';
+  }
+
+  @override
+  String get profileTitle => 'Hồ sơ';
+
+  @override
+  String get profileUser => 'Người dùng';
+
+  @override
+  String get profileAvatarUpdated => 'Đã cập nhật ảnh đại diện';
+
+  @override
+  String get profileCannotUpdateAvatar => 'Không thể cập nhật ảnh';
+
+  @override
+  String get profileSignedOut => 'Đã đăng xuất';
+
+  @override
+  String get profileCannotSignOut => 'Không thể đăng xuất';
+
+  @override
+  String get profileEditProfile => 'Chỉnh sửa hồ sơ';
+
+  @override
+  String get profileViewStatistics => 'Xem báo cáo thống kê';
+
+  @override
+  String get profileSettings => 'Cài đặt';
+
+  @override
+  String get profileDataAndSync => 'Dữ liệu và đồng bộ';
+
+  @override
+  String get profileSupport => 'Hỗ trợ';
+
+  @override
+  String get profileSignOut => 'Đăng xuất';
+
+  @override
+  String get profileSignIn => 'Đăng nhập';
+
+  @override
+  String get profileFeatureInDevelopment => 'Tính năng đang phát triển';
+
+  @override
+  String get profileAppName => 'VGP';
+
+  @override
+  String get profileAppDescription => 'Ứng dụng quản lý chế độ ăn uống thông minh';
+
+  @override
+  String get editProfileTitle => 'Chỉnh sửa hồ sơ';
+
+  @override
+  String get editProfileSave => 'Lưu';
+
+  @override
+  String get editProfileUpdated => 'Đã cập nhật hồ sơ';
+
+  @override
+  String get editProfileError => 'Lỗi';
+
+  @override
+  String get editProfilePersonalInfo => 'Thông tin cá nhân';
+
+  @override
+  String get editProfileFullName => 'Họ và tên';
+
+  @override
+  String get editProfilePleaseEnterFullName => 'Vui lòng nhập họ tên';
+
+  @override
+  String get editProfileAge => 'Tuổi';
+
+  @override
+  String get editProfilePleaseEnterAge => 'Vui lòng nhập tuổi';
+
+  @override
+  String get editProfileInvalidAge => 'Tuổi không hợp lệ';
+
+  @override
+  String get editProfileGender => 'Giới tính';
+
+  @override
+  String get editProfileMale => 'Nam';
+
+  @override
+  String get editProfileFemale => 'Nữ';
+
+  @override
+  String get editProfileBodyMetrics => 'Thông số cơ thể';
+
+  @override
+  String get editProfileHeight => 'Chiều cao (cm)';
+
+  @override
+  String get editProfileInvalidHeight => 'Chiều cao không hợp lệ';
+
+  @override
+  String get editProfileWeight => 'Cân nặng (kg)';
+
+  @override
+  String get editProfileInvalidWeight => 'Cân nặng không hợp lệ';
+
+  @override
+  String get editProfileGoalWeight => 'Mục tiêu cân nặng (kg)';
+
+  @override
+  String get editProfileInvalidGoalWeight => 'Mục tiêu cân nặng không hợp lệ';
+
+  @override
+  String get editProfileYourGoal => 'Mục tiêu của bạn';
+
+  @override
+  String get editProfileSelectGoal => 'Chọn mục tiêu';
+
+  @override
+  String get editProfileGoalLoseWeight => 'Giảm cân';
+
+  @override
+  String get editProfileGoalGainWeight => 'Tăng cân';
+
+  @override
+  String get editProfileGoalMaintainWeight => 'Duy trì cân nặng';
+
+  @override
+  String get editProfileGoalBuildMuscle => 'Tăng cơ';
+
+  @override
+  String get settingsTitle => 'Cài đặt';
+
+  @override
+  String get settingsNotifications => 'Thông báo';
+
+  @override
+  String get settingsNotificationTitle => 'Thông báo';
+
+  @override
+  String get settingsNotificationSubtitle => 'Nhận thông báo về bữa ăn và mục tiêu';
+
+  @override
+  String get settingsAppearance => 'Giao diện';
+
+  @override
+  String get settingsDarkMode => 'Chế độ tối';
+
+  @override
+  String get settingsDarkModeSubtitle => 'Sử dụng giao diện tối';
+
+  @override
+  String get settingsDarkModeEnabled => 'Đã chuyển sang chế độ tối';
+
+  @override
+  String get settingsDarkModeDisabled => 'Đã chuyển sang chế độ sáng';
+
+  @override
+  String get settingsLanguage => 'Ngôn ngữ';
+
+  @override
+  String get settingsUnits => 'Đơn vị đo lường';
+
+  @override
+  String get settingsUnitSystem => 'Hệ đo lường';
+
+  @override
+  String get dataSyncTitle => 'Dữ liệu & Đồng bộ';
+
+  @override
+  String get dataSyncAutoSync => 'Tự động đồng bộ';
+
+  @override
+  String get dataSyncAutoSyncSubtitle => 'Đồng bộ dữ liệu tự động với cloud';
+
+  @override
+  String get dataSyncBackupData => 'Sao lưu dữ liệu';
+
+  @override
+  String get dataSyncBackupDataSubtitle => 'Sao lưu dữ liệu của bạn';
+
+  @override
+  String get dataSyncBackupDialogTitle => 'Sao lưu dữ liệu';
+
+  @override
+  String get dataSyncBackupDialogMessage => 'Bạn có muốn sao lưu dữ liệu của mình lên cloud không?';
+
+  @override
+  String get dataSyncBackupDialogCancel => 'Hủy';
+
+  @override
+  String get dataSyncBackupDialogConfirm => 'Sao lưu';
+
+  @override
+  String get dataSyncBackupInProgress => 'Đang sao lưu dữ liệu...';
+
+  @override
+  String get dataSyncClearCache => 'Xóa cache';
+
+  @override
+  String get dataSyncClearCacheSubtitle => 'Xóa dữ liệu tạm thời';
+
+  @override
+  String get dataSyncClearCacheDialogTitle => 'Xóa cache';
+
+  @override
+  String get dataSyncClearCacheDialogMessage => 'Việc xóa cache sẽ giải phóng dung lượng nhưng có thể làm ứng dụng chậm hơn trong lần mở tiếp theo. Bạn có chắc chắn muốn xóa?';
+
+  @override
+  String get dataSyncClearCacheDialogCancel => 'Hủy';
+
+  @override
+  String get dataSyncClearCacheDialogConfirm => 'Xóa';
+
+  @override
+  String get dataSyncClearCacheSuccess => 'Đã xóa cache thành công';
+
+  @override
+  String get supportTitle => 'Hỗ trợ';
+
+  @override
+  String get supportPrivacyPolicy => 'Chính sách bảo mật';
+
+  @override
+  String get supportOpeningPrivacyPolicy => 'Đang mở chính sách bảo mật...';
+
+  @override
+  String get supportTermsOfService => 'Điều khoản sử dụng';
+
+  @override
+  String get supportOpeningTermsOfService => 'Đang mở điều khoản sử dụng...';
+
+  @override
+  String get supportRecommendationSources => 'Nguồn khuyến nghị';
+
+  @override
+  String get supportOpeningRecommendationSources => 'Đang mở nguồn khuyến nghị...';
+
+  @override
+  String get supportFindVGPOnSocialMedia => 'Tìm VGP trên trang mạng xã hội';
+
+  @override
+  String get supportTiktok => 'Tiktok';
+
+  @override
+  String get supportOpeningTiktok => 'Đang mở TikTok...';
+
+  @override
+  String get supportFacebook => 'Facebook';
+
+  @override
+  String get supportOpeningFacebook => 'Đang mở Facebook...';
+
+  @override
+  String get supportInstagram => 'Instagram';
+
+  @override
+  String get supportOpeningInstagram => 'Đang mở Instagram...';
+
+  @override
+  String get supportHelpCenter => 'Trung tâm hỗ trợ';
+
+  @override
+  String get supportAlwaysHereToHelp => 'Chúng tôi luôn sẵn sàng giúp đỡ';
+
+  @override
+  String get helpCenterTitle => 'Trung tâm hỗ trợ';
+
+  @override
+  String get helpCenterWeAreReadyToHelp => 'Chúng tôi sẵn sàng hỗ trợ';
+
+  @override
+  String get helpCenterFindAnswersOrContact => 'Tìm câu trả lời hoặc liên hệ với team';
+
+  @override
+  String get helpCenterFAQ => 'Câu hỏi thường gặp';
+
+  @override
+  String get helpCenterContactUs => 'Liên hệ với chúng tôi';
+
+  @override
+  String get helpCenterFAQ1Question => 'Làm thế nào để theo dõi dinh dưỡng?';
+
+  @override
+  String get helpCenterFAQ1Answer => 'Bạn có thể thêm thực phẩm vào nhật ký bữa ăn hàng ngày. Ứng dụng sẽ tự động tính toán dinh dưỡng cho bạn.';
+
+  @override
+  String get helpCenterFAQ2Question => 'Tôi có thể đặt mục tiêu calo không?';
+
+  @override
+  String get helpCenterFAQ2Answer => 'Có, bạn có thể đặt mục tiêu calo và các chỉ số dinh dưỡng khác trong phần Cài đặt Mục tiêu.';
+
+  @override
+  String get helpCenterFAQ3Question => 'Làm sao để tạo thực đơn?';
+
+  @override
+  String get helpCenterFAQ3Answer => 'Vào phần Thực đơn, chọn \"Tạo mới\" và thêm các món ăn bạn muốn. Ứng dụng sẽ tính toán dinh dưỡng tự động.';
+
+  @override
+  String get helpCenterFAQ4Question => 'Dữ liệu của tôi có được đồng bộ không?';
+
+  @override
+  String get helpCenterFAQ4Answer => 'Có, dữ liệu được tự động đồng bộ với cloud nếu bạn đã đăng nhập tài khoản.';
+
+  @override
+  String get helpCenterFAQ5Question => 'Làm sao để xuất báo cáo?';
+
+  @override
+  String get helpCenterFAQ5Answer => 'Vào phần Báo cáo, chọn khoảng thời gian và nhấn nút \"Xuất PDF\" để tải báo cáo về máy.';
+
+  @override
+  String get helpCenterContactEmail => 'Email';
+
+  @override
+  String get helpCenterContactEmailAddress => 'support@vgp.com';
+
+  @override
+  String get helpCenterContactPhone => 'Số điện thoại';
+
+  @override
+  String get helpCenterContactPhoneNumber => '+84 123 456 789';
+
+  @override
+  String get helpCenterContactAddress => 'Địa chỉ';
+
+  @override
+  String get helpCenterContactAddressValue => '123 Đường Chính, Quận 1, TP. Hồ Chí Minh';
+
+  @override
+  String get monday => 'Thứ Hai';
+
+  @override
+  String get tuesday => 'Thứ Ba';
+
+  @override
+  String get wednesday => 'Thứ Tư';
+
+  @override
+  String get thursday => 'Thứ Năm';
+
+  @override
+  String get friday => 'Thứ Sáu';
+
+  @override
+  String get saturday => 'Thứ Bảy';
+
+  @override
+  String get sunday => 'Chủ Nhật';
+
+  @override
+  String get bottomNavHome => 'Trang chủ';
+
+  @override
+  String get bottomNavRecord => 'Ghi nhận';
+
+  @override
+  String get bottomNavChatBot => 'Chat bot';
+
+  @override
+  String get bottomNavProfile => 'Hồ sơ';
+
+  @override
+  String get bottomNavScanFood => 'Quét món ăn';
+
+  @override
+  String get bottomNavReport => 'Báo cáo';
+
+  @override
+  String get searchHint => 'Tìm kiếm';
+
+  @override
+  String get calorieGoalTitle => 'Mục tiêu calo';
+
+  @override
+  String get viewReport => 'Xem báo cáo';
+
+  @override
+  String get calorieRemaining => 'Calo còn lại';
+
+  @override
+  String get goalLabel => 'Mục tiêu';
+
+  @override
+  String get consumedLabel => 'Đã nạp';
+
+  @override
+  String get exerciseLabel => 'Tập luyện';
+
+  @override
+  String get notificationTitle => 'Thông báo';
+
+  @override
+  String get waterReminderTitle => 'Nhắc nhở uống nước';
+
+  @override
+  String get waterReminderMessage => 'Uống đủ nước mỗi ngày giúp cơ thể khỏe mạnh và duy trì năng lượng!';
+
+  @override
+  String get markAllAsRead => 'Đọc tất cả';
+
+  @override
+  String get noNotifications => 'Chưa có thông báo nào';
+
+  @override
+  String get recordPageTitle => 'Ghi nhận món ăn';
+
+  @override
+  String get recordedMealsTitle => 'Món ăn đã ghi nhận';
+
+  @override
+  String get retryButton => 'Thử lại';
+
+  @override
+  String get noMealsRecorded => 'Chưa có món ăn nào được ghi nhận';
+
+  @override
+  String get addFirstMeal => 'Hãy thêm món ăn đầu tiên của bạn!';
+
+  @override
+  String get calories => 'calories';
+
+  @override
+  String get nutritionInfo => 'Thông tin dinh dưỡng';
+
+  @override
+  String get foodScannerTitle => 'Quét món ăn';
+
+  @override
+  String get foodScannerSubtitle => 'Căn chỉnh sản phẩm trong khung';
+
+  @override
+  String get foodScannerOverlayAutoDetect => 'Đang tự động nhận diện...';
+
+  @override
+  String get foodScannerOverlayBarcodeHint => 'Căn mã vạch trong khung';
+
+  @override
+  String get foodScannerActionFood => 'Quét món ăn';
+
+  @override
+  String get foodScannerActionBarcode => 'Mã vạch';
+
+  @override
+  String get foodScannerActionGallery => 'Thư viện';
+
+  @override
+  String get foodScannerHelpTitle => 'Cách quét';
+
+  @override
+  String get foodScannerHelpTip1 => 'Đặt món ăn nằm gọn trong khung.';
+
+  @override
+  String get foodScannerHelpTip2 => 'Dùng chế độ Mã vạch cho sản phẩm đóng gói.';
+
+  @override
+  String get foodScannerHelpTip3 => 'Chọn từ Thư viện để dùng lại ảnh đã chụp.';
+
+  @override
+  String get foodScannerGalleryTitle => 'Chọn từ thư viện';
+
+  @override
+  String get foodScannerGallerySubtitle => 'Chọn ảnh món ăn đã chụp trước đó.';
+
+  @override
+  String get foodScannerGalleryButton => 'Mở thư viện';
+
+  @override
+  String get foodScannerPlaceholderCaptureFood => 'Đang lưu ảnh món ăn';
+
+  @override
+  String get foodScannerPlaceholderScanBarcode => 'Đang quét mã vạch (sắp ra mắt)';
+
+  @override
+  String get foodScannerPlaceholderOpenGallery => 'Đang mở thư viện (sắp ra mắt)';
+
+  @override
+  String get foodScannerBarcodeScanning => 'Đang quét mã vạch...';
+
+  @override
+  String foodScannerBarcodeDetected(String value) {
+    return 'Đã phát hiện mã: $value';
+  }
+
+  @override
+  String get foodScannerBarcodeCopy => 'Sao chép mã';
+
+  @override
+  String get foodScannerBarcodeScanAgain => 'Quét lại';
+
+  @override
+  String get foodScannerBarcodeCopied => 'Đã sao chép mã vạch';
+
+  @override
+  String get recentlyLoggedTitle => 'Đã ghi nhận gần đây';
+
+  @override
+  String get recentlyLoggedSubtitle => 'Bắt đầu theo dõi bữa ăn bằng cách chụp ảnh nhanh';
+
+  @override
+  String get recentlyLoggedEmpty => 'Bạn chưa tải lên bất kỳ món ăn nào';
+
+  @override
+  String get viewAll => 'Xem tất cả';
+
+  @override
+  String get delete => 'Xóa';
+
+  @override
+  String get cancel => 'Hủy';
+
+  @override
+  String get deletePhoto => 'Xóa ảnh';
+
+  @override
+  String get deletePhotoConfirmation => 'Bạn có chắc chắn muốn xóa ảnh này không?';
+
+  @override
+  String get photoDeletedSuccessfully => 'Đã xóa ảnh thành công';
+
+  @override
+  String get analyzeFood => 'Phân tích món ăn';
+
+  @override
+  String get shareFunctionality => 'Tính năng chia sẻ sắp ra mắt';
+
+  @override
+  String get aiFoodAnalysis => 'Phân tích món ăn bằng AI sắp ra mắt';
 }

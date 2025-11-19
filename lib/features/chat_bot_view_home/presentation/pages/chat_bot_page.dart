@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../providers/chat_provider_factory.dart';
 import '../providers/chat_provider.dart';
-import '../widgets/chat_message_bubble.dart';
+import '../widgets/messages_area.dart';
 import '../widgets/chat_input_area.dart';
 import '../widgets/chat_options_popup.dart';
 import '../widgets/food_suggestion_inputs.dart';
 import '../widgets/chat_settings_menu.dart';
 import '../../../../common/custom_app_bar.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Main chat bot page with clean architecture
 class ChatBotPage extends StatefulWidget {
@@ -49,47 +50,31 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: CustomAppBar(
-        title: 'Diet Assistant',
+        title: l10n.chatBotDietAssistant,
         actions: [
           ChatSettingsMenu(
             onCreateNewChat: _onCreateNewChat,
             onChatHistory: _onChatHistory,
-            onSettings: _onSettings,
           ),
         ],
       ),
       body: Column(
         children: [
-          _buildMessagesArea(_chatProvider),
+          MessagesArea(messages: _chatProvider.messages),
           if (_chatProvider.showOptions)
             ChatOptionsPopup(onOptionSelected: _onOptionSelected),
           if (_chatProvider.showFileInputs)
             _buildFoodSuggestionInputs(_chatProvider),
           ChatInputArea(
             messageController: _messageController,
-            showOptions: _chatProvider.showOptions,
-            onToggleOptions: () => _chatProvider.toggleOptions(),
             onSendPressed: () => _onSendPressed(_chatProvider),
             onMessageSubmitted: (text) => _onMessageSubmitted(text, _chatProvider),
           ),
         ],
-      ),
-    );
-  }
-
-  /// Builds the scrollable messages area
-  Widget _buildMessagesArea(ChatProvider chatProvider) {
-    return Expanded(
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: chatProvider.messages.length,
-        itemBuilder: (context, index) {
-          final message = chatProvider.messages[index];
-          return ChatMessageBubble(message: message);
-        },
       ),
     );
   }
@@ -108,25 +93,23 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   /// Handles create new chat action
   void _onCreateNewChat() async {
+    final l10n = AppLocalizations.of(context)!;
     await _chatProvider.createNewChatSession();
-    _showSnackBar('Đã tạo cuộc trò chuyện mới');
+    _showSnackBar(l10n.chatBotNewChatCreated);
   }
 
   /// Handles chat history action
   void _onChatHistory() {
+    final l10n = AppLocalizations.of(context)!;
     // TODO: Implement chat history view
-    _showSnackBar('Tính năng lịch sử chat sẽ được thêm sau');
+    _showSnackBar(l10n.chatBotChatHistoryComingSoon);
   }
 
-  /// Handles settings action
-  void _onSettings() {
-    // TODO: Implement settings page
-    _showSnackBar('Tính năng cài đặt sẽ được thêm sau');
-  }
 
   /// Handles option selection
   void _onOptionSelected(String option) {
-    if (option == 'gợi ý món ăn') {
+    final l10n = AppLocalizations.of(context)!;
+    if (option == l10n.chatBotFoodSuggestion) {
       _chatProvider.showFoodSuggestionInputs();
       return;
     }
@@ -147,12 +130,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   /// Handles food suggestion submission
   void _onFoodSuggestionSubmit(ChatProvider chatProvider) async {
+    final l10n = AppLocalizations.of(context)!;
     final ingredients = _ingredientsController.text.trim();
     final budget = _budgetController.text.trim();
     final mealType = _mealTypeController.text.trim();
 
     if (ingredients.isEmpty || budget.isEmpty || mealType.isEmpty) {
-      _showSnackBar('Vui lòng điền đầy đủ thông tin');
+      _showSnackBar(l10n.chatBotPleaseEnterAllInfo);
       return;
     }
 

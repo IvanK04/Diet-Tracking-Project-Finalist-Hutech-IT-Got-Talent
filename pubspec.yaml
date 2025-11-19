@@ -41,7 +41,9 @@ dependencies:
   firebase_storage: ^12.3.2
   google_sign_in: ^7.0.0
   image_picker: ^1.1.2
+  camera: ^0.11.0+1
   shared_preferences: ^2.0.18
+  permission_handler: ^11.3.1
   http: ^1.1.0
   flutter_localizations:
     sdk: flutter
@@ -49,6 +51,7 @@ dependencies:
   flutter_bloc: ^8.1.3
   equatable: ^2.0.5
   uuid: ^4.0.0
+  google_mlkit_barcode_scanning: ^0.14.1
 
 dev_dependencies:
   flutter_test:

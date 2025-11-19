@@ -754,8 +754,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'(Exercise twice a day, manual labor)'**
   String get activityLevelExtraActiveSubtitle;
-<<<<<<< HEAD
-=======
 
   /// No description provided for @loginTitle.
   ///
@@ -1117,18 +1115,1193 @@ abstract class AppLocalizations {
   /// **'Registration successful!'**
   String get registrationSuccess;
 
-  /// No description provided for @dietAssistant.
+  /// No description provided for @chatBotDietAssistant.
   ///
   /// In en, this message translates to:
   /// **'Diet Assistant'**
-  String get dietAssistant;
+  String get chatBotDietAssistant;
 
-  /// No description provided for @recordMeal.
+  /// No description provided for @chatBotNewChatCreated.
   ///
   /// In en, this message translates to:
-  /// **'Record Meal'**
-  String get recordMeal;
->>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
+  /// **'New conversation created'**
+  String get chatBotNewChatCreated;
+
+  /// No description provided for @chatBotChatHistoryComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history feature will be added later'**
+  String get chatBotChatHistoryComingSoon;
+
+  /// No description provided for @chatBotSettingsComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings feature will be added later'**
+  String get chatBotSettingsComingSoon;
+
+  /// No description provided for @chatBotPleaseEnterAllInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all information'**
+  String get chatBotPleaseEnterAllInfo;
+
+  /// No description provided for @chatBotCreateNewChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new chat'**
+  String get chatBotCreateNewChat;
+
+  /// No description provided for @chatBotStartNewConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new conversation'**
+  String get chatBotStartNewConversation;
+
+  /// No description provided for @chatBotChatHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history'**
+  String get chatBotChatHistory;
+
+  /// No description provided for @chatBotViewPreviousConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'View previous conversations'**
+  String get chatBotViewPreviousConversations;
+
+  /// No description provided for @chatBotSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get chatBotSettings;
+
+  /// No description provided for @chatBotCustomizeApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize app'**
+  String get chatBotCustomizeApp;
+
+  /// No description provided for @chatBotEnterMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter message...'**
+  String get chatBotEnterMessage;
+
+  /// No description provided for @chatBotFoodSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'food suggestion'**
+  String get chatBotFoodSuggestion;
+
+  /// No description provided for @chatBotEnterIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter available ingredients'**
+  String get chatBotEnterIngredients;
+
+  /// No description provided for @chatBotEnterBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter desired meal budget'**
+  String get chatBotEnterBudget;
+
+  /// No description provided for @chatBotEnterMealType.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast, Lunch, Dinner, Snack, Full day menu'**
+  String get chatBotEnterMealType;
+
+  /// No description provided for @chatBotSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get chatBotSubmit;
+
+  /// No description provided for @chatBotJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get chatBotJustNow;
+
+  /// No description provided for @chatBotMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes ago'**
+  String chatBotMinutesAgo(int minutes);
+
+  /// No description provided for @chatBotHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours ago'**
+  String chatBotHoursAgo(int hours);
+
+  /// No description provided for @chatBotSaveAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Save all'**
+  String get chatBotSaveAll;
+
+  /// No description provided for @chatBotSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get chatBotSave;
+
+  /// No description provided for @chatBotAddedAllToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {count} dishes to list'**
+  String chatBotAddedAllToList(int count);
+
+  /// No description provided for @chatBotAddedToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Added \"{name}\" to list'**
+  String chatBotAddedToList(String name);
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileUser.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get profileUser;
+
+  /// No description provided for @profileAvatarUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar updated'**
+  String get profileAvatarUpdated;
+
+  /// No description provided for @profileCannotUpdateAvatar.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot update avatar'**
+  String get profileCannotUpdateAvatar;
+
+  /// No description provided for @profileSignedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed out'**
+  String get profileSignedOut;
+
+  /// No description provided for @profileCannotSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot sign out'**
+  String get profileCannotSignOut;
+
+  /// No description provided for @profileEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditProfile;
+
+  /// No description provided for @profileViewStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'View statistics'**
+  String get profileViewStatistics;
+
+  /// No description provided for @profileSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get profileSettings;
+
+  /// No description provided for @profileDataAndSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Data and sync'**
+  String get profileDataAndSync;
+
+  /// No description provided for @profileSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get profileSupport;
+
+  /// No description provided for @profileSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get profileSignOut;
+
+  /// No description provided for @profileSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get profileSignIn;
+
+  /// No description provided for @profileFeatureInDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature in development'**
+  String get profileFeatureInDevelopment;
+
+  /// No description provided for @profileAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'VGP'**
+  String get profileAppName;
+
+  /// No description provided for @profileAppDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart diet management app'**
+  String get profileAppDescription;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get editProfileTitle;
+
+  /// No description provided for @editProfileSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get editProfileSave;
+
+  /// No description provided for @editProfileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get editProfileUpdated;
+
+  /// No description provided for @editProfileError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get editProfileError;
+
+  /// No description provided for @editProfilePersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal information'**
+  String get editProfilePersonalInfo;
+
+  /// No description provided for @editProfileFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get editProfileFullName;
+
+  /// No description provided for @editProfilePleaseEnterFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter full name'**
+  String get editProfilePleaseEnterFullName;
+
+  /// No description provided for @editProfileAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get editProfileAge;
+
+  /// No description provided for @editProfilePleaseEnterAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter age'**
+  String get editProfilePleaseEnterAge;
+
+  /// No description provided for @editProfileInvalidAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid age'**
+  String get editProfileInvalidAge;
+
+  /// No description provided for @editProfileGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get editProfileGender;
+
+  /// No description provided for @editProfileMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get editProfileMale;
+
+  /// No description provided for @editProfileFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get editProfileFemale;
+
+  /// No description provided for @editProfileBodyMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Body metrics'**
+  String get editProfileBodyMetrics;
+
+  /// No description provided for @editProfileHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height (cm)'**
+  String get editProfileHeight;
+
+  /// No description provided for @editProfileInvalidHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid height'**
+  String get editProfileInvalidHeight;
+
+  /// No description provided for @editProfileWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (kg)'**
+  String get editProfileWeight;
+
+  /// No description provided for @editProfileInvalidWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid weight'**
+  String get editProfileInvalidWeight;
+
+  /// No description provided for @editProfileGoalWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal weight (kg)'**
+  String get editProfileGoalWeight;
+
+  /// No description provided for @editProfileInvalidGoalWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid goal weight'**
+  String get editProfileInvalidGoalWeight;
+
+  /// No description provided for @editProfileYourGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your goal'**
+  String get editProfileYourGoal;
+
+  /// No description provided for @editProfileSelectGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Select goal'**
+  String get editProfileSelectGoal;
+
+  /// No description provided for @editProfileGoalLoseWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose weight'**
+  String get editProfileGoalLoseWeight;
+
+  /// No description provided for @editProfileGoalGainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain weight'**
+  String get editProfileGoalGainWeight;
+
+  /// No description provided for @editProfileGoalMaintainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain weight'**
+  String get editProfileGoalMaintainWeight;
+
+  /// No description provided for @editProfileGoalBuildMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build muscle'**
+  String get editProfileGoalBuildMuscle;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotifications;
+
+  /// No description provided for @settingsNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotificationTitle;
+
+  /// No description provided for @settingsNotificationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive notifications about meals and goals'**
+  String get settingsNotificationSubtitle;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsAppearance;
+
+  /// No description provided for @settingsDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode'**
+  String get settingsDarkMode;
+
+  /// No description provided for @settingsDarkModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use dark theme'**
+  String get settingsDarkModeSubtitle;
+
+  /// No description provided for @settingsDarkModeEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to dark mode'**
+  String get settingsDarkModeEnabled;
+
+  /// No description provided for @settingsDarkModeDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched to light mode'**
+  String get settingsDarkModeDisabled;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get settingsUnits;
+
+  /// No description provided for @settingsUnitSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit system'**
+  String get settingsUnitSystem;
+
+  /// No description provided for @dataSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Sync'**
+  String get dataSyncTitle;
+
+  /// No description provided for @dataSyncAutoSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto sync'**
+  String get dataSyncAutoSync;
+
+  /// No description provided for @dataSyncAutoSyncSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync data automatically with cloud'**
+  String get dataSyncAutoSyncSubtitle;
+
+  /// No description provided for @dataSyncBackupData.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup data'**
+  String get dataSyncBackupData;
+
+  /// No description provided for @dataSyncBackupDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup your data'**
+  String get dataSyncBackupDataSubtitle;
+
+  /// No description provided for @dataSyncBackupDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup data'**
+  String get dataSyncBackupDialogTitle;
+
+  /// No description provided for @dataSyncBackupDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to backup your data to the cloud?'**
+  String get dataSyncBackupDialogMessage;
+
+  /// No description provided for @dataSyncBackupDialogCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get dataSyncBackupDialogCancel;
+
+  /// No description provided for @dataSyncBackupDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get dataSyncBackupDialogConfirm;
+
+  /// No description provided for @dataSyncBackupInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Backing up data...'**
+  String get dataSyncBackupInProgress;
+
+  /// No description provided for @dataSyncClearCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear cache'**
+  String get dataSyncClearCache;
+
+  /// No description provided for @dataSyncClearCacheSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear temporary data'**
+  String get dataSyncClearCacheSubtitle;
+
+  /// No description provided for @dataSyncClearCacheDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear cache'**
+  String get dataSyncClearCacheDialogTitle;
+
+  /// No description provided for @dataSyncClearCacheDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Clearing cache will free up storage but may slow down the app on next launch. Are you sure you want to clear?'**
+  String get dataSyncClearCacheDialogMessage;
+
+  /// No description provided for @dataSyncClearCacheDialogCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get dataSyncClearCacheDialogCancel;
+
+  /// No description provided for @dataSyncClearCacheDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get dataSyncClearCacheDialogConfirm;
+
+  /// No description provided for @dataSyncClearCacheSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared successfully'**
+  String get dataSyncClearCacheSuccess;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get supportTitle;
+
+  /// No description provided for @supportPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get supportPrivacyPolicy;
+
+  /// No description provided for @supportOpeningPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening privacy policy...'**
+  String get supportOpeningPrivacyPolicy;
+
+  /// No description provided for @supportTermsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of service'**
+  String get supportTermsOfService;
+
+  /// No description provided for @supportOpeningTermsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening terms of service...'**
+  String get supportOpeningTermsOfService;
+
+  /// No description provided for @supportRecommendationSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation sources'**
+  String get supportRecommendationSources;
+
+  /// No description provided for @supportOpeningRecommendationSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening recommendation sources...'**
+  String get supportOpeningRecommendationSources;
+
+  /// No description provided for @supportFindVGPOnSocialMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Find VGP on social media'**
+  String get supportFindVGPOnSocialMedia;
+
+  /// No description provided for @supportTiktok.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiktok'**
+  String get supportTiktok;
+
+  /// No description provided for @supportOpeningTiktok.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening TikTok...'**
+  String get supportOpeningTiktok;
+
+  /// No description provided for @supportFacebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get supportFacebook;
+
+  /// No description provided for @supportOpeningFacebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Facebook...'**
+  String get supportOpeningFacebook;
+
+  /// No description provided for @supportInstagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get supportInstagram;
+
+  /// No description provided for @supportOpeningInstagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Instagram...'**
+  String get supportOpeningInstagram;
+
+  /// No description provided for @supportHelpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help center'**
+  String get supportHelpCenter;
+
+  /// No description provided for @supportAlwaysHereToHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'We are always here to help'**
+  String get supportAlwaysHereToHelp;
+
+  /// No description provided for @helpCenterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help center'**
+  String get helpCenterTitle;
+
+  /// No description provided for @helpCenterWeAreReadyToHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'We are ready to help'**
+  String get helpCenterWeAreReadyToHelp;
+
+  /// No description provided for @helpCenterFindAnswersOrContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Find answers or contact the team'**
+  String get helpCenterFindAnswersOrContact;
+
+  /// No description provided for @helpCenterFAQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently asked questions'**
+  String get helpCenterFAQ;
+
+  /// No description provided for @helpCenterContactUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us'**
+  String get helpCenterContactUs;
+
+  /// No description provided for @helpCenterFAQ1Question.
+  ///
+  /// In en, this message translates to:
+  /// **'How to track nutrition?'**
+  String get helpCenterFAQ1Question;
+
+  /// No description provided for @helpCenterFAQ1Answer.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add food to your daily meal diary. The app will automatically calculate nutrition for you.'**
+  String get helpCenterFAQ1Answer;
+
+  /// No description provided for @helpCenterFAQ2Question.
+  ///
+  /// In en, this message translates to:
+  /// **'Can I set calorie goals?'**
+  String get helpCenterFAQ2Question;
+
+  /// No description provided for @helpCenterFAQ2Answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, you can set calorie goals and other nutrition metrics in the Goal Settings section.'**
+  String get helpCenterFAQ2Answer;
+
+  /// No description provided for @helpCenterFAQ3Question.
+  ///
+  /// In en, this message translates to:
+  /// **'How to create a menu?'**
+  String get helpCenterFAQ3Question;
+
+  /// No description provided for @helpCenterFAQ3Answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Menu section, select \"Create new\" and add the dishes you want. The app will automatically calculate nutrition.'**
+  String get helpCenterFAQ3Answer;
+
+  /// No description provided for @helpCenterFAQ4Question.
+  ///
+  /// In en, this message translates to:
+  /// **'Is my data synchronized?'**
+  String get helpCenterFAQ4Question;
+
+  /// No description provided for @helpCenterFAQ4Answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, data is automatically synchronized with cloud if you are logged in to an account.'**
+  String get helpCenterFAQ4Answer;
+
+  /// No description provided for @helpCenterFAQ5Question.
+  ///
+  /// In en, this message translates to:
+  /// **'How to export reports?'**
+  String get helpCenterFAQ5Question;
+
+  /// No description provided for @helpCenterFAQ5Answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Report section, select a time period and press the \"Export PDF\" button to download the report to your device.'**
+  String get helpCenterFAQ5Answer;
+
+  /// No description provided for @helpCenterContactEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get helpCenterContactEmail;
+
+  /// No description provided for @helpCenterContactEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'support@vgp.com'**
+  String get helpCenterContactEmailAddress;
+
+  /// No description provided for @helpCenterContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get helpCenterContactPhone;
+
+  /// No description provided for @helpCenterContactPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'+84 123 456 789'**
+  String get helpCenterContactPhoneNumber;
+
+  /// No description provided for @helpCenterContactAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get helpCenterContactAddress;
+
+  /// No description provided for @helpCenterContactAddressValue.
+  ///
+  /// In en, this message translates to:
+  /// **'123 Main Street, District 1, Ho Chi Minh City'**
+  String get helpCenterContactAddressValue;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
+
+  /// No description provided for @bottomNavHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// No description provided for @bottomNavRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get bottomNavRecord;
+
+  /// No description provided for @bottomNavChatBot.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat bot'**
+  String get bottomNavChatBot;
+
+  /// No description provided for @bottomNavProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get bottomNavProfile;
+
+  /// No description provided for @bottomNavScanFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan food'**
+  String get bottomNavScanFood;
+
+  /// No description provided for @bottomNavReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get bottomNavReport;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchHint;
+
+  /// No description provided for @calorieGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie Goal'**
+  String get calorieGoalTitle;
+
+  /// No description provided for @viewReport.
+  ///
+  /// In en, this message translates to:
+  /// **'View Report'**
+  String get viewReport;
+
+  /// No description provided for @calorieRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get calorieRemaining;
+
+  /// No description provided for @goalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get goalLabel;
+
+  /// No description provided for @consumedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumed'**
+  String get consumedLabel;
+
+  /// No description provided for @exerciseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise'**
+  String get exerciseLabel;
+
+  /// No description provided for @notificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationTitle;
+
+  /// No description provided for @waterReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Reminder'**
+  String get waterReminderTitle;
+
+  /// No description provided for @waterReminderMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Drink enough water every day to keep your body healthy and energized!'**
+  String get waterReminderMessage;
+
+  /// No description provided for @markAllAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get markAllAsRead;
+
+  /// No description provided for @noNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotifications;
+
+  /// No description provided for @recordPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record Meals'**
+  String get recordPageTitle;
+
+  /// No description provided for @recordedMealsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded Meals'**
+  String get recordedMealsTitle;
+
+  /// No description provided for @retryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
+  /// No description provided for @noMealsRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals recorded yet'**
+  String get noMealsRecorded;
+
+  /// No description provided for @addFirstMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first meal!'**
+  String get addFirstMeal;
+
+  /// No description provided for @calories.
+  ///
+  /// In en, this message translates to:
+  /// **'calories'**
+  String get calories;
+
+  /// No description provided for @nutritionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Information'**
+  String get nutritionInfo;
+
+  /// No description provided for @foodScannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Food scanner'**
+  String get foodScannerTitle;
+
+  /// No description provided for @foodScannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Align the product inside the frame'**
+  String get foodScannerSubtitle;
+
+  /// No description provided for @foodScannerOverlayAutoDetect.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto detecting...'**
+  String get foodScannerOverlayAutoDetect;
+
+  /// No description provided for @foodScannerOverlayBarcodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Align barcode inside the frame'**
+  String get foodScannerOverlayBarcodeHint;
+
+  /// No description provided for @foodScannerActionFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan food'**
+  String get foodScannerActionFood;
+
+  /// No description provided for @foodScannerActionBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get foodScannerActionBarcode;
+
+  /// No description provided for @foodScannerActionGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get foodScannerActionGallery;
+
+  /// No description provided for @foodScannerHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to scan'**
+  String get foodScannerHelpTitle;
+
+  /// No description provided for @foodScannerHelpTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Place the meal fully inside the frame.'**
+  String get foodScannerHelpTip1;
+
+  /// No description provided for @foodScannerHelpTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the Barcode mode for packaged products.'**
+  String get foodScannerHelpTip2;
+
+  /// No description provided for @foodScannerHelpTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from Gallery to reuse saved photos.'**
+  String get foodScannerHelpTip3;
+
+  /// No description provided for @foodScannerGalleryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from gallery'**
+  String get foodScannerGalleryTitle;
+
+  /// No description provided for @foodScannerGallerySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a previously captured meal photo.'**
+  String get foodScannerGallerySubtitle;
+
+  /// No description provided for @foodScannerGalleryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Open gallery'**
+  String get foodScannerGalleryButton;
+
+  /// No description provided for @foodScannerPlaceholderCaptureFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Capturing food photo (coming soon)'**
+  String get foodScannerPlaceholderCaptureFood;
+
+  /// No description provided for @foodScannerPlaceholderScanBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning barcode (coming soon)'**
+  String get foodScannerPlaceholderScanBarcode;
+
+  /// No description provided for @foodScannerPlaceholderOpenGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening gallery (coming soon)'**
+  String get foodScannerPlaceholderOpenGallery;
+
+  /// No description provided for @foodScannerBarcodeScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning for barcode...'**
+  String get foodScannerBarcodeScanning;
+
+  /// No description provided for @foodScannerBarcodeDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected barcode: {value}'**
+  String foodScannerBarcodeDetected(String value);
+
+  /// No description provided for @foodScannerBarcodeCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get foodScannerBarcodeCopy;
+
+  /// No description provided for @foodScannerBarcodeScanAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan again'**
+  String get foodScannerBarcodeScanAgain;
+
+  /// No description provided for @foodScannerBarcodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode copied to clipboard'**
+  String get foodScannerBarcodeCopied;
+
+  /// No description provided for @recentlyLoggedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently logged'**
+  String get recentlyLoggedTitle;
+
+  /// No description provided for @recentlyLoggedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start tracking your meals by taking a quick picture'**
+  String get recentlyLoggedSubtitle;
+
+  /// No description provided for @recentlyLoggedEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t uploaded any food'**
+  String get recentlyLoggedEmpty;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get viewAll;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @deletePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Photo'**
+  String get deletePhoto;
+
+  /// No description provided for @deletePhotoConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this photo?'**
+  String get deletePhotoConfirmation;
+
+  /// No description provided for @photoDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo deleted successfully'**
+  String get photoDeletedSuccessfully;
+
+  /// No description provided for @analyzeFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze Food'**
+  String get analyzeFood;
+
+  /// No description provided for @shareFunctionality.
+  ///
+  /// In en, this message translates to:
+  /// **'Share functionality coming soon'**
+  String get shareFunctionality;
+
+  /// No description provided for @aiFoodAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'AI food analysis coming soon'**
+  String get aiFoodAnalysis;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

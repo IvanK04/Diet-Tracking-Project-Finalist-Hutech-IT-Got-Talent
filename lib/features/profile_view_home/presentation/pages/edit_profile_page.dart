@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../providers/profile_provider.dart';
 import '../../../../model/user.dart';
@@ -29,12 +30,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   GenderType? _selectedGender;
   String? _selectedGoal;
 
-  final List<String> _goals = [
-    'Giảm cân',
-    'Tăng cân',
-    'Duy trì cân nặng',
-    'Tăng cơ',
-  ];
+  // Goals will be initialized in build method with localization
+  late List<String> _goals;
 
   @override
   void initState() {
@@ -48,10 +45,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _goalWeightController = TextEditingController(text: profile?.goalWeight?.toString() ?? '');
     
     _selectedGender = profile?.gender;
-    // Only set goal if it exists in the list, otherwise set to null
-    _selectedGoal = (profile?.goal != null && _goals.contains(profile!.goal)) 
-        ? profile.goal 
-        : null;
+    _selectedGoal = profile?.goal;
   }
 
   @override
@@ -85,6 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         goal: _selectedGoal,
         medicalConditions: profile.medicalConditions,
         allergies: profile.allergies,
+        avatars: profile.avatars,
       );
 
       await widget.profileProvider.updateProfile(updatedProfile);
@@ -92,23 +87,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
       if (!mounted) return;
       
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Đã cập nhật hồ sơ')),
-      );
+      debugPrint('Profile updated successfully');
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Lỗi: $e')),
-      );
+      debugPrint('Profile update error: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Initialize goals with localized strings
+    _goals = [
+      AppLocalizations.of(context)!.editProfileGoalLoseWeight,
+      AppLocalizations.of(context)!.editProfileGoalGainWeight,
+      AppLocalizations.of(context)!.editProfileGoalMaintainWeight,
+      AppLocalizations.of(context)!.editProfileGoalBuildMuscle,
+    ];
+    
+    // Validate selectedGoal is in the current goals list
+    if (_selectedGoal != null && !_goals.contains(_selectedGoal)) {
+      _selectedGoal = null;
+    }
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
       appBar: CustomAppBar(
-        title: 'Chỉnh sửa hồ sơ',
+        title: AppLocalizations.of(context)!.editProfileTitle,
         showBackButton: true,
         actions: [
           Padding(
@@ -123,8 +127,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Lưu',
+              child: Text(
+                AppLocalizations.of(context)!.editProfileSave,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -144,14 +148,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 8),
               
               // Họ và tên
-              _buildSectionTitle('Thông tin cá nhân'),
+              _buildSectionTitle(AppLocalizations.of(context)!.editProfilePersonalInfo),
               _buildTextField(
                 controller: _fullNameController,
-                label: 'Họ và tên',
+                label: AppLocalizations.of(context)!.editProfileFullName,
                 icon: Icons.person_outline,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Vui lòng nhập họ tên';
+                    return AppLocalizations.of(context)!.editProfilePleaseEnterFullName;
                   }
                   return null;
                 },
@@ -161,16 +165,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
               // Tuổi
               _buildTextField(
                 controller: _ageController,
-                label: 'Tuổi',
+                label: AppLocalizations.of(context)!.editProfileAge,
                 icon: Icons.cake_outlined,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Vui lòng nhập tuổi';
+                    return AppLocalizations.of(context)!.editProfilePleaseEnterAge;
                   }
                   final age = int.tryParse(value.trim());
                   if (age == null || age < 1 || age > 120) {
-                    return 'Tuổi không hợp lệ';
+                    return AppLocalizations.of(context)!.editProfileInvalidAge;
                   }
                   return null;
                 },
@@ -178,13 +182,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 16),
               
               // Giới tính
-              _buildSectionTitle('Giới tính'),
+              _buildSectionTitle(AppLocalizations.of(context)!.editProfileGender),
               Row(
                 children: [
                   Expanded(
                     child: _buildGenderCard(
                       gender: GenderType.male,
-                      label: 'Nam',
+                      label: AppLocalizations.of(context)!.editProfileMale,
                       icon: Icons.male,
                     ),
                   ),
@@ -192,7 +196,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   Expanded(
                     child: _buildGenderCard(
                       gender: GenderType.female,
-                      label: 'Nữ',
+                      label: AppLocalizations.of(context)!.editProfileFemale,
                       icon: Icons.female,
                     ),
                   ),
@@ -201,17 +205,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               
               // Chiều cao
-              _buildSectionTitle('Thông số cơ thể'),
+              _buildSectionTitle(AppLocalizations.of(context)!.editProfileBodyMetrics),
               _buildTextField(
                 controller: _heightController,
-                label: 'Chiều cao (cm)',
+                label: AppLocalizations.of(context)!.editProfileHeight,
                 icon: Icons.height,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value != null && value.trim().isNotEmpty) {
                     final height = double.tryParse(value.trim());
                     if (height == null || height < 50 || height > 300) {
-                      return 'Chiều cao không hợp lệ';
+                      return AppLocalizations.of(context)!.editProfileInvalidHeight;
                     }
                   }
                   return null;
@@ -222,14 +226,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               // Cân nặng
               _buildTextField(
                 controller: _weightController,
-                label: 'Cân nặng (kg)',
+                label: AppLocalizations.of(context)!.editProfileWeight,
                 icon: Icons.monitor_weight_outlined,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value != null && value.trim().isNotEmpty) {
                     final weight = double.tryParse(value.trim());
                     if (weight == null || weight < 20 || weight > 500) {
-                      return 'Cân nặng không hợp lệ';
+                      return AppLocalizations.of(context)!.editProfileInvalidWeight;
                     }
                   }
                   return null;
@@ -240,14 +244,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               // Mục tiêu cân nặng
               _buildTextField(
                 controller: _goalWeightController,
-                label: 'Mục tiêu cân nặng (kg)',
+                label: AppLocalizations.of(context)!.editProfileGoalWeight,
                 icon: Icons.flag_outlined,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value != null && value.trim().isNotEmpty) {
                     final goalWeight = double.tryParse(value.trim());
                     if (goalWeight == null || goalWeight < 20 || goalWeight > 500) {
-                      return 'Mục tiêu cân nặng không hợp lệ';
+                      return AppLocalizations.of(context)!.editProfileInvalidGoalWeight;
                     }
                   }
                   return null;
@@ -256,7 +260,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 24),
               
               // Mục tiêu
-              _buildSectionTitle('Mục tiêu của bạn'),
+              _buildSectionTitle(AppLocalizations.of(context)!.editProfileYourGoal),
               _buildGoalDropdown(),
               const SizedBox(height: 32),
             ],
@@ -409,7 +413,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           fillColor: Theme.of(context).cardColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
-        hint: const Text('Chọn mục tiêu'),
+        hint: Text(AppLocalizations.of(context)!.editProfileSelectGoal),
         items: _goals.map((goal) {
           return DropdownMenuItem(
             value: goal,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../themes/theme_provider.dart';
 import '../../../../common/language_selector.dart';
 import '../../../../common/unit_selector.dart';
@@ -16,7 +17,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _notificationsEnabled = true;
   bool _darkModeEnabled = false;
   Language _selectedLanguage = Language.vi;
   UnitSystem _selectedUnit = UnitSystem.metric;
@@ -33,7 +33,6 @@ class _SettingsPageState extends State<SettingsPage> {
     final languageCode = prefs.getString('language') ?? 'vi';
     final unitCode = prefs.getString('unit') ?? 'metric';
     setState(() {
-      _notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
       _darkModeEnabled = themeProvider.isDarkMode;
       _selectedLanguage = languageCode == 'en' ? Language.en : Language.vi;
       _selectedUnit = unitCode == 'imperial' ? UnitSystem.imperial : UnitSystem.metric;
@@ -42,7 +41,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _saveSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('notifications_enabled', _notificationsEnabled);
     await prefs.setString('language', _selectedLanguage == Language.vi ? 'vi' : 'en');
     await prefs.setString('unit', _selectedUnit == UnitSystem.metric ? 'metric' : 'imperial');
     // Dark mode is handled by ThemeProvider, no need to save separately
@@ -52,8 +50,8 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-      appBar: const CustomAppBar(
-        title: 'Cài đặt',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.settingsTitle,
         showBackButton: true,
       ),
       body: SingleChildScrollView(
@@ -63,34 +61,14 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             const SizedBox(height: 8),
             
-            // Thông báo
-            _buildSectionTitle('Thông báo'),
-            _buildSettingCard(
-              children: [
-                _buildSwitchTile(
-                  icon: Icons.notifications_outlined,
-                  title: 'Thông báo',
-                  subtitle: 'Nhận thông báo về bữa ăn và mục tiêu',
-                  value: _notificationsEnabled,
-                  onChanged: (value) {
-                    setState(() {
-                      _notificationsEnabled = value;
-                    });
-                    _saveSettings();
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            
             // Giao diện
-            _buildSectionTitle('Giao diện'),
+            _buildSectionTitle(AppLocalizations.of(context)!.settingsAppearance),
             _buildSettingCard(
               children: [
                 _buildSwitchTile(
                   icon: Icons.dark_mode_outlined,
-                  title: 'Chế độ tối',
-                  subtitle: 'Sử dụng giao diện tối',
+                  title: AppLocalizations.of(context)!.settingsDarkMode,
+                  subtitle: AppLocalizations.of(context)!.settingsDarkModeSubtitle,
                   value: _darkModeEnabled,
                   onChanged: (value) async {
                     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
@@ -98,15 +76,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       _darkModeEnabled = value;
                     });
                     await themeProvider.toggleTheme();
-                    if (!mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(_darkModeEnabled 
-                            ? 'Đã chuyển sang chế độ tối' 
-                            : 'Đã chuyển sang chế độ sáng'),
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
                   },
                 ),
                 const Divider(height: 1),
@@ -116,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 24),
             
             // Đơn vị đo lường
-            _buildSectionTitle('Đơn vị đo lường'),
+            _buildSectionTitle(AppLocalizations.of(context)!.settingsUnits),
             _buildSettingCard(
               children: [
                 _buildUnitTile(),
@@ -238,7 +207,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Ngôn ngữ',
+              AppLocalizations.of(context)!.settingsLanguage,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -283,7 +252,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Hệ đo lường',
+              AppLocalizations.of(context)!.settingsUnitSystem,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

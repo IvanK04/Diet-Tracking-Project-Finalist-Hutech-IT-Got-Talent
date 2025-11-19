@@ -337,8 +337,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activityLevelExtraActiveSubtitle => '(Exercise twice a day, manual labor)';
-<<<<<<< HEAD
-=======
 
   @override
   String get loginTitle => 'Login';
@@ -523,9 +521,606 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationSuccess => 'Registration successful!';
 
   @override
-  String get dietAssistant => 'Diet Assistant';
+  String get chatBotDietAssistant => 'Diet Assistant';
 
   @override
-  String get recordMeal => 'Record Meal';
->>>>>>> 34fe3db9ee2fbe41befcb7c6d761953ebaa95435
+  String get chatBotNewChatCreated => 'New conversation created';
+
+  @override
+  String get chatBotChatHistoryComingSoon => 'Chat history feature will be added later';
+
+  @override
+  String get chatBotSettingsComingSoon => 'Settings feature will be added later';
+
+  @override
+  String get chatBotPleaseEnterAllInfo => 'Please fill in all information';
+
+  @override
+  String get chatBotCreateNewChat => 'Create new chat';
+
+  @override
+  String get chatBotStartNewConversation => 'Start a new conversation';
+
+  @override
+  String get chatBotChatHistory => 'Chat history';
+
+  @override
+  String get chatBotViewPreviousConversations => 'View previous conversations';
+
+  @override
+  String get chatBotSettings => 'Settings';
+
+  @override
+  String get chatBotCustomizeApp => 'Customize app';
+
+  @override
+  String get chatBotEnterMessage => 'Enter message...';
+
+  @override
+  String get chatBotFoodSuggestion => 'food suggestion';
+
+  @override
+  String get chatBotEnterIngredients => 'Enter available ingredients';
+
+  @override
+  String get chatBotEnterBudget => 'Enter desired meal budget';
+
+  @override
+  String get chatBotEnterMealType => 'Breakfast, Lunch, Dinner, Snack, Full day menu';
+
+  @override
+  String get chatBotSubmit => 'Submit';
+
+  @override
+  String get chatBotJustNow => 'Just now';
+
+  @override
+  String chatBotMinutesAgo(int minutes) {
+    return '$minutes minutes ago';
+  }
+
+  @override
+  String chatBotHoursAgo(int hours) {
+    return '$hours hours ago';
+  }
+
+  @override
+  String get chatBotSaveAll => 'Save all';
+
+  @override
+  String get chatBotSave => 'Save';
+
+  @override
+  String chatBotAddedAllToList(int count) {
+    return 'Added $count dishes to list';
+  }
+
+  @override
+  String chatBotAddedToList(String name) {
+    return 'Added \"$name\" to list';
+  }
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileUser => 'User';
+
+  @override
+  String get profileAvatarUpdated => 'Avatar updated';
+
+  @override
+  String get profileCannotUpdateAvatar => 'Cannot update avatar';
+
+  @override
+  String get profileSignedOut => 'Signed out';
+
+  @override
+  String get profileCannotSignOut => 'Cannot sign out';
+
+  @override
+  String get profileEditProfile => 'Edit profile';
+
+  @override
+  String get profileViewStatistics => 'View statistics';
+
+  @override
+  String get profileSettings => 'Settings';
+
+  @override
+  String get profileDataAndSync => 'Data and sync';
+
+  @override
+  String get profileSupport => 'Support';
+
+  @override
+  String get profileSignOut => 'Sign out';
+
+  @override
+  String get profileSignIn => 'Sign in';
+
+  @override
+  String get profileFeatureInDevelopment => 'Feature in development';
+
+  @override
+  String get profileAppName => 'VGP';
+
+  @override
+  String get profileAppDescription => 'Smart diet management app';
+
+  @override
+  String get editProfileTitle => 'Edit profile';
+
+  @override
+  String get editProfileSave => 'Save';
+
+  @override
+  String get editProfileUpdated => 'Profile updated';
+
+  @override
+  String get editProfileError => 'Error';
+
+  @override
+  String get editProfilePersonalInfo => 'Personal information';
+
+  @override
+  String get editProfileFullName => 'Full name';
+
+  @override
+  String get editProfilePleaseEnterFullName => 'Please enter full name';
+
+  @override
+  String get editProfileAge => 'Age';
+
+  @override
+  String get editProfilePleaseEnterAge => 'Please enter age';
+
+  @override
+  String get editProfileInvalidAge => 'Invalid age';
+
+  @override
+  String get editProfileGender => 'Gender';
+
+  @override
+  String get editProfileMale => 'Male';
+
+  @override
+  String get editProfileFemale => 'Female';
+
+  @override
+  String get editProfileBodyMetrics => 'Body metrics';
+
+  @override
+  String get editProfileHeight => 'Height (cm)';
+
+  @override
+  String get editProfileInvalidHeight => 'Invalid height';
+
+  @override
+  String get editProfileWeight => 'Weight (kg)';
+
+  @override
+  String get editProfileInvalidWeight => 'Invalid weight';
+
+  @override
+  String get editProfileGoalWeight => 'Goal weight (kg)';
+
+  @override
+  String get editProfileInvalidGoalWeight => 'Invalid goal weight';
+
+  @override
+  String get editProfileYourGoal => 'Your goal';
+
+  @override
+  String get editProfileSelectGoal => 'Select goal';
+
+  @override
+  String get editProfileGoalLoseWeight => 'Lose weight';
+
+  @override
+  String get editProfileGoalGainWeight => 'Gain weight';
+
+  @override
+  String get editProfileGoalMaintainWeight => 'Maintain weight';
+
+  @override
+  String get editProfileGoalBuildMuscle => 'Build muscle';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get settingsNotificationTitle => 'Notifications';
+
+  @override
+  String get settingsNotificationSubtitle => 'Receive notifications about meals and goals';
+
+  @override
+  String get settingsAppearance => 'Appearance';
+
+  @override
+  String get settingsDarkMode => 'Dark mode';
+
+  @override
+  String get settingsDarkModeSubtitle => 'Use dark theme';
+
+  @override
+  String get settingsDarkModeEnabled => 'Switched to dark mode';
+
+  @override
+  String get settingsDarkModeDisabled => 'Switched to light mode';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsUnits => 'Units';
+
+  @override
+  String get settingsUnitSystem => 'Unit system';
+
+  @override
+  String get dataSyncTitle => 'Data & Sync';
+
+  @override
+  String get dataSyncAutoSync => 'Auto sync';
+
+  @override
+  String get dataSyncAutoSyncSubtitle => 'Sync data automatically with cloud';
+
+  @override
+  String get dataSyncBackupData => 'Backup data';
+
+  @override
+  String get dataSyncBackupDataSubtitle => 'Backup your data';
+
+  @override
+  String get dataSyncBackupDialogTitle => 'Backup data';
+
+  @override
+  String get dataSyncBackupDialogMessage => 'Do you want to backup your data to the cloud?';
+
+  @override
+  String get dataSyncBackupDialogCancel => 'Cancel';
+
+  @override
+  String get dataSyncBackupDialogConfirm => 'Backup';
+
+  @override
+  String get dataSyncBackupInProgress => 'Backing up data...';
+
+  @override
+  String get dataSyncClearCache => 'Clear cache';
+
+  @override
+  String get dataSyncClearCacheSubtitle => 'Clear temporary data';
+
+  @override
+  String get dataSyncClearCacheDialogTitle => 'Clear cache';
+
+  @override
+  String get dataSyncClearCacheDialogMessage => 'Clearing cache will free up storage but may slow down the app on next launch. Are you sure you want to clear?';
+
+  @override
+  String get dataSyncClearCacheDialogCancel => 'Cancel';
+
+  @override
+  String get dataSyncClearCacheDialogConfirm => 'Clear';
+
+  @override
+  String get dataSyncClearCacheSuccess => 'Cache cleared successfully';
+
+  @override
+  String get supportTitle => 'Support';
+
+  @override
+  String get supportPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get supportOpeningPrivacyPolicy => 'Opening privacy policy...';
+
+  @override
+  String get supportTermsOfService => 'Terms of service';
+
+  @override
+  String get supportOpeningTermsOfService => 'Opening terms of service...';
+
+  @override
+  String get supportRecommendationSources => 'Recommendation sources';
+
+  @override
+  String get supportOpeningRecommendationSources => 'Opening recommendation sources...';
+
+  @override
+  String get supportFindVGPOnSocialMedia => 'Find VGP on social media';
+
+  @override
+  String get supportTiktok => 'Tiktok';
+
+  @override
+  String get supportOpeningTiktok => 'Opening TikTok...';
+
+  @override
+  String get supportFacebook => 'Facebook';
+
+  @override
+  String get supportOpeningFacebook => 'Opening Facebook...';
+
+  @override
+  String get supportInstagram => 'Instagram';
+
+  @override
+  String get supportOpeningInstagram => 'Opening Instagram...';
+
+  @override
+  String get supportHelpCenter => 'Help center';
+
+  @override
+  String get supportAlwaysHereToHelp => 'We are always here to help';
+
+  @override
+  String get helpCenterTitle => 'Help center';
+
+  @override
+  String get helpCenterWeAreReadyToHelp => 'We are ready to help';
+
+  @override
+  String get helpCenterFindAnswersOrContact => 'Find answers or contact the team';
+
+  @override
+  String get helpCenterFAQ => 'Frequently asked questions';
+
+  @override
+  String get helpCenterContactUs => 'Contact us';
+
+  @override
+  String get helpCenterFAQ1Question => 'How to track nutrition?';
+
+  @override
+  String get helpCenterFAQ1Answer => 'You can add food to your daily meal diary. The app will automatically calculate nutrition for you.';
+
+  @override
+  String get helpCenterFAQ2Question => 'Can I set calorie goals?';
+
+  @override
+  String get helpCenterFAQ2Answer => 'Yes, you can set calorie goals and other nutrition metrics in the Goal Settings section.';
+
+  @override
+  String get helpCenterFAQ3Question => 'How to create a menu?';
+
+  @override
+  String get helpCenterFAQ3Answer => 'Go to the Menu section, select \"Create new\" and add the dishes you want. The app will automatically calculate nutrition.';
+
+  @override
+  String get helpCenterFAQ4Question => 'Is my data synchronized?';
+
+  @override
+  String get helpCenterFAQ4Answer => 'Yes, data is automatically synchronized with cloud if you are logged in to an account.';
+
+  @override
+  String get helpCenterFAQ5Question => 'How to export reports?';
+
+  @override
+  String get helpCenterFAQ5Answer => 'Go to the Report section, select a time period and press the \"Export PDF\" button to download the report to your device.';
+
+  @override
+  String get helpCenterContactEmail => 'Email';
+
+  @override
+  String get helpCenterContactEmailAddress => 'support@vgp.com';
+
+  @override
+  String get helpCenterContactPhone => 'Phone';
+
+  @override
+  String get helpCenterContactPhoneNumber => '+84 123 456 789';
+
+  @override
+  String get helpCenterContactAddress => 'Address';
+
+  @override
+  String get helpCenterContactAddressValue => '123 Main Street, District 1, Ho Chi Minh City';
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get tuesday => 'Tuesday';
+
+  @override
+  String get wednesday => 'Wednesday';
+
+  @override
+  String get thursday => 'Thursday';
+
+  @override
+  String get friday => 'Friday';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
+
+  @override
+  String get bottomNavHome => 'Home';
+
+  @override
+  String get bottomNavRecord => 'Record';
+
+  @override
+  String get bottomNavChatBot => 'Chat bot';
+
+  @override
+  String get bottomNavProfile => 'Profile';
+
+  @override
+  String get bottomNavScanFood => 'Scan food';
+
+  @override
+  String get bottomNavReport => 'Report';
+
+  @override
+  String get searchHint => 'Search';
+
+  @override
+  String get calorieGoalTitle => 'Calorie Goal';
+
+  @override
+  String get viewReport => 'View Report';
+
+  @override
+  String get calorieRemaining => 'Remaining';
+
+  @override
+  String get goalLabel => 'Goal';
+
+  @override
+  String get consumedLabel => 'Consumed';
+
+  @override
+  String get exerciseLabel => 'Exercise';
+
+  @override
+  String get notificationTitle => 'Notifications';
+
+  @override
+  String get waterReminderTitle => 'Water Reminder';
+
+  @override
+  String get waterReminderMessage => 'Drink enough water every day to keep your body healthy and energized!';
+
+  @override
+  String get markAllAsRead => 'Mark all as read';
+
+  @override
+  String get noNotifications => 'No notifications yet';
+
+  @override
+  String get recordPageTitle => 'Record Meals';
+
+  @override
+  String get recordedMealsTitle => 'Recorded Meals';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get noMealsRecorded => 'No meals recorded yet';
+
+  @override
+  String get addFirstMeal => 'Add your first meal!';
+
+  @override
+  String get calories => 'calories';
+
+  @override
+  String get nutritionInfo => 'Nutrition Information';
+
+  @override
+  String get foodScannerTitle => 'Food scanner';
+
+  @override
+  String get foodScannerSubtitle => 'Align the product inside the frame';
+
+  @override
+  String get foodScannerOverlayAutoDetect => 'Auto detecting...';
+
+  @override
+  String get foodScannerOverlayBarcodeHint => 'Align barcode inside the frame';
+
+  @override
+  String get foodScannerActionFood => 'Scan food';
+
+  @override
+  String get foodScannerActionBarcode => 'Barcode';
+
+  @override
+  String get foodScannerActionGallery => 'Gallery';
+
+  @override
+  String get foodScannerHelpTitle => 'How to scan';
+
+  @override
+  String get foodScannerHelpTip1 => 'Place the meal fully inside the frame.';
+
+  @override
+  String get foodScannerHelpTip2 => 'Use the Barcode mode for packaged products.';
+
+  @override
+  String get foodScannerHelpTip3 => 'Pick from Gallery to reuse saved photos.';
+
+  @override
+  String get foodScannerGalleryTitle => 'Pick from gallery';
+
+  @override
+  String get foodScannerGallerySubtitle => 'Select a previously captured meal photo.';
+
+  @override
+  String get foodScannerGalleryButton => 'Open gallery';
+
+  @override
+  String get foodScannerPlaceholderCaptureFood => 'Capturing food photo (coming soon)';
+
+  @override
+  String get foodScannerPlaceholderScanBarcode => 'Scanning barcode (coming soon)';
+
+  @override
+  String get foodScannerPlaceholderOpenGallery => 'Opening gallery (coming soon)';
+
+  @override
+  String get foodScannerBarcodeScanning => 'Scanning for barcode...';
+
+  @override
+  String foodScannerBarcodeDetected(String value) {
+    return 'Detected barcode: $value';
+  }
+
+  @override
+  String get foodScannerBarcodeCopy => 'Copy code';
+
+  @override
+  String get foodScannerBarcodeScanAgain => 'Scan again';
+
+  @override
+  String get foodScannerBarcodeCopied => 'Barcode copied to clipboard';
+
+  @override
+  String get recentlyLoggedTitle => 'Recently logged';
+
+  @override
+  String get recentlyLoggedSubtitle => 'Start tracking your meals by taking a quick picture';
+
+  @override
+  String get recentlyLoggedEmpty => 'You haven\'t uploaded any food';
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get deletePhoto => 'Delete Photo';
+
+  @override
+  String get deletePhotoConfirmation => 'Are you sure you want to delete this photo?';
+
+  @override
+  String get photoDeletedSuccessfully => 'Photo deleted successfully';
+
+  @override
+  String get analyzeFood => 'Analyze Food';
+
+  @override
+  String get shareFunctionality => 'Share functionality coming soon';
+
+  @override
+  String get aiFoodAnalysis => 'AI food analysis coming soon';
 }

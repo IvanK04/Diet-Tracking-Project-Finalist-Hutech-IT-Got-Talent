@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'help_center_page.dart';
 import '../../../../common/custom_app_bar.dart';
 
@@ -10,8 +11,8 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-      appBar: const CustomAppBar(
-        title: 'Hỗ trợ',
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.supportTitle,
         showBackButton: true,
       ),
       body: SingleChildScrollView(
@@ -28,33 +29,27 @@ class SupportPage extends StatelessWidget {
                 _buildActionTile(
                   context,
                   icon: Icons.privacy_tip_outlined,
-                  title: 'Chính sách bảo mật',
+                  title: AppLocalizations.of(context)!.supportPrivacyPolicy,
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Đang mở chính sách bảo mật...')),
-                    );
+                    debugPrint('Opening privacy policy');
                   },
                 ),
                 const Divider(height: 1),
                 _buildActionTile(
                   context,
                   icon: Icons.description_outlined,
-                  title: 'Điều khoản sử dụng',
+                  title: AppLocalizations.of(context)!.supportTermsOfService,
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Đang mở điều khoản sử dụng...')),
-                    );
+                    debugPrint('Opening terms of service');
                   },
                 ),
                const Divider(height: 1),
                  _buildActionTile(
                   context,
                   icon: Icons.lightbulb_outline,
-                  title: 'Nguồn khuyến nghị',
+                  title: AppLocalizations.of(context)!.supportRecommendationSources,
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Đang mở nguồn khuyến nghị...')),
-                    );
+                    debugPrint('Opening recommendation sources');
                   },
                 ),
               ],
@@ -111,7 +106,7 @@ class SupportPage extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Tìm VGP trên trang mạng xã hội',
+                  AppLocalizations.of(context)!.supportFindVGPOnSocialMedia,
                   style: TextStyle(
                     color: isDarkMode
                         ? Colors.white
@@ -130,32 +125,26 @@ class SupportPage extends StatelessWidget {
             children: [
               _buildSocialMediaButton(
                 context,
-                imagePath: 'icon/tiktok.png',
-                label: 'Tiktok',
+                imagePath: 'assets/icon/tiktok.png',
+                label: AppLocalizations.of(context)!.supportTiktok,
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Đang mở TikTok...')),
-                  );
+                  debugPrint('Opening TikTok');
                 },
               ),
               _buildSocialMediaButton(
                 context,
-                imagePath: 'icon/facebook.png',
-                label: 'Facebook',
+                imagePath: 'assets/icon/facebook.png',
+                label: AppLocalizations.of(context)!.supportFacebook,
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Đang mở Facebook...')),
-                  );
+                  debugPrint('Opening Facebook');
                 },
               ),
               _buildSocialMediaButton(
                 context,
-                imagePath: 'icon/instagram.png',
-                label: 'Instagram',
+                imagePath: 'assets/icon/instagram.png',
+                label: AppLocalizations.of(context)!.supportInstagram,
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Đang mở Instagram...')),
-                  );
+                  debugPrint('Opening Instagram');
                 },
               ),
             ],
@@ -288,7 +277,7 @@ class SupportPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Trung tâm hỗ trợ',
+                    AppLocalizations.of(context)!.supportHelpCenter,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -297,7 +286,7 @@ class SupportPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Chúng tôi luôn sẵn sàng giúp đỡ',
+                    AppLocalizations.of(context)!.supportAlwaysHereToHelp,
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,

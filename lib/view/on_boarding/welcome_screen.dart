@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import '../identities/login/login_main_screen.dart';
 import '../../common/language_selector.dart';
 import '../../common/custom_button.dart';
 import '../../services/language_service.dart';
 import '../../l10n/app_localizations.dart';
-import '../../themes/theme_provider.dart';
 import '../../responsive/responsive.dart';
 import 'started_view/started_screen.dart';
 
@@ -29,9 +27,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   int _currentImageIndex = 0;
 
   final List<String> _images = [
-    'assets/welcome_screen/flexitarian-diet-foods_OCES.jpg',
-    'assets/welcome_screen/holding-schematic-meal-plan-di-4012-3914-1658462990.webp',
-    'assets/welcome_screen/diet.jpg',
+    'assets/welcome_screen/brand.png',
+    'assets/welcome_screen/welcome_screen.png',
+    'assets/welcome_screen/plan_eat.png',
   ];
 
   @override
@@ -120,9 +118,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     final responsive = ResponsiveHelper.of(context);
-    
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
@@ -138,36 +136,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     child: LanguageSelector(
                       selected: LanguageService.currentLanguage,
                       onChanged: _onLanguageChanged,
-                    ),
-                  ),
-                  responsive.horizontalSpace(8),
-                  // Theme toggle button
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(responsive.radius(12)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).shadowColor.withOpacity(0.1),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: IconButton(
-                      iconSize: responsive.iconSize(24),
-                      onPressed: () {
-                        themeProvider.toggleTheme();
-                      },
-                      icon: Icon(
-                        themeProvider.isDarkMode 
-                          ? Icons.light_mode_rounded 
-                          : Icons.dark_mode_rounded,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
-                      tooltip: themeProvider.isDarkMode 
-                        ? 'Chuyển sang chế độ sáng' 
-                        : 'Chuyển sang chế độ tối',
                     ),
                   ),
                 ],
@@ -229,21 +197,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                   _showImageDialog(context, index);
                                 },
                                 child: Container(
-                                  margin: responsive.edgePadding(
-                                    horizontal: 4,
-                                  ),
+                                  margin: responsive.edgePadding(horizontal: 4),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(responsive.radius(20)),
+                                    borderRadius: BorderRadius.circular(
+                                      responsive.radius(20),
+                                    ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.1,
+                                        ),
                                         blurRadius: 20,
                                         offset: const Offset(0, 10),
                                       ),
                                     ],
                                   ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(responsive.radius(20)),
+                                    borderRadius: BorderRadius.circular(
+                                      responsive.radius(20),
+                                    ),
                                     child: Image.asset(
                                       _images[index],
                                       fit: BoxFit.cover,
@@ -263,13 +235,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             (index) => AnimatedContainer(
                               duration: const Duration(milliseconds: 300),
                               margin: responsive.edgePadding(horizontal: 4),
-                              width: _currentImageIndex == index ? responsive.width(24) : responsive.width(8),
+                              width: _currentImageIndex == index
+                                  ? responsive.width(24)
+                                  : responsive.width(8),
                               height: responsive.height(8),
                               decoration: BoxDecoration(
                                 color: _currentImageIndex == index
                                     ? const Color(0xFF9C27B0)
-                                    : Colors.grey.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(responsive.radius(4)),
+                                    : Colors.grey.withValues(alpha: 0.3),
+                                borderRadius: BorderRadius.circular(
+                                  responsive.radius(4),
+                                ),
                               ),
                             ),
                           ),
@@ -289,21 +265,28 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       Align(
                         alignment: Alignment.center,
                         child: SizedBox(
-                          width: responsive.width(MediaQuery.of(context).size.width * 0.85),
+                          width: responsive.width(
+                            MediaQuery.of(context).size.width * 0.85,
+                          ),
                           height: responsive.height(56),
                           child: Container(
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF9C27B0), Color(0xFF673AB7)],
+                              gradient: LinearGradient(
+                                colors: [
+                                  colorScheme.primary,
+                                  colorScheme.secondary,
+                                ],
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                               ),
-                              borderRadius: BorderRadius.circular(responsive.radius(28)),
+                              borderRadius: BorderRadius.circular(
+                                responsive.radius(28),
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(
-                                    0xFF9C27B0,
-                                  ).withOpacity(0.3),
+                                  color: colorScheme.primary.withValues(
+                                    alpha: 0.28,
+                                  ),
                                   blurRadius: 15,
                                   offset: const Offset(0, 5),
                                 ),
@@ -312,7 +295,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(responsive.radius(28)),
+                                borderRadius: BorderRadius.circular(
+                                  responsive.radius(28),
+                                ),
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -333,7 +318,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                       style: GoogleFonts.inter(
                                         fontSize: responsive.fontSize(16),
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.white,
+                                        color: colorScheme.onPrimary,
                                       ),
                                     ),
                                     responsive.horizontalSpace(12),
@@ -350,25 +335,22 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                             children: [
                                               Icon(
                                                 Icons.arrow_forward_ios,
-                                                color: Colors.white.withOpacity(
-                                                  0.8,
-                                                ),
+                                                color: colorScheme.onPrimary
+                                                    .withValues(alpha: 0.8),
                                                 size: responsive.iconSize(14),
                                               ),
                                               responsive.horizontalSpace(2),
                                               Icon(
                                                 Icons.arrow_forward_ios,
-                                                color: Colors.white.withOpacity(
-                                                  0.6,
-                                                ),
+                                                color: colorScheme.onPrimary
+                                                    .withValues(alpha: 0.6),
                                                 size: responsive.iconSize(14),
                                               ),
                                               responsive.horizontalSpace(2),
                                               Icon(
                                                 Icons.arrow_forward_ios,
-                                                color: Colors.white.withOpacity(
-                                                  0.4,
-                                                ),
+                                                color: colorScheme.onPrimary
+                                                    .withValues(alpha: 0.4),
                                                 size: responsive.iconSize(14),
                                               ),
                                             ],
@@ -387,13 +369,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       Align(
                         alignment: Alignment.center,
                         child: SizedBox(
-                          width: responsive.width(MediaQuery.of(context).size.width * 0.85),
+                          width: responsive.width(
+                            MediaQuery.of(context).size.width * 0.85,
+                          ),
                           child: CustomButton(
                             text:
                                 AppLocalizations.of(context)?.login ??
                                 'Đăng nhập',
-                            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                            textColor: Theme.of(context).colorScheme.onSurface,
+                            backgroundColor: colorScheme.secondaryContainer,
+                            textColor: colorScheme.onSecondaryContainer,
                             onPressed: () {
                               Navigator.push(
                                 context,

@@ -50,7 +50,7 @@ class _HeightSelectorState extends State<HeightSelector> {
               const SizedBox(height: 16),
               // Progress indicator
               const ProgressBarWidget(
-                progress: 4 / 7, // Bước 4/7
+                progress: 4 / 8, // Bước 4/8
               ),
               const SizedBox(height: 24),
 
@@ -91,13 +91,13 @@ class _HeightSelectorState extends State<HeightSelector> {
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ],
                       border: Border.all(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         width: 1,
                       ),
                     ),
@@ -136,13 +136,15 @@ class _HeightSelectorState extends State<HeightSelector> {
                               heightCm: _selectedHeight,
                             );
                           }
-                          if (!mounted) return;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const WeightSelector(),
-                            ),
-                          );
+                          if (!context.mounted) return;
+                          if (mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const WeightSelector(),
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           AppLocalizations.of(context)?.next ?? 'Next',

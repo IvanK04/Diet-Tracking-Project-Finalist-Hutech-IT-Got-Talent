@@ -81,7 +81,7 @@ class _WeightSelectorState extends State<WeightSelector> {
               SizedBox(height: r.space(12)),
               // Progress bar
               const ProgressBarWidget(
-                progress: 5 / 7, // Bước 5/7
+                progress: 5 / 8, // Bước 5/8
               ),
               SizedBox(height: r.space(18)),
               // Titles
@@ -214,13 +214,13 @@ class _WeightSelectorState extends State<WeightSelector> {
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ],
                       border: Border.all(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         width: 1,
                       ),
                     ),
@@ -257,13 +257,15 @@ class _WeightSelectorState extends State<WeightSelector> {
                           } else {
                             await _local.saveGuestData(weightKg: _weightKg);
                           }
-                          await Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => GoalWeightSelector(
-                                currentWeightKg: _weightKg.round(),
+                          if (mounted && context.mounted) {
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => GoalWeightSelector(
+                                  currentWeightKg: _weightKg.round(),
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         child: Text(
                           AppLocalizations.of(context)?.next ?? 'Next',

@@ -9,6 +9,7 @@ import 'package:diet_tracking_project/widget/progress_bar/user_progress_bar.dart
 import '../../../database/local_storage_service.dart';
 import 'package:diet_tracking_project/l10n/app_localizations.dart';
 import 'package:diet_tracking_project/utils/bmi_calculator.dart';
+import 'package:diet_tracking_project/utils/weight_utils.dart';
 import 'daily_activities_selector.dart';
 import '../../../database/auth_service.dart';
 
@@ -73,7 +74,7 @@ class _GoalWeightSelectorState extends State<GoalWeightSelector> {
     final displayedValue = _isKg ? _goalWeightKg : _goalWeightKg * 2.2046226218;
     final valueText = displayedValue.toStringAsFixed(1);
     final bmi = BmiCalculator.computeBmi(_goalWeightKg, _heightCm);
-    final bmiText = BmiCalculator.bmiDescription(context, bmi);
+    final bmiText = WeightUtils.goalBmiDescription(bmi);
 
     return Scaffold(
       backgroundColor: _pageBg,
@@ -88,7 +89,7 @@ class _GoalWeightSelectorState extends State<GoalWeightSelector> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: r.space(4)),
                 child: const ProgressBarWidget(
-                  progress: 6 / 7, // Bước 6/7
+                  progress: 6 / 8, // Bước 6/8
                 ),
               ),
               SizedBox(height: r.space(20)),
@@ -214,13 +215,13 @@ class _GoalWeightSelectorState extends State<GoalWeightSelector> {
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
                       ],
                       border: Border.all(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         width: 1,
                       ),
                     ),
@@ -262,11 +263,13 @@ class _GoalWeightSelectorState extends State<GoalWeightSelector> {
                               goalWeightKg: _goalWeightKg,
                             );
                           }
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const DailyActivitiesSelector(),
-                            ),
-                          );
+                          if (mounted && context.mounted) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const DailyActivitiesSelector(),
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           AppLocalizations.of(context)?.next ?? 'Tiếp theo',

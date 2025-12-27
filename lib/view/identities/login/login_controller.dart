@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../database/auth_service.dart';
 import '../../../database/exceptions.dart';
-import '../../../database/guest_sync_service.dart';
+import '../../../database/data_migration_service.dart';
 import '../../../database/local_storage_service.dart';
 import '../../../model/user.dart' as app_user;
 import '../../../services/google_auth_service.dart';
+import '../../../utils/logger.dart';
 
 /// Error codes cho đăng nhập
 class LoginErrorCode {
@@ -18,11 +19,11 @@ class LoginErrorCode {
 /// Controller quản lý business logic cho màn hình đăng nhập
 class LoginController {
   final AuthService? authService;
-  final GuestSyncService? guestSyncService;
+  final DataMigrationService? dataMigrationService;
   final GoogleAuthService? googleAuthService;
 
   AuthService? _authService;
-  GuestSyncService? _guestSync;
+  DataMigrationService? _dataMigration;
   GoogleAuthService? _googleAuthService;
   LocalStorageService? _localStorage;
 
@@ -31,14 +32,14 @@ class LoginController {
 
   LoginController({
     this.authService,
-    this.guestSyncService,
+    this.dataMigrationService,
     this.googleAuthService,
   });
 
   /// Khởi tạo lazy services khi cần thiết
   void _ensureServicesInitialized() {
     _authService ??= authService ?? AuthService();
-    _guestSync ??= guestSyncService ?? GuestSyncService();
+    _dataMigration ??= dataMigrationService ?? DataMigrationService();
   }
 
   /// Khởi tạo Google Auth Service khi cần
@@ -53,10 +54,16 @@ class LoginController {
 
   /// Xử lý exception chung cho các phương thức đăng nhập
   LoginResult _handleLoginException(dynamic e, String defaultErrorCode) {
-    print('❌ Exception: $e');
+    AppLogger.error(
+      'Exception occurred during login',
+      error: e,
+      tag: 'LoginController',
+    );
     if (e is AuthException) {
       // Map AuthException codes to LoginErrorCode
-      if (e.code == 'wrong-password' || e.code == 'user-not-found' || e.code == 'invalid-credential') {
+      if (e.code == 'wrong-password' ||
+          e.code == 'user-not-found' ||
+          e.code == 'invalid-credential') {
         return LoginResult.failure(LoginErrorCode.invalidCredentials);
       }
     }
@@ -151,6 +158,12 @@ class LoginController {
     return await _localStorage!.hasGuestData();
   }
 
+  /// Kiểm tra xem guest đã hoàn tất onboarding cần thiết chưa
+  Future<bool> hasCompleteGuestOnboarding() async {
+    _ensureLocalStorageInitialized();
+    return await _localStorage!.hasCompleteGuestOnboarding();
+  }
+
   /// Lấy dữ liệu guest
   Future<Map<String, dynamic>?> getGuestData() async {
     _ensureLocalStorageInitialized();
@@ -160,9 +173,9 @@ class LoginController {
   /// Đồng bộ dữ liệu guest sang user account
   Future<void> _syncGuestData(String userId) async {
     try {
-      await _guestSync?.syncGuestToUser(userId);
+      await _dataMigration?.syncGuestToUser(userId);
     } catch (e) {
-      print('⚠️ Guest sync failed: $e');
+      AppLogger.warning('Guest sync failed: $e', tag: 'LoginController');
     }
   }
 
@@ -212,19 +225,13 @@ class LoginResult {
   }
 
   factory LoginResult.failure(String error) {
-    return LoginResult._(
-      isSuccess: false,
-      error: error,
-    );
+    return LoginResult._(isSuccess: false, error: error);
   }
 
   factory LoginResult.cancelled() {
-    return LoginResult._(
-      isSuccess: false,
-      isCancelled: true,
-    );
+    return LoginResult._(isSuccess: false, isCancelled: true);
   }
-  
+
   // Getter for backward compatibility - returns errorCode
   String? get errorCode => error;
 }

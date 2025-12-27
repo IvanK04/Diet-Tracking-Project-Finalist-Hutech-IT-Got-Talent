@@ -45,7 +45,7 @@ class FirestoreService {
     return _firestore.collection(_usersCollection).doc(userId).delete();
   }
 
-  /// 🔍 Kiểm tra user có tồn tại
+  ///  Kiểm tra user có tồn tại
   Future<bool> userExists(String userId) async {
     final doc = await _firestore.collection(_usersCollection).doc(userId).get();
     return doc.exists;
@@ -86,6 +86,6 @@ class FirestoreService {
   /// Tải toàn bộ lịch sử chat của user hiện tại (để UI gọi sau khi đăng nhập)
   Future<List<ChatMessage>> loadChatHistoryForCurrentUser() async {
     final uid = _requireUid();
-    return load_history_from_firestore(uid);
+    return loadHistoryFromFirestore(uid);
   }
 }

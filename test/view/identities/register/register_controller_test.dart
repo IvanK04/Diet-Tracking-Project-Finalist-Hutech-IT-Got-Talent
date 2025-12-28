@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:diet_tracking_project/view/identities/register/register_controller.dart';
 import 'package:diet_tracking_project/database/auth_service.dart';
 import 'package:diet_tracking_project/database/data_migration_service.dart';
+import 'package:diet_tracking_project/database/local_storage_service.dart';
 import 'package:diet_tracking_project/database/exceptions.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
@@ -50,17 +51,17 @@ class _AuthStub extends AuthService {
   }
 }
 
-/// Mock implementation của GuestSyncService cho testing
-class _GuestSyncMock implements GuestSyncService {
+/// Stub implementation của DataMigrationService cho testing
+class _DataMigrationStub extends DataMigrationService {
   Exception? syncException;
 
-  @override
-  Future<void> syncGuestToUser(String userId) async {
-    if (syncException != null) throw syncException!;
-  }
+  _DataMigrationStub({required AuthService authService})
+      : super(local: LocalStorageService(), auth: authService);
 
   @override
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+  Future<void> syncGuestToUser(String uid) async {
+    if (syncException != null) throw syncException!;
+  }
 }
 
 void main() {
@@ -277,14 +278,14 @@ void main() {
   group('RegisterController - Service Tests', () {
     late RegisterController controller;
     late _AuthStub authStub;
-    late _GuestSyncMock guestSyncStub;
+    late _DataMigrationStub dataMigrationStub;
 
     setUp(() {
       authStub = _AuthStub();
-      guestSyncStub = _GuestSyncMock();
+      dataMigrationStub = _DataMigrationStub(authService: authStub);
       controller = RegisterController(
         authService: authStub,
-        guestSyncService: guestSyncStub,
+        dataMigrationService: dataMigrationStub,
       );
     });
 
@@ -323,14 +324,14 @@ void main() {
   group('RegisterController - SignUp Tests', () {
     late RegisterController controller;
     late _AuthStub authStub;
-    late _GuestSyncMock guestSyncStub;
+    late _DataMigrationStub dataMigrationStub;
 
     setUp(() {
       authStub = _AuthStub();
-      guestSyncStub = _GuestSyncMock();
+      dataMigrationStub = _DataMigrationStub(authService: authStub);
       controller = RegisterController(
         authService: authStub,
-        guestSyncService: guestSyncStub,
+        dataMigrationService: dataMigrationStub,
       );
     });
 
@@ -367,7 +368,7 @@ void main() {
     });
 
     test('signUp trả về failure khi email đã được sử dụng', () async {
-      authStub.signUpException = AuthException(
+      authStub.signUpException = const AuthException(
         'Email already in use',
         'email-already-in-use',
       );
@@ -383,7 +384,7 @@ void main() {
     });
 
     test('signUp trả về failure khi mật khẩu yếu', () async {
-      authStub.signUpException = AuthException(
+      authStub.signUpException = const AuthException(
         'Password is weak',
         'weak-password',
       );

@@ -17,8 +17,6 @@ class NutritionSummary extends StatefulWidget {
 
 class _NutritionSummaryState extends State<NutritionSummary> {
   final LocalStorageService _local = LocalStorageService();
-  final AuthService _authService = AuthService();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserNutritionInfo? _userInfo;
   NutritionCalculation? _calculation;
@@ -140,13 +138,13 @@ class _NutritionSummaryState extends State<NutritionSummary> {
   Widget _buildHeader() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -187,11 +185,11 @@ class _NutritionSummaryState extends State<NutritionSummary> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -247,11 +245,11 @@ class _NutritionSummaryState extends State<NutritionSummary> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -425,13 +423,13 @@ class _NutritionSummaryState extends State<NutritionSummary> {
   Widget _buildBottomButtons() {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.05),
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: Offset(0, -2),
           ),
         ],
       ),
@@ -473,11 +471,11 @@ class _NutritionSummaryState extends State<NutritionSummary> {
                 ),
                 onPressed: () async {
                   final planData = _calculation!.toJson();
-                  final user = _auth.currentUser;
+                  final user = FirebaseAuth.instance.currentUser;
 
                   if (user != null) {
                     // Nếu đã đăng nhập, lưu trực tiếp lên Firestore
-                    await _authService.saveNutritionPlan(user.uid, planData);
+                    await AuthService().saveNutritionPlan(user.uid, planData);
                   } else {
                     // Nếu là guest, lưu vào local storage
                     await _local.saveData('nutrition_plan', planData);
@@ -500,7 +498,10 @@ class _NutritionSummaryState extends State<NutritionSummary> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const InterfaceConfirmation(),
+                        builder: (context) => InterfaceConfirmation(
+                          currentWeightKg: _userInfo?.currentWeightKg.round(),
+                          goalWeightKg: _userInfo?.targetWeightKg.round(),
+                        ),
                       ),
                     );
                   }

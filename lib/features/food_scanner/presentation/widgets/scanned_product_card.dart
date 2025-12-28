@@ -22,7 +22,8 @@ class ScannedProductCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.colorScheme.brightness == Brightness.dark;
     final String title = product.productName ?? 'Unknown product';
-    final String subtitle = (product.brands != null && product.brands!.isNotEmpty)
+    final String subtitle =
+        (product.brands != null && product.brands!.isNotEmpty)
         ? product.brands!.trim()
         : '';
     final String calories = _formatCalories(product.calories);
@@ -76,7 +77,7 @@ class ScannedProductCard extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               theme.colorScheme.surface,
-              theme.colorScheme.surfaceVariant,
+              theme.colorScheme.surfaceContainerHighest,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -84,13 +85,13 @@ class ScannedProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.25),
+              color: Colors.black.withValues(alpha: 0.25),
               blurRadius: 22,
               offset: const Offset(0, 12),
             ),
           ],
           border: Border.all(
-            color: theme.colorScheme.outline.withOpacity(0.4),
+            color: theme.colorScheme.outline.withValues(alpha: 0.4),
           ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
@@ -104,7 +105,7 @@ class ScannedProductCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.12),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -133,8 +134,9 @@ class ScannedProductCard extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onSurface
-                                .withOpacity(0.7),
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: 0.7,
+                            ),
                           ),
                         ),
                       ],
@@ -145,10 +147,10 @@ class ScannedProductCard extends StatelessWidget {
                   onPressed: onReset,
                   icon: Icon(
                     Icons.close,
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   tooltip: 'Bỏ qua',
-                )
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -157,15 +159,11 @@ class ScannedProductCard extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
             ),
             const SizedBox(height: 10),
-            Wrap(
-              spacing: 10,
-              runSpacing: 8,
-              children: macroChips,
-            ),
+            Wrap(spacing: 10, runSpacing: 8, children: macroChips),
             const SizedBox(height: 18),
             Row(
               children: [
@@ -173,11 +171,11 @@ class ScannedProductCard extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       context.read<BarcodeBloc>().add(
-                            SaveBarcodeProductRequested(
-                              product,
-                              imagePath: state.imagePath,
-                            ),
-                          );
+                        SaveBarcodeProductRequested(
+                          product,
+                          imagePath: state.imagePath,
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.check_circle_outline),
                     label: const Text('Ghi nhận thực phẩm'),
@@ -185,19 +183,16 @@ class ScannedProductCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 14,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 OutlinedButton(
                   onPressed: onReset,
-                  child: const Text('Bỏ qua'),
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                      color: theme.colorScheme.onSurface.withOpacity(0.4),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
@@ -207,6 +202,7 @@ class ScannedProductCard extends StatelessWidget {
                       horizontal: 12,
                     ),
                   ),
+                  child: const Text('Bỏ qua'),
                 ),
               ],
             ),
@@ -246,16 +242,13 @@ class _MacroChip extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 90),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: accent.withOpacity(0.18),
+        color: accent.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            emoji,
-            style: const TextStyle(fontSize: 16),
-          ),
+          Text(emoji, style: const TextStyle(fontSize: 16)),
           const SizedBox(width: 6),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,16 +256,16 @@ class _MacroChip extends StatelessWidget {
               Text(
                 label,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
                 value,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
               ),
             ],
           ),

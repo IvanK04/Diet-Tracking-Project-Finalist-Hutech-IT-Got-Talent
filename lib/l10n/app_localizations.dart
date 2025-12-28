@@ -8,11 +8,8 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_en.dart';
 import 'app_localizations_vi.dart';
 
-// ignore_for_file: type=lint
-
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -20,20 +17,18 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('vi'),
+    Locale('vi')
   ];
 
   String get bottomNavAddFood;
@@ -61,8 +56,6 @@ abstract class AppLocalizations {
   String get addFoodSuccessNotificationTitle;
 
   String addFoodSuccessNotificationBody(String foodName, String date);
-
-  String get caloriesToday;
 
   String get weWillBuild;
 
@@ -101,10 +94,6 @@ abstract class AppLocalizations {
   String get chatBotEmptyTitle;
 
   String get chatBotEmptySubtitle;
-
-  String get chatBotChatHistory;
-
-  String get chatBotCreateNewChat;
 
   String get start;
 
@@ -460,7 +449,11 @@ abstract class AppLocalizations {
 
   String get chatBotPleaseEnterAllInfo;
 
+  String get chatBotCreateNewChat;
+
   String get chatBotStartNewConversation;
+
+  String get chatBotChatHistory;
 
   String get chatBotViewPreviousConversations;
 
@@ -915,10 +908,173 @@ abstract class AppLocalizations {
   String get sourceTagScanned;
 
   String get sourceTagManual;
+
+  String get foodAllergiesTitle;
+
+  String get foodAllergiesSubtitle;
+
+  String get foodAllergiesHint;
+
+  String get add;
+
+  String get noAllergiesAdded;
+
+  String get allergySeafood;
+
+  String get allergyMilk;
+
+  String get allergyPeanuts;
+
+  String get allergyEggs;
+
+  String get allergyWheat;
+
+  String get allergySoy;
+
+  String get allergyFish;
+
+  String get allergyNuts;
+
+  String get allergyShrimp;
+
+  String get allergyCrab;
+
+  String get allergyBeef;
+
+  String get allergyChicken;
+
+  String get allergySesame;
+
+  String get allergyScallops;
+
+  String get allergySnails;
+
+  String get allergyGluten;
+
+  String get allergyLactose;
+
+  String get allergyHoney;
+
+  String get allergyStrawberry;
+
+  String get allergyKiwi;
+
+  String get allergyTomato;
+
+  String get allergyMushroom;
+
+  String get allergyAlcohol;
+
+  String get allergyPreservatives;
+
+  String get allergyFoodColoring;
+
+  String get allergyMustard;
+
+  String get allergyCelery;
+
+  String get allergyAlmond;
+
+  String get allergyCashew;
+
+  String get allergyWalnut;
+
+  String get allergyChestnut;
+
+  String get allergyOats;
+
+  String get allergyCorn;
+
+  String get allergyBanana;
+
+  String get allergyPineapple;
+
+  String get allergyGarlic;
+
+  String get allergyOnion;
+
+  String get allergyChocolate;
+
+  String get allergyCoffee;
+
+  String get howActiveAreYou;
+
+  String get howLongToReachGoal;
+
+  String loseWeightAmount(String amount);
+
+  String gainWeightAmount(String amount);
+
+  String daysSuffix(int count);
+
+  String get unhealthyPlanWarning;
+
+  String get back;
+
+  String weeksApprox(String weeks);
+
+  String get bmr;
+
+  String get tdee;
+
+  String calPerDay(String cal);
+
+  String get targetCalories;
+
+  String get dailyAdjustment;
+
+  String calSuffix(String cal);
+
+  String get safeRange;
+
+  String get warningTitle;
+
+  String recommendationDays(int days);
+
+  String get yourGoal;
+
+  String get currentWeight;
+
+  String get targetWeight;
+
+  String get difference;
+
+  String get time;
+
+  String daysWeeks(int days, String weeks);
+
+  String get warning;
+
+  String get recommendation;
+
+  String recommendationDaysWeeks(int days, String weeks);
+
+  String get planSummary;
+
+  String get confirm;
+
+  String get understandRisk;
+
+  String get planSavedWarning;
+
+  String errorLoadingData(String error);
+
+  String get noCalculationData;
+
+  String get interfaceConfirmationReadyToStartTitle;
+
+  String get interfaceConfirmationKeepHabitsMessage;
+
+  String get interfaceConfirmationUpdateGoalsAnytimeMessage;
+
+  String get interfaceConfirmationGoalMaintain;
+
+  String interfaceConfirmationGoalLoseKg(int kg);
+
+  String interfaceConfirmationGoalGainKg(int kg);
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -927,8 +1083,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'vi'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'vi'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -936,16 +1091,14 @@ class _AppLocalizationsDelegate
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'vi':
-      return AppLocalizationsVi();
+    case 'en': return AppLocalizationsEn();
+    case 'vi': return AppLocalizationsVi();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

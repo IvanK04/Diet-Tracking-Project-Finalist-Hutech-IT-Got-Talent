@@ -9,7 +9,7 @@ import 'package:diet_tracking_project/features/food_scanner/presentation/bloc/fo
 import 'package:diet_tracking_project/features/food_scanner/presentation/bloc/barcode/barcode_bloc.dart';
 import 'package:diet_tracking_project/features/food_scanner/presentation/bloc/barcode/barcode_event.dart';
 import 'package:diet_tracking_project/features/food_scanner/presentation/bloc/food_scan/food_scan_state.dart';
-import 'package:diet_tracking_project/features/food_scanner/presentation/widgets/camera_preview_wrapper.dart';
+import 'package:diet_tracking_project/widget/camera/camera_preview_wrapper.dart';
 import 'package:diet_tracking_project/features/food_scanner/presentation/widgets/scanner_bottom_overlay.dart';
 import 'package:diet_tracking_project/features/food_scanner/presentation/widgets/mobile_barcode_scanner_view.dart';
 import 'package:diet_tracking_project/features/food_scanner/presentation/widgets/scanner_preview.dart';
@@ -33,7 +33,8 @@ class ScannerView extends StatefulWidget {
 
 class _ScannerViewState extends State<ScannerView> {
   ScannerActionType _selectedAction = ScannerActionType.food;
-  final GlobalKey<MobileBarcodeScannerViewState> _barcodeScannerKey = GlobalKey();
+  final GlobalKey<MobileBarcodeScannerViewState> _barcodeScannerKey =
+      GlobalKey();
   BarcodeState? _prevBarcodeState;
 
   List<ScannerActionConfig> _buildActions(AppLocalizations l10n) {
@@ -80,7 +81,8 @@ class _ScannerViewState extends State<ScannerView> {
                   // barcode camera so users can scan again immediately.
                   final prev = _prevBarcodeState;
                   _prevBarcodeState = barcodeState;
-                  if (prev is BarcodeUploading && barcodeState is BarcodeError) {
+                  if (prev is BarcodeUploading &&
+                      barcodeState is BarcodeError) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       _barcodeScannerKey.currentState?.restartScanning();
                     });
@@ -114,10 +116,9 @@ class _ScannerViewState extends State<ScannerView> {
                                 .read<cam.CameraBloc>()
                                 .controller,
                             isInitializing: isCameraInitializing,
-                            errorMessage:
-                                cameraState is cam_state.CameraError
-                                    ? cameraState.errorMessage
-                                    : null,
+                            errorMessage: cameraState is cam_state.CameraError
+                                ? cameraState.errorMessage
+                                : null,
                           ),
                           isRealTimeScanning: true,
                           onBarcodeDetected:
@@ -173,14 +174,8 @@ class _ScannerViewState extends State<ScannerView> {
     );
   }
 
-
-
   void _handleBarcodeReset() {
     context.read<BarcodeBloc>().add(const BarcodeResetRequested());
     _barcodeScannerKey.currentState?.restartScanning();
   }
-
-
 }
-
-

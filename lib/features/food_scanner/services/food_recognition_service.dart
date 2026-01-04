@@ -7,7 +7,12 @@ import 'package:flutter/foundation.dart';
 /// You can replace the stub with a real on-device model or call your API.
 class FoodRecognitionResult {
   final String name;
+
+  /// Backward-compatible: average calories if available.
   final double? calories;
+
+  /// Preferred: calorie range estimate (min, max).
+  final List<int>? caloriesRange;
   final String? description;
   final double? protein;
   final double? carbs;
@@ -16,6 +21,7 @@ class FoodRecognitionResult {
   FoodRecognitionResult({
     required this.name,
     this.calories,
+    this.caloriesRange,
     this.description,
     this.protein,
     this.carbs,
@@ -26,16 +32,16 @@ class FoodRecognitionResult {
 class FoodRecognitionService {
   // Server đang chạy tại máy có IP: 192.168.1.140
   // Máy tính và điện thoại phải cùng mạng WiFi
-  static const String defaultBaseUrl = 'http://192.168.2.1:8000';
+  static const String defaultBaseUrl = 'http://192.168.1.140:8000';
 
   final http.Client _client;
   final String _baseUrl;
 
-  FoodRecognitionService({
-    http.Client? client,
-    String? baseUrl,
-  })  : _client = client ?? http.Client(),
-        _baseUrl = (baseUrl == null || baseUrl.isEmpty) ? defaultBaseUrl : baseUrl;
+  FoodRecognitionService({http.Client? client, String? baseUrl})
+    : _client = client ?? http.Client(),
+      _baseUrl = (baseUrl == null || baseUrl.isEmpty)
+          ? defaultBaseUrl
+          : baseUrl;
 
   /// Recognize food from an image path. Return null if not recognized.
   Future<FoodRecognitionResult?> recognizeFood(String imagePath) async {
@@ -49,14 +55,18 @@ class FoodRecognitionService {
 
       // Gửi request
       debugPrint('Sending image to $uri');
-      final streamedResponse = await _client.send(request).timeout(
-        const Duration(seconds: 20), // Tăng timeout cho việc upload và xử lý AI
-        onTimeout: () {
-          throw Exception(
-            'Timeout when connecting to the food recognition server',
+      final streamedResponse = await _client
+          .send(request)
+          .timeout(
+            const Duration(
+              seconds: 20,
+            ), // Tăng timeout cho việc upload và xử lý AI
+            onTimeout: () {
+              throw Exception(
+                'Timeout when connecting to the food recognition server',
+              );
+            },
           );
-        },
-      );
 
       // Đọc response
       final response = await http.Response.fromStream(streamedResponse);
@@ -65,21 +75,46 @@ class FoodRecognitionService {
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body) as Map<String, dynamic>;
-        final predictions = jsonData['predictions'] as Map<String, dynamic>?;
 
-        if (predictions == null) {
-          debugPrint('Predictions key not found in response');
-          return null;
+        // Server sometimes omits or malforms dish_name, so ignore it to avoid crashes.
+        const fallbackName = 'Thông tin món ăn';
+
+        // Preferred: {"calories_range": [min, max] | null}
+        final dynamic rangeRaw = jsonData['calories_range'];
+
+        List<int>? range;
+        if (rangeRaw is List && rangeRaw.length == 2) {
+          final a = rangeRaw[0];
+          final b = rangeRaw[1];
+
+          int? n1;
+          int? n2;
+          if (a is num) n1 = a.round();
+          if (b is num) n2 = b.round();
+          if (n1 == null && a is String) n1 = num.tryParse(a)?.round();
+          if (n2 == null && b is String) n2 = num.tryParse(b)?.round();
+
+          if (n1 != null && n2 != null) {
+            range = [n1, n2];
+          }
+        }
+
+        double? avg;
+        if (range != null) {
+          avg = (range[0] + range[1]) / 2.0;
+        }
+
+        if (range == null) {
+          debugPrint(
+            'calories_range not found or invalid in response; still returning fallback result',
+          );
         }
 
         return FoodRecognitionResult(
-          name: 'Thông tin món ăn', // Tên tạm thời
-          calories: (predictions['total_calories'] as num?)?.toDouble(),
-          protein: (predictions['total_protein'] as num?)?.toDouble(),
-          carbs: (predictions['total_carb'] as num?)?.toDouble(),
-          fat: (predictions['total_fat'] as num?)?.toDouble(),
-          // Cung cấp một mô tả ngắn gọn, chung chung
-          description: 'Thông tin dinh dưỡng được phân tích từ ảnh.',
+          name: fallbackName,
+          calories: avg,
+          caloriesRange: range,
+          description: null,
         );
       } else {
         return null;

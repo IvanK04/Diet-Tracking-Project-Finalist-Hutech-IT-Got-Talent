@@ -34,10 +34,11 @@ client = OpenAI(
 
 def intent_classification(text):
 
-    messages = [ {"role": "system", "content": """ Bạn là bộ phân loại intent. - Nếu câu hỏi yêu cầu dữ liệu cụ thể từ dataset (ví dụ: calories, protein, allergen, health_tags, thành phần dinh dưỡng, số liệu, "đề xuất món ăn", "cho món ăn phù hơp", "Gợi ý món ăn", "Xin ý tưởng món ăn", "cơm sườn có bao nhiêu calo") → GraphRAG. - Nếu câu hỏi chỉ mang tính hội thoại chung về thực phẩm, món ăn, sức khỏe (ví dụ: "táo có tốt cho sức khỏe không", "ăn nhiều cơm có béo không", "tại sao dị ứng cá không được ăn hải sản", "Ăn chuối mỗi ngày có lợi gì?", "Bỏ bữa sáng có hại sức khỏe không?") → Chatbot. Không cần giải thích thêm"""}, {"role": "user", "content": text} ]
+    messages = [ { "role": "system", "content": """ Bạn là bộ phân loại intent. - Nếu câu hỏi yêu cầu dữ liệu cụ thể từ dataset chứa thông tin thực phẩm và nguyên liệu (ví dụ: calories, protein, allergen, health_tags, thành phần dinh dưỡng, đề xuất món ăn, cho món ăn phù hợp, Gợi ý món ăn, Xin ý tưởng món ăn, cơm sườn có bao nhiêu calo) → Trả về đúng chữ: GraphRAG - Nếu câu hỏi chỉ mang tính hội thoại chung → Trả về đúng chữ: Chatbot - Không được trả lời thêm bất kỳ giải thích nào khác. """ }, 
+     {"role": "user", "content": text} ]
 
     completion = client.chat.completions.create(
-        model="Qwen/Qwen3-4B-Instruct-2507",
+        model="Qwen/Qwen3-4B-Instruct-2507:nscale",
         messages=messages,
     )
 
@@ -65,7 +66,7 @@ from graphrag.vector_stores.lancedb import LanceDBVectorStore
 
 load_dotenv()
 
-INPUT_DIR = "F:\Diet-Tracking\chat_box\graphrag\output"
+INPUT_DIR = "E:\MyProjectLibrary\Diet Tracking\diet_tracking_project\chat_box\graphrag\output"
 LANCEDB_URI = f"{INPUT_DIR}/lancedb"
 
 COMMUNITY_REPORT_TABLE = "community_reports"
@@ -132,7 +133,7 @@ chat_config = LanguageModelConfig(
     api_key=api_key,
     type=ModelType.Chat,
     model_provider="openai",
-    model="Qwen/Qwen3-4B-Instruct-2507",
+    model="Qwen/Qwen3-4B-Instruct-2507:nscale",
     api_base = "https://router.huggingface.co/v1",
     model_supports_json = "true",
     concurrent_requests = 1, # Rất quan trọng: HF API miễn phí sẽ khóa bạn nếu gọi nhanh
@@ -206,11 +207,11 @@ local_context_params = {
     "include_community_rank": False,
     "return_candidate_context": False,
     "embedding_vectorstore_key": EntityVectorStoreKey.ID,  # set this to EntityVectorStoreKey.TITLE if the vectorstore uses entity title as ids
-    "max_tokens": 15_000,  # change this based on the token limit you have on your model (if you are using a model with 8k limit, a good setting could be 5000)
+    "max_tokens": 8_200,  # change this based on the token limit you have on your model (if you are using a model with 8k limit, a good setting could be 5000)
 }
 
 model_params = {
-    "max_tokens": 15_000,  # change this based on the token limit you have on your model (if you are using a model with 8k limit, a good setting could be 1000=1500)
+    "max_tokens": 8_200,  # change this based on the token limit you have on your model (if you are using a model with 8k limit, a good setting could be 1000=1500)
     "temperature": 0.3,
 }
 
@@ -245,34 +246,14 @@ def build_user_profile(age, height, weight, allergy, goal, goal_weight, gender):
 
 import asyncio
 
-async def local_search(prompt, age, height, weight, allergy, goal, goal_weight, gender):
-    user_profile = f"""Dưới đây là thông tin của người dùng để bạn hiểu rõ về người dùng hơn, và không được nhắc lại thông tin của người dùng trừ khi họ yêu cầu:[
-            - Tuổi: {age}
-            - Giới tính: {gender}
-            - Chiều cao: {height} cm
-            - Cân nặng: {weight} kg
-            - Dị ứng: {allergy}
-            - Mục tiêu: {goal}
-            - Cân nặng mục tiêu: {goal_weight}
-            ].
-    """
-
-    json_type = """
-        Trả về dữ liệu theo mẫu sau:
-        {
-            "name": string,
-            "calories": float,
-            "carbs": float,
-            "fat": float,
-            "protein": float
-        }
-"""
-
-    result = await search_engine.search(user_profile + prompt + f"cho 10 món ăn phù hợp với query của người dùng và cho thông tin dinh dưỡng về calories, carb, fat và protein đầy đủ + {json_type}, giải thích ngắn gọn về cách suy luận của bạn")
-    # result = await search_engine.search("cho biết thông tin về các chế độ ăn phổ biến trong bảng dữ liệu")
-    json_blocks = re.findall(r'\{.*?\}', result.response, re.DOTALL)
-    foods = [json.loads(block) for block in json_blocks] 
-    return(foods)
+async def local_search(prompt, goal, allery):
+    user_profile = f"mình dị ứng với: {allery}, mục tiêu: {goal}"
+    # result = await search_engine.search(prompt + f"cho 10 món ăn phù hợp với query của người dùng và cho thông tin dinh dưỡng về calories, carb, fat và protein đầy đủ + {json_type}, không cần phải giải thích gì thêm")
+    result = await search_engine.search(user_profile + prompt + "nếu bạn không có thông tin, có thể sử dụng kiến thức nền của bạn, ***chỉ cần trả về thông tin và không cần giải thích thêm***")
+    # json_blocks = re.findall(r'\{.*?\}', result.response, re.DOTALL)
+    # foods = [json.loads(block) for block in json_blocks] 
+    # return foods
+    return result
 
 # asyncio.run(local_search())
 
@@ -280,18 +261,17 @@ async def local_search(prompt, age, height, weight, allergy, goal, goal_weight, 
 def chat_bot(prompt, conversation_history, age, height, weight, allergy, goal, goal_weight, gender):
     # Define the system message
     system_message = {"role": "system", "content":f"""
-        -Bạn là trợ lí dinh dưỡng ảo tiếng việt và trả lời nhẹ nhàng, có thể thêm emoji, trả lời mọi câu hỏi liên quan đến ăn uống, dinh dưỡng, sức khỏe, thói quen ăn uống, dị ứng. Nếu người dùng hỏi những câu hỏi không liên quan đến lĩnh vực của bạn thì nhớ nhắc người dùng là bạn chuyên về dinh dưỡng và sức khỏe là chính. Câu trả lời không được hơn 1000 kí tự
+        -Bạn là trợ lí dinh dưỡng ảo tiếng việt và trả lời nhẹ nhàng, có thể thêm emoji, trả lời mọi câu hỏi liên quan đến ăn uống, dinh dưỡng, sức khỏe, thói quen ăn uống, dị ứng. Nếu người dùng hỏi những câu hỏi không liên quan đến lĩnh vực của bạn thì nhớ nhắc người dùng là bạn chuyên về dinh dưỡng và sức khỏe là chính. Câu trả lời không được hơn 2000 kí tự
         Dưới đây là thông tin của người dùng để bạn hiểu rõ về người dùng hơn, và không được nhắc lại thông tin của người dùng trừ khi họ yêu cầu:[
-        - Tuổi: {age}
-        - Giới tính: {gender}
-        - Chiều cao: {height} cm
-        - Cân nặng: {weight} kg
-        - Dị ứng: {allergy}
-        - Mục tiêu: {goal}
-        - Cân nặng mục tiêu: {goal_weight}
-        ].
-        -Nếu người dùng hỏi **ngoài chủ đề dinh dưỡng**, hãy **từ chối nhẹ nhàng**, ví dụ:> “Xin lỗi, tôi chỉ hỗ trợ về dinh dưỡng và ăn uống. Bạn có muốn tôi gợi ý món ăn hôm nay không?”.
-        """}
+        
+        Tuổi: {age}
+        Giới tính: {gender}
+        Chiều cao: {height} cm
+        Cân nặng: {weight} kg
+        Dị ứng: {allergy}
+        Mục tiêu: {goal}
+        Cân nặng mục tiêu: {goal_weight}
+        ].-Nếu người dùng hỏi ngoài chủ đề dinh dưỡng, hãy từ chối nhẹ nhàng, ví dụ:> “Xin lỗi, tôi chỉ hỗ trợ về dinh dưỡng và ăn uống. Bạn có muốn tôi gợi ý món ăn hôm nay không?”."""}
 
     messages = list(conversation_history)
 
@@ -299,7 +279,7 @@ def chat_bot(prompt, conversation_history, age, height, weight, allergy, goal, g
     messages.append({"role": "user", "content": prompt})
 
     completion = client.chat.completions.create(
-        model="Qwen/Qwen3-4B-Instruct-2507",
+        model="Qwen/Qwen3-4B-Instruct-2507:nscale",
         messages=messages,
     )
 
@@ -309,40 +289,35 @@ def chat_bot(prompt, conversation_history, age, height, weight, allergy, goal, g
 
     return bot_response, messages
 
-def more_bot(prompt, conversation_history, age, height, weight, allergy, goal, goal_weight, gender, food):
+def more_bot(prompt, conversation_history, allergy, goal, food):
     system_message = {"role": "system", "content":f"""
-        -Bạn là trợ lí dinh dưỡng ảo tiếng việt và trả lời nhẹ nhàng, có thể thêm emoji, trả lời mọi câu hỏi liên quan đến ăn uống, dinh dưỡng, sức khỏe, thói quen ăn uống, dị ứng. Nếu người dùng hỏi những câu hỏi không liên quan đến lĩnh vực của bạn thì nhớ nhắc người dùng là bạn chuyên về dinh dưỡng và sức khỏe là chính.
-        Dưới đây là thông tin của người dùng để bạn hiểu rõ về người dùng hơn, và không được nhắc lại thông tin của người dùng trừ khi họ yêu cầu:[
-        - Tuổi: {age}
-        - Giới tính: {gender}
-        - Chiều cao: {height} cm
-        - Cân nặng: {weight} kg
-        - Dị ứng: {allergy}
-        - Mục tiêu: {goal}
-        - Cân nặng mục tiêu: {goal_weight}
-        ].
-        -Dưới đây là thông tin đồ ăn lấy từ database, Hãy chọn ngẫu nhiên 3 món khác nhau mỗi lần trả lời và giải thích ngắn gọn, tránh lặp lại cùng một bộ món ăn trong nhiều lần gợi ý.+ {food}
-        -Sau đây là yêu cầu đề xuất món ăn của người dùng, hãy trả lời dưới dạng sau.
-        ### 🧾 **Định dạng trả lời chuẩn bắt buộc phải đưa ra cho từng món ăn:**
+        -Bạn là trợ lí dinh dưỡng ảo tiếng việt.
+        Dưới đây là thông tin của người dùng để bạn hiểu rõ về người dùng hơn:
+        Dị ứng: {allergy}
+        Mục tiêu: {goal} 
+        -Dưới đây là thông tin đồ ăn lấy từ kiến thức đồ thị + {food}, hãy trả lời thông tin dinh dưỡng cho người dùng.
+        -Nếu người dùng yêu cầu món ăn thì hãy trả lời dưới dạng sau.
+        ### 🧾 Định dạng trả lời chuẩn bắt buộc phải đưa ra cho từng món ăn:
 
         ⭐
-        **Món ăn đề xuất:** (tên món ăn rõ ràng)
-        **Lý do chọn:** (1–2 câu nêu lý do chọn món, phù hợp sức khỏe hoặc mục tiêu)
-        **Thông tin dinh dưỡng (ước tính cho 1 khẩu phần):**
-        - Calo: Khoảng (…) - (…) kcal
-        - Protein: … g
-        - Carb: … g
-        - Fat: … g
-        ⭐,
+        Món ăn đề xuất: (tên món ăn rõ ràng)
+        Lý do chọn: (1–2 câu nêu lý do chọn món, phù hợp sức khỏe hoặc mục tiêu)
+        Thông tin dinh dưỡng (ước tính cho 1 khẩu phần):
+        
+        Calo: Khoảng (…) - (…) kcal
+        Protein: … g
+        Carb: … g
+        Fat: … g⭐,
 
         -Hãy trả lời người dùng 1 cách thân thiện.
+        -Tránh lặp lại cùng một bộ món ăn trong nhiều lần gợi ý.
         """}
     messages = list(conversation_history) # Create a mutable copy
 
     messages.append(system_message)
     messages.append({"role": "user", "content": prompt})
     completion = client.chat.completions.create(
-        model="Qwen/Qwen3-4B-Instruct-2507",
+        model="Qwen/Qwen3-4B-Instruct-2507:nscale",
         messages=messages,
     )
 
@@ -405,40 +380,10 @@ async def chatbox(request: ChatRequest):
         return{"reply": response}
     else:
         print(intent)
-        food = await local_search(request.prompt, request.age, request.height, request.weight, request.allergy, request.goal, request.goal_weight, request.gender)
-        response, chat_history = more_bot(request.prompt, chat_history, request.age, request.height, request.weight, request.allergy, request.goal, request.goal_weight, request.gender, food)
-
+        # def more_bot(prompt, conversation_history, allergy, goal, food):
+        food = await local_search(request.prompt, request.goal, request.allergy)
+        response, chat_history = more_bot(request.prompt, chat_history, request.allergy, request.goal, food)
         return{"reply": response}
-        # return{"reply": response}
-
-
-
-
-
-    chat_history = [
-        {"role": "system",
-        "content": build_system_prompt()}
-    ]
-
-    content = build_user_prompt(request.age, request.height, request.weight, request.allergy, request.goal, request.prompt, request.goal_weight, request.gender)
-
-    chat_history.append(
-        {"role": "user",
-         "content": content}
-    )
-
-    max_iterations = 2
-    iteration_count = 0
-    while iteration_count < max_iterations:
-        iteration_count += 1
-        resp = call_llm(chat_history)
-        if resp.choices[0].message.tool_calls:
-            chat_history.append(get_tool_response(resp))
-        else:
-            break
-    if iteration_count >= max_iterations:
-        print("Warning: Maximum iterations reached")
-    return{"reply": chat_history[-1]['content']}
         
 if __name__ == "__main__":
     print(extract_tags("món ăn giảm cân giành con người bị dị ứng cá"))

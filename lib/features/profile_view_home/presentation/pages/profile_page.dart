@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import '../../../record_view_home/presentation/cubit/record_cubit.dart';
 import '../../../record_view_home/presentation/cubit/record_state.dart';
 import '../../../record_view_home/domain/entities/food_record_entity.dart';
 import '../../../home_page/presentation/pages/nutrition_summary_page.dart';
+import '../../../home_page/presentation/providers/home_provider.dart';
+import '../../../../config/home_page_config.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -85,8 +88,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _handleSignOut() async {
     try {
-  await widget.profileProvider.signOut();
-  await _localStorage.clearGuestData();
+      await widget.profileProvider.signOut();
+      await _localStorage.clearGuestData();
+
+      // Đặt lại tab về Trang chủ sau khi đăng xuất
+      try {
+        if (mounted) {
+          await context.read<HomeProvider>().setCurrentIndex(
+            HomePageConfig.homeIndex,
+          );
+        }
+      } catch (_) {
+        // nếu không có HomeProvider trong context thì bỏ qua
+      }
 
       // Clear chat history when logging out
       ChatProviderFactory.dispose();
@@ -97,8 +111,8 @@ class _ProfilePageState extends State<ProfilePage> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: widget.welcomeScreenBuilder ??
-              (context) => const WelcomeScreen(),
+          builder:
+              widget.welcomeScreenBuilder ?? (context) => const WelcomeScreen(),
         ),
         (route) => false,
       );

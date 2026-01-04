@@ -1,17 +1,14 @@
 import os
-import torch
-import timm
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torchvision.transforms as T
-from sklearn.metrics.pairwise import cosine_similarity
+import unicodedata
+import re
+import base64
+from sentence_transformers import SentenceTransformer
 from PIL import Image
 from io import BytesIO
 import numpy as np
 import base64
 from pinecone import Pinecone
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form, Body
 from dotenv import load_dotenv
 import os
 from huggingface_hub import InferenceClient
@@ -26,360 +23,348 @@ load_dotenv()
 app = FastAPI()
 
 ##api-key##
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY_FOR_VISION")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-##pinecone##
-pc = Pinecone(api_key=PINECONE_API_KEY)
+##data#
+INGREDIENT_DB = {
+    "rice_noodles": {"unit": "100g", "calories": (105, 130)},
+    "egg_noodles": {"unit": "100g", "calories": (130, 160)},
+    "beef": {"unit": "100g", "calories": (220, 280)},
+    "chicken": {"unit": "100g", "calories": (165, 210)},
+    "pork": {"unit": "100g", "calories": (240, 300)},
+    "fish": {"unit": "100g", "calories": (120, 160)},
+    "shrimp": {"unit": "100g", "calories": (90, 120)},
+    "tofu": {"unit": "100g", "calories": (70, 90)},
+    "broth": {"unit": "100ml", "calories": (10, 30)},
+    "vegetables": {"unit": "100g", "calories": (20, 40)},
+    "oil": {"unit": "10ml", "calories": (80, 90)},
+    "sauce": {"unit": "30g", "calories": (50, 80)},
+    "rice": {"unit": "100g", "calories": (130, 150)},
+    "soy_sauce": {"unit": "10ml", "calories": (8, 12)},
+    "pepper": {"unit": "5g", "calories": (10, 15)},
+    "mushroom": {"unit": "100g", "calories": (25, 35)},
+    "tofu_skin": {"unit": "100g", "calories": (50, 70)},
+    "garlic": {"unit": "10g", "calories": (15, 20)}  # mới thêm
+}
 
-index_name = "testing-db"
 
-# if index_name not in [idx["name"] for idx in pc.list_indexes()]:
-#     pc.create_index(name=index_name, dimension=384, metric="cosine", spec=ServerlessSpec(cloud="aws", region="us-east-1"))
-#     print(f"Tạo bảng {index_name}")
 
-index = pc.Index(index_name)
+DISH_DB = {
+    "beef_bo": {  # phở bò
+        "alias": ["phở bò", "pho bo", "beef noodle soup"],
+        "ingredients": {
+            "rice_noodles": (150, 250),
+            "beef": (80, 150),
+            "broth": (300, 500),
+            "vegetables": (30, 60)
+        },
+        "optional": ["oil"]
+    },
 
-food_content = [
-    {
-        "id": "1",
-        "food_name": "apple",
-        "tag": ["Apple", "fresh apple", "raw apple", "whole apple"],
-        "calories": "52kcal",
-        "fat": "0.17g",
-        "protein": "0.26g",
-        "carb": "13.8g"
+    "hue_beef_noodle_soup": {  # bún bò huế
+        "alias": ["bún bò huế", "bun bo hue"],
+        "ingredients": {
+            "rice_noodles": (150, 230),
+            "beef": (90, 160),
+            "broth": (250, 400),
+            "vegetables": (40, 80)
+        },
+        "optional": ["oil", "sauce"]
     },
-    {
-        "id": "2",
-        "food_name": "pomelo",
-        "tag": ["Pomelo", "fresh pomelo", "raw pomelo", "whole pomelo"],
-        "calories": "32kcal",
-        "fat": "0.1g",
-        "protein": "0.63g",
-        "carb": "8.08g"
-    },
-    {
-        "id": "3",
-        "food_name": "raspberry",
-        "tag": ["Raspberry", "fresh raspberry", "raw raspberry", "whole raspberry cluster"],
-        "calories": "43kcal",
-        "fat": "0.49g",
-        "protein": "1.39g",
-        "carb": "9.61g"
-    },
-    {
-        "id": "4",
-        "food_name": "watermelon",
-        "tag": ["Watermelon", "fresh watermelon", "raw watermelon", "whole watermelon"],
-        "calories": "31.3kcal",
-        "fat": "0.1g",
-        "protein": "0.66g",
-        "carb": "7.73g"
-    },
-    {
-        "id": "5",
-        "food_name": "mango",
-        "tag": ["Mango", "fresh mango", "ripe mango", "raw mango", "whole mango"],
-        "calories": "60kcal",
-        "fat": "0.38g",
-        "protein": "0.82g",
-        "carb": "15g"
-    },
-    {
-        "id": "6",
-        "food_name": "durian",
-        "tag": ["Durian", "fresh durian", "ripe durian", "raw durian", "whole durian"],
-        "calories": "137kcal",
-        "fat": "1.4g",
-        "protein": "2.4g",
-        "carb": "28.4g"
-    },
-    {
-        "id": "7",
-        "food_name": "dragon fruit",
-        "tag": ["Dragon fruit", "fresh dragon fruit", "raw dragon fruit", "whole dragon fruit"],
-        "calories": "60kcal",
-        "fat": "0.1g",
-        "protein": "1g",
-        "carb": "14g"
-    },
-    {
-        "id": "8",
-        "food_name": "mangosteen",
-        "tag": ["Mangosteen", "fresh mangosteen", "raw mangosteen", "whole mangosteen"],
-        "calories": "73kcal",
-        "fat": "0.58g",
-        "protein": "0.41g",
-"carb": "18g"
-    },
-    {
-        "id": "9",
-        "food_name": "banana",
-        "tag": ["Banana", "fresh banana", "raw banana", "whole banana", "ripe banana"],
-        "calories": "89kcal",
-        "fat": "0.33g",
-        "protein": "1.09g",
-        "carb": "22.8g"
-    },
-    {
-        "id": "10",
-        "food_name": "pear",
-        "tag": ["Pear", "fresh pear", "raw pear", "whole pear"],
-        "calories": "57kcal",
-        "fat": "0.14g",
-        "protein": "0.36g",
-        "carb": "15.2g"
-    },
-    {
-        "id": "11",
-        "food_name": "avocado",
-        "tag": ["Avocado", "fresh avocado", "raw avocado", "whole avocado"],
-        "calories": "153kcal",
-        "fat": "14.4g",
-        "protein": "1.9g",
-        "carb": "8.5g",
-    }
-]
 
-extractor = InferenceClient(model="sentence-transformers/all-MiniLM-L6-v2")
-def get_embedding(text: str):
-  return extractor.feature_extraction(text).tolist()
-##--------##
+    "broken_rice": {  # cơm tấm
+        "alias": ["cơm tấm", "com tam", "broken rice"],
+        "ingredients": {
+            "rice": (200, 300),
+            "pork": (100, 180),
+            "vegetables": (50, 100)
+        },
+        "optional": ["oil", "sauce"]
+    },
 
-##main_logic##
-def is_in_domain(new_emb, db_emb, threshold=0.65):
-    sims = cosine_similarity(new_emb.reshape(1, -1), db_emb)
-    max_sim = sims.max()
-    return max_sim >= threshold, max_sim
-##----------##
+    "vietnamese_baguette_sandwich": {  # bánh mì
+        "alias": ["bánh mì", "banh mi", "vietnamese sandwich"],
+        "ingredients": {
+            "pork": (80, 120),
+            "vegetables": (40, 60),
+            "sauce": (20, 40)
+        },
+        "optional": ["oil"]
+    },
 
-##qwen##
+    "grilled_pork_with_vermicelli": {  # bún thịt nướng
+        "alias": ["bún thịt nướng", "bun thit nuong"],
+        "ingredients": {
+"rice_noodles": (150, 250),
+            "pork": (120, 200),
+            "vegetables": (50, 100),
+            "broth": (200, 300)
+        },
+        "optional": ["oil"]
+    },
+
+    "crab_noodle_soup": {  # bún riêu
+        "alias": ["bún riêu", "bun rieu"],
+        "ingredients": {
+            "rice_noodles": (150, 250),
+            "shrimp": (50, 100),
+            "pork": (50, 100),
+            "broth": (300, 500),
+            "vegetables": (40, 80)
+        },
+        "optional": ["oil", "sauce"]
+    },
+
+    "southern_noodle_soup": {  # hủ tiếu
+        "alias": ["hủ tiếu", "hu tieu", "southern noodle soup"],
+        "ingredients": {
+            "rice_noodles": (150, 250),
+            "pork": (80, 150),
+            "shrimp": (50, 100),
+            "broth": (300, 500),
+            "vegetables": (30, 60)
+        },
+        "optional": ["oil"]
+    },
+
+    "chicken_glass_noodle_soup": {  # miến gà
+        "alias": ["miến gà", "mien ga"],
+        "ingredients": {
+            "egg_noodles": (150, 200),
+            "chicken": (80, 150),
+            "broth": (300, 500),
+            "vegetables": (30, 60)
+        },
+        "optional": ["oil"]
+    },
+
+    "vietnamese_pancake": {  # bánh xèo
+        "alias": ["bánh xèo", "banh xeo"],
+        "ingredients": {
+            "shrimp": (50, 100),
+            "pork": (50, 100),
+            "vegetables": (50, 100)
+        },
+        "optional": ["oil", "sauce"]
+    },
+
+    "spring_rolls": {  # gỏi cuốn
+        "alias": ["gỏi cuốn", "goi cuon", "spring rolls"],
+        "ingredients": {
+            "shrimp": (40, 80),
+            "pork": (40, 80),
+            "vegetables": (60, 100),
+            "rice_noodles": (50, 100)
+        },
+        "optional": ["sauce"]
+    },
+
+    "chicken_soup": {  # cháo gà
+        "alias": ["cháo gà", "chao ga", "chicken porridge"],
+        "ingredients": {
+            "rice": (100, 200),
+            "chicken": (80, 150),
+            "broth": (300, 500),
+            "vegetables": (30, 60)
+        },
+        "optional": ["oil"]
+    },
+
+    "steamed_rice_rolls": {  # bánh cuốn
+        "alias": ["bánh cuốn", "banh cuon", "steamed rice rolls"],
+        "ingredients": {
+            "rice_noodles": (100, 150),
+            "pork": (50, 100),
+            "vegetables": (40, 80)
+        },
+        "optional": ["sauce", "oil"]
+    },
+
+    "braised_fish": {  # cá kho
+        "alias": ["cá kho", "ca kho", "braised fish"],
+        "ingredients": {
+            "fish": (150, 250),
+            "soy_sauce": (10, 20),
+            "pepper": (2, 5),
+            "oil": (10, 20),
+            "vegetables": (30, 60)
+        },
+        "optional": ["sauce"]
+    },
+
+    "vegetarian_soup": {  # súp chay
+        "alias": ["súp chay", "sup chay", "vegetarian soup"],
+        "ingredients": {
+            "mushroom": (80, 150),
+            "tofu": (50, 100),
+            "tofu_skin": (50, 100),
+            "vegetables": (100, 200),
+            "broth": (300, 500)
+},
+        "optional": ["oil", "sauce"]
+    },
+    "fried_fish_with_garlic" : {  # Cá chiên tỏi
+        "alias": ["cá chiên tỏi", "ca chien toi", "fried fish with garlic"],
+        "ingredients": {
+            "fish": (150, 250),
+            "garlic": (5, 15),
+            "oil": (10, 20),
+            "vegetables": (30, 60)
+        },
+        "optional": ["sauce"]
+}
+}
+
+
+
+
+
+embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
+dish_keys = list(DISH_DB.keys())
+dish_texts = [k.replace("_", " ") for k in dish_keys]
+
+dish_embeddings = embedder.encode(dish_texts, normalize_embeddings=True)
+
 client = OpenAI(
     base_url="https://router.huggingface.co/v1",
     api_key=HF_TOKEN,
 )
 
-def food_or_not(img_base64):
-    messages = [
-    {"role": "system", "content": """Hãy xem qua bức ảnh người dùng gửi, bức ảnh có phải là đồ mà con người ăn hay uống được hay không.
-    Nếu được thì trả về **FOOD**, không được thì trả về **NOT_FOOD**. Không cần giải thích thêm."""},
-    {"role": "user", "content":
-        [
-            {"type": "image_url",
-            "image_url": {"url": f"data:image/jpeg;base64,{img_base64}"}},
+def good_or_bad(allergy, food_name):
+    response = client.chat.completions.create(
+        model="Qwen/Qwen3-4B-Instruct-2507:nscale",
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"""người dùng có dị ứng {allergy}.
+                        Hãy xem tên tiếng anh món ăn được gửi: {food_name}
+                        - Nếu món ăn không phù hợp với người dùng → trả lời **không**. 
+                        - Nếu món ăn phù hợp với người dùng → trả lời **có**. 
+                        Chỉ trả lời đúng một trong hai: **có**, **không**.
+                        """
+                    }
+                ]
+            }
         ]
-    }]
+    )
 
-    completion = client.chat.completions.create(
-    model="Qwen/Qwen2.5-VL-7B-Instruct",
-    messages=messages,)
+    return response.choices[0].message.content
 
-    return(completion.choices[0].message.content)
+def food_classification(img_64):
+    response = client.chat.completions.create(
+        model="Qwen/Qwen2.5-VL-7B-Instruct:hyperbolic",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": (
+                            "Look at the picture and identify the dish.\n"
+                            "⚠️ If the picture contains multiple dishes, a plate with mixed food, "
+                            "or if the picture is not food, DO NOT guess.\n"
+                            "In those cases, return JSON with ***dish='uncertain'*** and message='Please retake the photo with only one clear dish.'\n\n"
+                            "JSON format:\n"
+                            "```json\n"
+                            "{\n"
+                            '  "dish": "...",\n'
+                            '  "ingredients": ["...", "..."],\n'
+                            '  "confidence": "high | medium | low",\n'
+                            '  "message": "..." \n'
+                            "}\n"
+                            "```"
+                        )
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{img_64}"
+                        }
+}
+                ]
+            }
+        ],
+        max_tokens=300,
+    )
 
-def predict_correction(img_base64):
+    import json
+    result = json.loads(response.choices[0].message.content.strip("```json").strip("```"))
+    return result
 
-    messages = [
-    {"role": "system", "content": """Cho mình biết tên về thực phẩm hoặc nước uống hoặc cả hai nếu có trong bức ảnh này. Và cho mình từ khóa đơn giản dựa trên hình ảnh để search vectorbase. Từ khóa nên được trả về như sau: Từ khóa: {từ khóa}"""},
-    {"role": "user", "content":
-    [
-        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_base64}"}},
-    ]}]
+def normalize_text(text):
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    return text.strip()
 
-    completion = client.chat.completions.create(
-        model="Qwen/Qwen2.5-VL-7B-Instruct",
-        messages=messages,)
 
-    return(completion.choices[0].message.content)
+def synthesize_dish(dish_name, dish_db, ingredient_db, ratio=0.25):
+    if dish_name not in dish_db:
+        return None
 
-##----##
+    dish = dish_db[dish_name]
 
-##efficientnet##
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    min_total = 0.0
+    max_total = 0.0
 
-def get_image_transform():
-    mean = [0.5, 0.5, 0.5]
-    std  = [0.5, 0.5, 0.5]
+    for ing, (min_amt, max_amt) in dish["ingredients"].items():
+        if ing not in ingredient_db:
+            continue
 
-    transform = T.Compose([
-        T.Resize(256),
-        T.CenterCrop(224),
-        T.ToTensor(),
-        T.Normalize(mean=mean, std=std),
-    ])
-    return transform
+        cal_min, cal_max = ingredient_db[ing]["calories"]
 
-def load_feature_extractor(model):
-    model.classifier = nn.Identity()
-
-    model.eval()
-    return model
-def extract_embedding(rgb_bytes, transform, vision_model, device):
-    image = Image.open(BytesIO(rgb_bytes)).convert("RGB")
-
-    img_tensor = transform(image).unsqueeze(0).to(device)
-
-    with torch.no_grad():
-        embedding = vision_model(img_tensor)
-
-    return embedding.squeeze(0).cpu().numpy()
-
-class NutrientRegressor(nn.Module):
-    def __init__(self, input_dim=1280, output_dim=5):
-        super(NutrientRegressor, self).__init__()
-        self.regressor = nn.Sequential(
-            nn.Linear(input_dim, 512),
-            nn.SiLU(),
-            nn.BatchNorm1d(512),
-            nn.Dropout(0.3),
-
-            nn.Linear(512, 256),
-            nn.SiLU(),
-            nn.BatchNorm1d(256),
-            nn.Dropout(0.2),
-
-            nn.Linear(256, 128),
-            nn.SiLU(),
-            nn.Dropout(0.1),
-
-            nn.Linear(128, output_dim)
-        )
-
-    def forward(self, x):
-        return self.regressor(x)
-
-class NutrientPredictor(nn.Module):
-    def __init__(self, backbone, regressor):
-        super(NutrientPredictor, self).__init__()
-        self.backbone = backbone
-        self.regressor = regressor
-
-    def forward(self, x): # Changed input argument from pixel_values to x
-        with torch.no_grad():
-            features = self.backbone(x) # Pass the tensor directly; removed .pooler_output
-        return self.regressor(features)
-
-def predict_image(img_bytes, predictor, transform, device):
-    image = Image.open(BytesIO(img_bytes)).convert("RGB")
-    tensor = transform(image).unsqueeze(0).to(device)
-
-    with torch.no_grad():
-        preds = predictor(tensor)
-    return preds.squeeze(0).cpu().numpy()
-
-model = timm.create_model("efficientnet_lite0", pretrained=True)
-vision_model = load_feature_extractor(model).to(device)
-regressor = NutrientRegressor(input_dim=1280, output_dim=5).to(device)
-
-regressor.load_state_dict(torch.load("model_weight/nutrient_regressor_weights (3).pth", map_location=device))
-regressor.eval()
-
-predictor = NutrientPredictor(vision_model, regressor).to(device)
-predictor.eval()
-
-transform = get_image_transform()
-db_emb = np.load("embedding_of_database/embeddings.npy")
-
-##efficientnet##
+        min_total += (min_amt / 100) * cal_min
+        max_total += (max_amt / 100) * cal_max
+    span = max_total - min_total
+    new_min = min_total + span * ratio
+    new_max = max_total - span * ratio
+    return int(new_min), int(new_max)
 
 
 @app.post("/scan_food")
-async def scan_food(file: UploadFile = File(...)):
-    ##Logic mới là nếu người dùng gửi bức ảnh là không phải là thực phẩm thì endpoint sẽ trả về là NOT_FOOD, còn lại vẫn như cũ
+async def scan_food(file: UploadFile = File(...),
+                    allergy: str | None = Form(None),):
     image_bytes = await file.read()
     img_base64 = base64.b64encode(image_bytes).decode('utf-8')
-    if food_or_not(img_base64) == "FOOD":
-        print("FOOD")
-        new_emb = extract_embedding(image_bytes, transform, vision_model, device)
-        in_domain, score = is_in_domain(new_emb, db_emb)
-        if(in_domain == True):
-            prediction = predict_image(image_bytes, predictor, transform, device)
-            new_emb = extract_embedding(image_bytes, transform, vision_model, device)
-            nutrient_columns = ['total_mass', 'total_calories', 'total_fat', 'total_carb', 'total_protein']
-            result = dict(zip(nutrient_columns, prediction))
-            print(in_domain)
-            print(result)
-            return {
-                "total_calories": str(float(result["total_calories"])),
-                "total_fat": str(float(result["total_fat"])),
-                "total_carb": str(float(result["total_carb"])),
-                "total_protein": str(float(result["total_protein"])),
-            }
-        else:
-            print(in_domain)
-            query = predict_correction(img_base64)
-            print(query)
-            query_embedding = get_embedding(query)
-            results = index.query(
-            vector=query_embedding,
-            top_k=1,
-            include_metadata=True
-            )
-            # print(results)
 
-            if results["matches"] and len(results["matches"]) > 0:
-                return {
-                    "total_calories": results["matches"][0]["metadata"]["calories"],
-                    "total_fat": results["matches"][0]["metadata"]["fat"],
-                    "total_carb": results["matches"][0]["metadata"]["carb"],
-                    "total_protein": results["matches"][0]["metadata"]["protein"],
-                }
-            else:
-                return {"error": "No matching food found"}
+    vlm_output = food_classification(img_base64)
+    flag = good_or_bad(allergy, vlm_output["dish"])
+
+    if(vlm_output["dish"].lower() == "uncertain"):
+        return {"reply": "Bức ảnh đồ ăn chưa nằm chính giữa khung hình."}
     else:
-        return {"NOT_FOOD"}
+        normalize_text(vlm_output["dish"])
+        query = normalize_text(vlm_output["dish"])
+        query_emb = embedder.encode([query], normalize_embeddings=True)
+        sims = dish_embeddings @ query_emb[0]
 
+        best_idx = int(np.argmax(sims))
+        best_score = float(sims[best_idx])
 
-if __name__ == "__main__":
-    # img_path = "diet-tracking/chat_box/testing_image/OIP.png"
+        if best_score < 0.2:
+            matched_dish = None
+        else:
+            matched_dish = dish_keys[best_idx]
 
-    # image = Image.open(img_path).convert("RGB")
-
-    # with open(img_path, "rb") as f:
-    #     image_bytes = f.read()
-
-    # img_base64 = base64.b64encode(image_bytes).decode('utf-8')
-    # db_emb = np.load("diet-tracking/chat_box/embedding_of_database/embeddings.npy")
-    # if food_or_not(img_base64) == "FOOD":
-    #     new_emb = extract_embedding(image_bytes, transform, vision_model, device)
-    #     in_domain, score = is_in_domain(new_emb, db_emb)
-    #     if(in_domain == True):
-    #         prediction = predict_image(image_bytes, predictor, transform, device)
-    #         new_emb = extract_embedding(image_bytes, transform, vision_model, device)
-    #         nutrient_columns = ['total_mass', 'total_calories', 'total_fat', 'total_carb', 'total_protein']
-    #         result = dict(zip(nutrient_columns, prediction))
-    #         print(in_domain)
-    #         print(result)
-    #     else:
-    #         query = predict_correction(img_base64)
-    #         print(query)
-    #         query_embedding = get_embedding(query)
-    #         results = index.query(
-    #         vector=query_embedding,
-    #         top_k=1,
-    #         include_metadata=True
-    #         )
-    #         nutritional_values = []
-
-    #         for match in results["matches"]:
-    #             nutritional_values.append(
-    #             {'total_calories':match["metadata"]["calories"],
-    #             'total_fat':match["metadata"]["fat"],
-    #             'total_protein':match["metadata"]["protein"],
-    #             'total_carb':match["metadata"]["carb"]}
-    #             )
-#         print(match["metadata"]["food_name"], "-", match["score"])
-    #         print(nutritional_values)
-    # else:
-        print("NOT_FOOD")
-
-    #     query = "apple 2"
-    #     query_embedding = get_embedding(query)
-    #     results = index.query(
-    #     vector=query_embedding,
-    #     top_k=1,
-    #     include_metadata=True
-    # )
-
-    # for match in results["matches"]:
-    #     print(match["metadata"]["food_name"], "-", match["score"])
+        dish = matched_dish
+        cal_range = synthesize_dish(dish, DISH_DB, INGREDIENT_DB)
+        print(cal_range)
+        if(flag.lower() == "có"):
+            print(vlm_output["dish"])
+            return {
+                    # "dish_name": vlm_output["dish"],
+                    "calories_range": cal_range,
+                    "warning": "none"
+                    }
+        else:
+            print(vlm_output["dish"])
+            return {
+                    # "dish_name": vlm_output["dish"],
+                    "calories_range": cal_range,
+                    "warning": "món ăn có chứa chất gây dị ứng đối với bạn, hãy cẩn thận."
+                    }
